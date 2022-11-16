@@ -1,0 +1,62 @@
+import React from 'react'
+import { View, TouchableOpacity, Text, Image, StyleSheet, } from 'react-native'
+
+function ItemCard({ item , navigation }) {
+
+    let product = item.item
+    return (
+        <TouchableOpacity onPress={e=>{navigation.navigate("item")}} style={styles.container}>
+            <Image
+                resizeMode={"contain"}
+                // source={{uri:"https://n3.sdlcdn.com/imgs/a/2/6/New-Fancy-Purse-House-Black-SDL825681176-2-1b9a6.jpg"}}
+                source={{ uri: product.imageURL}}
+                style={styles.image}
+            />
+            <View>
+                <Text numberOfLines={1} ellipsizeMode="tail" style={styles.prodName}>
+                    {product.productName}
+                </Text>
+            </View>
+            <View>
+                <Text
+                    style={{ color: "#426D54", fontWeight: "bold", fontSize: 17 }}
+                >Rs
+                    <Text
+                        style={{ fontSize: 22 }}
+                    > {product.productPrice}</Text></Text>
+            </View>
+        </TouchableOpacity>
+    )
+}
+
+const styles = StyleSheet.create({
+
+    container: {
+        width: "42%",
+        // backgroundColor:"white",
+        // marginLeft: 20,
+        margin:10,
+        backgroundColor: "white",
+        padding: 6,
+        borderRadius: 10,
+        shadowColor: "grey",
+        shadowOffset: { width: 10, height: 10 },
+        shadowOpacity: 0.3,
+        shadowRadius: 5,
+        elevation: 15
+    },
+    image: {
+        width: "100%",
+        height: 110,
+    },
+    prodName: {
+        fontFamily: "arial",
+        fontSize: 21,
+    },
+    prodPrice: {
+
+    }
+})
+
+
+export default ItemCard
