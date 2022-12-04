@@ -4,8 +4,9 @@ import { View, TouchableOpacity, Text, Image, StyleSheet, } from 'react-native'
 function ItemCard({ item , navigation }) {
 
     let product = item.item
+    console.log(item , "item from products")
     return (
-        <TouchableOpacity onPress={e=>{navigation.navigate("item")}} style={styles.container}>
+        <TouchableOpacity onPress={e=>{navigation.navigate("item" , {item})}} style={styles.container}>
             <Image
                 resizeMode={"contain"}
                 // source={{uri:"https://n3.sdlcdn.com/imgs/a/2/6/New-Fancy-Purse-House-Black-SDL825681176-2-1b9a6.jpg"}}

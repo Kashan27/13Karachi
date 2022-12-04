@@ -20,7 +20,7 @@ import OptionsMenu from "react-native-menu-platform";
 const Header = ({ navigation, title, goback, search, showMore, width }) => {
 
   const home = () => {
-    navigation.navigate("homes")
+    navigation.navigate("home")
   }
   const _handleSearch = () => console.log('Searching');
 

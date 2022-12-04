@@ -4,18 +4,18 @@ import { Button } from 'react-native-paper';
 import { useState } from 'react';
 
 
-const ShopsSlider = ({ markets , updMarket }) => {
+const ShopsSlider = ({name , markets , updMarket }) => {
     let [mode , setMode] =  useState("contained-tonal")
     return (
         <View>
             <Button 
             // onPressIn={e=>{setMode("contained")}}
             // onPressOut={e=>{setMode("contained-tonal")}}
-            onPress={e=>{updMarket(markets.item.marketName)}}
+            onPress={e=>{updMarket(name)}}
              mode={mode}
              >
 
-                {markets.item.marketName}
+                {name}
             </Button>
         </View>
     )

@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, FlatList, ScrollView } from 'react-native'
+import { StyleSheet, Text, View, FlatList, ScrollView, Dimensions } from 'react-native'
 import React from 'react'
 import Header from '../Components/Header/Header'
 import { useState, useEffect, useRef } from 'react';
@@ -10,10 +10,14 @@ import ItemCard from '../Components/Card/Card';
 
 
 
+
+
+const Height = Dimensions.get("screen").height;
 const Home = ({ navigation }) => {
     let [products, setProducts] = useState([])
 
     useEffect(() => {
+        console.log(Height, "Height")
         axios.get(`http://${ip}:9000/api/allpostdata`)
             .then(res => {
                 let data = res.data
@@ -30,7 +34,8 @@ const Home = ({ navigation }) => {
     const sliderImages = [
         { img: "https://th.bing.com/th/id/OIP.xEbcztsACaZL-Aw5DeLuZwHaDZ?w=285&h=160&c=7&r=0&o=5&pid=1.7" },
         { img: "https://th.bing.com/th/id/R.2db5a3f2be76363303d7c101364da461?rik=zfZFg04CcoCzXQ&pid=ImgRaw&r=0" },
-        { img: 'https://th.bing.com/th/id/OIP.rjVa-ZNOK3w_PQ5x6UyCxwHaFL?pid=ImgDet&rs=1' }]
+        { img: 'https://th.bing.com/th/id/OIP.rjVa-ZNOK3w_PQ5x6UyCxwHaFL?pid=ImgDet&rs=1' }
+    ]
     const [visible, setVisible] = React.useState(false);
     const openMenu = () => setVisible(true);
     const closeMenu = () => setVisible(false);
@@ -69,7 +74,7 @@ const Home = ({ navigation }) => {
             <View>
                 <Text style={styles.text}>Recently Added</Text>
             </View>
-            <View style={{marginLeft:10 , display:"flex" , alignItems:"center" , height:"50%" , width: "100%" }}>
+            <View style={{ marginLeft: 10, display: "flex", alignItems: "center", height: Height - 530, width: "100%" }}>
                 {products[0] ?
 
                     <FlatList

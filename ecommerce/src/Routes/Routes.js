@@ -8,6 +8,7 @@ import { Text } from "react-native";
 import { StyleSheet } from "react-native";
 import Header from "../Components/Header/Header";
 import SingleProductScreen from "../Screens/SingleProductScreen";
+import Shops from "../Screens/Shops";
 
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -90,6 +91,7 @@ const StackNav = () => {
                 <Stack.Screen  name="test" component={TabNav} />
                 <Stack.Screen name="login" component={Login} />
                 <Stack.Screen name="signup" component={Signup} />
+                <Stack.Screen name="shops" component={Shops} />
                 <Stack.Screen name="products" component={Products} />
                 <Stack.Screen  name="header" component={Header} />
                 <Stack.Screen  name="item" component={SingleProductScreen} />

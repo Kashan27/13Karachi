@@ -19,16 +19,18 @@ import { Button } from 'react-native-paper';
 const Products = ({ route, navigation }) => {
 
 
-    const { marketName, markets } = route.params;
+    const { shop , marketName } = route.params;
+    console.log(shop)
     const [allProd, setAllProd] = useState()
-    const [currentMarket, setCurrentMarket] = useState(marketName)
+    const [currentShop, setCurrentShop] = useState(shop)
+    const [shopList , setShopList] = useState([])
     let [p, setP] = useState([])
 
 
 
-    const handleUpdateMarket = (shop) => {
-        setCurrentMarket(shop)
-        let filterData = allProd.filter(val => val.prodmarketname === shop)
+    const handleUpdateShop = (shop) => {
+        setCurrentShop(shop)
+        let filterData = allProd.filter(val => val.hotelname === shop)
         setP(filterData)
 
 
@@ -39,14 +41,30 @@ const Products = ({ route, navigation }) => {
 
     useEffect(() => {
         getProducts()
+        getShops()
         // setCurrentMarket(marketName)
     }, [])
+
+    const getShops = (shop) => {
+
+        axios.get(`http://${ip}:9000/api/allsignup`)
+            .then(res => {
+                let data = res.data
+                let filterShops = data.filter(val => val.marketname === marketName)
+                setShopList(filterShops)
+                
+            })
+            .catch(err => {
+                console.error(err)
+            })
+
+    }
 
     const getProducts = () => {
         axios.get(`http://${ip}:9000/api/allpostdata`)
             .then(res => {
                 let data = res.data
-                let filterData = data.filter(val => val.prodmarketname === currentMarket)
+                let filterData = data.filter(val => val.hotelname === currentShop)
                 console.log(filterData, "filtered")
                 setP(filterData)
                 setAllProd(res.data)
@@ -54,9 +72,9 @@ const Products = ({ route, navigation }) => {
             .catch(err => {
                 console.error(err)
             })
-        console.log(markets, "markets")
     }
 
+    console.log(p , "p")
 
 
 
@@ -123,9 +141,10 @@ const Products = ({ route, navigation }) => {
             <ItemCard navigation={navigation} onPress={e => { console.log("itemcard") }} item={item} />
         )
     }
-    const renderMarkets = (item) => {
+    const renderShopList = (item) => {
+        console.log(item)
         return (
-            <ShopsSlider updMarket={handleUpdateMarket} markets={item} />
+            <ShopsSlider name={item.item.hotelname} updMarket={handleUpdateShop} markets={item} />
         )
     }
 
@@ -139,9 +158,9 @@ const Products = ({ route, navigation }) => {
 
                     <FlatList
                         onPress={e => { console.log(e.target) }}
-                        ListHeaderComponent={<Text style={{ fontSize: 20 }}>Markets</Text>}
-                        data={markets}
-                        renderItem={renderMarkets}
+                        ListHeaderComponent={<Text style={{ fontSize: 20 }}>Shops</Text>}
+                        data={shopList}
+                        renderItem={renderShopList}
                         // numColumns={2}
                         showsVerticalScrollIndicator={false}
                         horizontal={true}
@@ -150,7 +169,7 @@ const Products = ({ route, navigation }) => {
 
 
                 <View style={{ display: "flex", width: "100%", alignItems: "center" }}>
-                    <Button style={{ margin: 10 }} labelStyle={{ fontSize: 18 }} mode='contained' >{currentMarket}</Button>
+                    <Button onClick={e=>{navigation.navigate('shops')}} style={{ margin: 10 }} labelStyle={{ fontSize: 18 }} mode='contained' >{currentShop}</Button>
                 </View>
 
 

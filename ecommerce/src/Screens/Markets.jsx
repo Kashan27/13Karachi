@@ -82,10 +82,10 @@ const Markets = ({ navigation }) => {
 
   const renderItem = ({ item }) => {
 
-
+    console.log(item.areaName)
     return (
       <Item
-        onPress={() => { navigation.navigate("products", { markets, marketName: item.marketName }) }}
+        onPress={() => { navigation.navigate("shops", {area:item.areaName , markets, marketName: item.marketName }) }}
         item={item}
       />
     );
@@ -120,8 +120,9 @@ const Markets = ({ navigation }) => {
         setItems={setItems}
       />
 
-      <View style={{ display: "flex", alignItems: "center" }}>
 
+
+      <View style={{ display: "flex", alignItems: "center" }}>
         <View style={styles.marketsContainer} >
           <Text style={styles.heading}>Markets</Text>
           <View style={styles.inputContainer}>
@@ -139,6 +140,14 @@ const Markets = ({ navigation }) => {
     </ImageBackground>
   )
 }
+
+
+
+
+
+
+//  ////             styles
+
 
 
 const styles = StyleSheet.create({
