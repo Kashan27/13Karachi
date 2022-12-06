@@ -45,12 +45,11 @@ const Home = ({ navigation }) => {
 
     const renderItem = (item) => {
         return (
-            <ItemCard navigation={navigation} onPress={e => { console.log("itemcard") }} item={item} />
+            <ItemCard navigation={navigation}  item={item} />
         )
     }
 
 
-    console.log(products)
     return (
         <View>
             <Header style={{ zIndex: 1 }} navigation={navigation} login={login} width={"80%"} close={closeMenu} showMore={true} title="App" />

@@ -7,28 +7,34 @@ import Header from '../Components/Header/Header';
 import ShopsSlider from '../Components/ShopSlider/ShopsSlider';
 import ip from "../ip"
 import { Button } from 'react-native-paper';
-
-
-
-
-
-
-
+import { Chip } from 'react-native-paper';
+import { TouchableWithoutFeedback } from 'react-native';
+import { Autocomplete, AutocompleteItem, Icon } from '@ui-kitten/components';
 
 
 const Products = ({ route, navigation }) => {
+    
+    
 
+    const filter = (item, query) => item.categoryName.toLowerCase().includes(query.toLowerCase());
 
-    const { shop , marketName } = route.params;
-    console.log(shop)
+    const StarIcon = (props) => (
+        <Icon {...props} name='copy-outline' />
+        );
+        
+        
+    const [data, setData] = useState([]);
+    const [categories, setCategories] = useState([])
+    const [value, setValue] = useState(null);
+    const {shop, marketName } = route.params;
     const [allProd, setAllProd] = useState()
     const [currentShop, setCurrentShop] = useState(shop)
-    const [shopList , setShopList] = useState([])
+    const [shopList, setShopList] = useState([])
     let [p, setP] = useState([])
-
-
-
-    const handleUpdateShop = (shop) => {
+    
+    
+    
+    const handleUpdateShop = () => {
         setCurrentShop(shop)
         let filterData = allProd.filter(val => val.hotelname === shop)
         setP(filterData)
@@ -36,14 +42,80 @@ const Products = ({ route, navigation }) => {
 
     }
 
+    const handleSetCategories = () => {
+        axios.get(`http://${ip}:9000/api/allgetcategory`)
+        .then(res => {
+            // console.log(res.data[0].categoryName,"categoories")
+            setCategories(res.data)
+            setData(res.data)
+        })
+        .catch(err => {
+            console.log(err)
+        })
+
+    }
+
+    const handleFilterByCategory = () => {
+            console.log(value, "value")
+            console.log(value, "value")
+            let filterData = allProd ? allProd.filter(val => val.category === value && val.hotelname === shop) : []
+            setP(filterData)
+            console.log(filterData , "filterData")
+            
+    }
+
+
+
+
+    const onSelect = (index) => {
+        setValue(data[index].categoryName);
+        console.log(data[index].categoryName)
+    };
+
+    const onChangeText = (query) => {
+        setValue(query);
+        setData(data.filter(item => filter(item, query)));
+    };
+
+    const clearInput = () => {
+        setValue('');
+        setData(categories);
+        handleUpdateShop()
+    };
+
+    const renderOption = (item, index) => (
+        <AutocompleteItem
+            key={index}
+            title={item.categoryName}
+            accessoryLeft={StarIcon}
+        />
+        // <Text>{item.title}</Text>
+    );
+
+    const renderCloseIcon = (props) => (
+        <TouchableWithoutFeedback onPress={clearInput}>
+            {/* <Icon {...props} name='close' /> */}
+            <Text>Clear Filter</Text>
+        </TouchableWithoutFeedback>
+    );
+
+
 
 
 
     useEffect(() => {
         getProducts()
         getShops()
+        handleSetCategories()
+
         // setCurrentMarket(marketName)
     }, [])
+
+    
+    useEffect(() => {
+        console.log(p)
+        handleFilterByCategory()
+    }, [value]);
 
     const getShops = (shop) => {
 
@@ -52,7 +124,7 @@ const Products = ({ route, navigation }) => {
                 let data = res.data
                 let filterShops = data.filter(val => val.marketname === marketName)
                 setShopList(filterShops)
-                
+
             })
             .catch(err => {
                 console.error(err)
@@ -65,7 +137,7 @@ const Products = ({ route, navigation }) => {
             .then(res => {
                 let data = res.data
                 let filterData = data.filter(val => val.hotelname === currentShop)
-                console.log(filterData, "filtered")
+                // console.log(filterData, "filtered")
                 setP(filterData)
                 setAllProd(res.data)
             })
@@ -74,7 +146,7 @@ const Products = ({ route, navigation }) => {
             })
     }
 
-    console.log(p , "p")
+    // console.log(p, "p")
 
 
 
@@ -142,7 +214,6 @@ const Products = ({ route, navigation }) => {
         )
     }
     const renderShopList = (item) => {
-        console.log(item)
         return (
             <ShopsSlider name={item.item.hotelname} updMarket={handleUpdateShop} markets={item} />
         )
@@ -154,10 +225,10 @@ const Products = ({ route, navigation }) => {
             <Header navigation={navigation} width={"60%"} showMore={true} search={true} goback={e => { navigation.goBack() }} title="App" />
             <View style={{ width: "100%" }}>
 
-                <View style={{ display: "flex", alignItems: "center", width: "100%", height: 50, marginVertical:10 }}>
+                <View style={{ display: "flex", alignItems: "center", width: "100%", height: 50, marginVertical: 10 }}>
 
                     <FlatList
-                        onPress={e => { console.log(e.target) }}
+                        // onPress={e => { console.log(e.target) }}
                         ListHeaderComponent={<Text style={{ fontSize: 20 }}>Shops</Text>}
                         data={shopList}
                         renderItem={renderShopList}
@@ -165,16 +236,24 @@ const Products = ({ route, navigation }) => {
                         showsVerticalScrollIndicator={false}
                         horizontal={true}
                     />
+
                 </View>
 
-
+                <Autocomplete
+                    placeholder='Place your Text'
+                    value={value}
+                    accessoryRight={renderCloseIcon}
+                    onChangeText={onChangeText}
+                    onSelect={onSelect}>
+                    {data.map(renderOption)}
+                </Autocomplete>
                 <View style={{ display: "flex", width: "100%", alignItems: "center" }}>
-                    <Button onClick={e=>{navigation.navigate('shops')}} style={{ margin: 10 }} labelStyle={{ fontSize: 18 }} mode='contained' >{currentShop}</Button>
+                    <Button onClick={e => { navigation.navigate('shops') }} style={{ margin: 10 }} labelStyle={{ fontSize: 18 }} mode='contained' >{currentShop}</Button>
                 </View>
 
 
-                    <View style={{ display: "flex", width: "100%" }}>
-                {p[0] ? 
+                <View style={{ display: "flex", width: "100%" }}>
+                    {p[0] ?
 
                         <FlatList
                             data={p}
@@ -183,10 +262,10 @@ const Products = ({ route, navigation }) => {
                             showsVerticalScrollIndicator={false}
                         />
                         :
-                        <Text style={{fontSize:30 , textAlign:"center", marginTop:"50%"}}>No Products Found</Text>
+                        <Text style={{ fontSize: 30, textAlign: "center", marginTop: "50%" }}>No Products Found</Text>
 
                     }
-                    </View>
+                </View>
             </View>
         </>
     )
