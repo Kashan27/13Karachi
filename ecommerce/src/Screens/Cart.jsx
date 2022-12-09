@@ -1,21 +1,33 @@
-import { StyleSheet, Text, View, FlatList } from 'react-native'
+import { StyleSheet, Text, View, FlatList , Dimensions } from 'react-native'
 import React from 'react'
 import Header from '../Components/Header/Header';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useState } from 'react';
 import CartCard from '../Components/Cart_Card/CartCard';
-import { Button } from 'react-native-paper';
 import { useWindowDimensions } from 'react-native';
+import { Button , Paragraph, Dialog, Portal, Provider ,Snackbar } from 'react-native-paper';
+
 
 
 
 const Cart = ({ navigation }) => {
-
+  // const height = Math.round(Dimensions.get("screen").height);
+  const [visibleDialog, setVisibleDialog] = useState(false);
+  const showDialog = () => setVisible(true);
+  const hideDialog = () => setVisibleDialog(false);
   let [cart, setCart] = useState([])
-  let [subTotal , setSubTotal] = useState(0)
+  let [subTotal, setSubTotal] = useState(0)
   const { height, width } = useWindowDimensions();
+  const [visible, setVisible] = useState(false);
+  const onToggleSnackBar = () => setVisible(!visible);
+  const onDismissSnackBar = () => setVisible(false);
+  const [msg, setMsg] = useState()
 
 
+let handleSnackBar = (message , visible) => {
+  setMsg(message);
+  setVisible(visible)
+}
 
   //        useEffect------
   useEffect(() => {
@@ -28,25 +40,29 @@ const Cart = ({ navigation }) => {
 
   const handleRemoveItem = async (index) => {
     let cartItems = [...cart]
-    cartItems.splice(index , 1)
-    try{
-    await AsyncStorage.setItem("cart" , JSON.stringify(cartItems))
+    cartItems.splice(index, 1)
+    try {
+      await AsyncStorage.setItem("cart", JSON.stringify(cartItems))
       setCart(cartItems)
-    }catch(err){
+    } catch (err) {
       console.log(err)
     }
-    
-    
+
+
   }
 
 
 
   //     renderItem
 
-  const renderItem = ({ item , index }) => {
+  const renderItem = ({ item, index }) => {
     console.log(index)
     return (
-      <CartCard removeItem={handleRemoveItem} index={index} item={item} />
+      <CartCard
+       handleOrderQty={handleOrderQty}
+       handleSnack={handleSnackBar}
+       removeItem={handleRemoveItem}
+       index={index} item={item} />
     )
   }
 
@@ -57,16 +73,16 @@ const Cart = ({ navigation }) => {
       const cartItems = await AsyncStorage.getItem("cart")
       let parse = JSON.parse(cartItems)
       var sum = 0;
-  
-    // Calculation the sum using forEach
-    parse.forEach(x => {
-      console.log(x.qty,"x")
+
+      // Calculation the sum using forEach
+      parse.forEach(x => {
+        // console.log(x.qty,"x")
         let total = x.qty * x.productPrice
         sum += total;
-    });
-    setSubTotal(sum);
+      });
+      setSubTotal(sum);
       setCart(parse)
-      console.log(parse)
+      // console.log(parse)
     } catch (err) {
       console.log(err.message)
     }
@@ -74,11 +90,19 @@ const Cart = ({ navigation }) => {
   }
 
 
-  console.log()
+const handleOrderQty = async (itemQty , index) => {
+    console.log(itemQty)
+    cart[index].qty = itemQty
+    setCart(cart)
+    await AsyncStorage.setItem("cart", JSON.stringify(cart))
+}
 
+
+// console.log(Math.round(height))
 
   return (
-    <View >
+<>
+    <View style={{height:803}}>
       <Header width={"60%"} navigation={navigation} showMore={true} search={true} goback={e => { navigation.goBack() }} title="App" />
 
       <View>
@@ -109,20 +133,54 @@ const Cart = ({ navigation }) => {
 
         {/* Procedd to checkOut */}
 
-        <View style={{display:'flex' , alignItems:"center"}}>
+        <View style={{ display: 'flex', alignItems: "center" }}>
           <View style={styles.checkOutContainer} >
             <Button
+            onPress={e=>{navigation.navigate("checkout",{subTotal})}}
               mode="contained"
             // width="45%"
             >Proceed to Checkout</Button>
-            <Text style={styles.totalAmount}>PKR {subTotal+100}</Text>
+            <Text style={styles.totalAmount}>PKR {subTotal + 100}</Text>
           </View>
         </View>
 
 
 
+
       </View>
     </View>
+    {/* Snack bar */}
+        <Snackbar
+          visible={visible}
+          onDismiss={onDismissSnackBar}
+          action={{
+            label: 'OK',
+            onPress: () => {
+              // Do something
+            },
+          }}>
+          {msg}
+        </Snackbar>
+
+              {/* Dialog box */}
+
+        {/* <Portal>
+          <Dialog visible={visibleDialog} onDismiss={hideDialog}>
+            <Dialog.Title>Select Payment Method</Dialog.Title>
+            <Dialog.Content>
+              <Button onPress={hideDialog}>Cash On Delivery</Button>
+              <Button onPress={hideDialog}>Credit Card</Button>
+              <Paragraph>Cash on Delivery</Paragraph>
+              <Paragraph>This is simple dialog</Paragraph>
+            </Dialog.Content>
+            <Dialog.Actions>
+              <Button onPress={hideDialog}>Next</Button>
+            </Dialog.Actions>
+          </Dialog>
+        </Portal> */}
+
+
+        </>
   )
 }
 
@@ -142,7 +200,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     width: "80%",
-    marginTop:30
+    marginTop: 30
   },
   summaryContainer: {
     // backgroundColor: "blue",

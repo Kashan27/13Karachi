@@ -7,15 +7,18 @@ import { useState } from 'react';
 const ShopsSlider = ({name , markets , updMarket }) => {
     let [mode , setMode] =  useState("contained-tonal")
     return (
-        <View>
+        <View
+        style={styles.container}>
             <Button 
+            style={{height:40 , margin:0}}
             // onPressIn={e=>{setMode("contained")}}
             // onPressOut={e=>{setMode("contained-tonal")}}
             onPress={e=>{updMarket(name)}}
              mode={mode}
              >
-
+                <Text>
                 {name}
+                </Text>
             </Button>
         </View>
     )
@@ -23,4 +26,11 @@ const ShopsSlider = ({name , markets , updMarket }) => {
 
 export default ShopsSlider
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    container:{
+        // height:100
+        // backgroundColor:"blue",
+        // paddingTop:8,
+        paddingLeft:5
+    }
+})

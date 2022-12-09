@@ -10,7 +10,7 @@ const Slider = ({images}) => {
     <ImageSlider 
     data={images}
     autoPlay={true}
-    onItemChanged={(item) => console.log("item", item)}
+    // onItemChanged={(item) => console.log("item", item)}
     closeIconColor="#fff"
 />
   )

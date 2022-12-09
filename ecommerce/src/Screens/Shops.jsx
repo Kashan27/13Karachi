@@ -49,7 +49,7 @@ const Shops = ({ route, navigation }) => {
 
     const getProducts = () => {
         console.log(marketName)
-        axios.get(`http://${ip}:9000/api/getmarket/${marketName}`)
+        axios.get(`https://${ip}/api/getmarket/${marketName}`)
             .then(res => {
                 let data = res.data
                 // console.log(data , "shops")

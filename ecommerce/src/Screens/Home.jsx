@@ -17,8 +17,8 @@ const Home = ({ navigation }) => {
     let [products, setProducts] = useState([])
 
     useEffect(() => {
-        console.log(Height, "Height")
-        axios.get(`http://${ip}:9000/api/allpostdata`)
+        // console.log(Height, "Height")
+        axios.get(`https://${ip}/api/allpostdata`)
             .then(res => {
                 let data = res.data
                 data = data.slice(-6)
@@ -32,9 +32,9 @@ const Home = ({ navigation }) => {
 
 
     const sliderImages = [
-        { img: "https://th.bing.com/th/id/OIP.xEbcztsACaZL-Aw5DeLuZwHaDZ?w=285&h=160&c=7&r=0&o=5&pid=1.7" },
-        { img: "https://th.bing.com/th/id/R.2db5a3f2be76363303d7c101364da461?rik=zfZFg04CcoCzXQ&pid=ImgRaw&r=0" },
-        { img: 'https://th.bing.com/th/id/OIP.rjVa-ZNOK3w_PQ5x6UyCxwHaFL?pid=ImgDet&rs=1' }
+        { img: "://th.bing.com/th/id/OIP.xEbcztsACaZL-Aw5DeLuZwHaDZ?w=285&h=160&c=7&r=0&o=5&pid=1.7" },
+        { img: "://th.bing.com/th/id/R.2db5a3f2be76363303d7c101364da461?rik=zfZFg04CcoCzXQ&pid=ImgRaw&r=0" },
+        { img: '://th.bing.com/th/id/OIP.rjVa-ZNOK3w_PQ5x6UyCxwHaFL?pid=ImgDet&rs=1' }
     ]
     const [visible, setVisible] = React.useState(false);
     const openMenu = () => setVisible(true);
@@ -80,7 +80,7 @@ const Home = ({ navigation }) => {
                         // contentContainerStyle={{display:'flex' ,height:"45%"  , alignItems:"center"}}
                         data={products}
                         renderItem={renderItem}
-                        numColumns={2}
+                        numColumns={3}
                         showsVerticalScrollIndicator={false}
                     />
                     :

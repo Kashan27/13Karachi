@@ -8,6 +8,7 @@ import { Text } from "react-native";
 import { StyleSheet } from "react-native";
 import Header from "../Components/Header/Header";
 import SingleProductScreen from "../Screens/SingleProductScreen";
+import CheckOut from "../Screens/CheckOut";
 import Shops from "../Screens/Shops";
 
 
@@ -18,6 +19,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
+import SuccessOrder from "../Screens/SuccessOrder";
 
 
 
@@ -95,6 +97,8 @@ const StackNav = () => {
                 <Stack.Screen name="products" component={Products} />
                 <Stack.Screen  name="header" component={Header} />
                 <Stack.Screen  name="item" component={SingleProductScreen} />
+                <Stack.Screen  name="checkout" component={CheckOut} />
+                <Stack.Screen  name="successorder" component={SuccessOrder} />
             </Stack.Navigator>
         </NavigationContainer>
 

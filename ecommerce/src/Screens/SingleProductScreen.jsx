@@ -17,7 +17,6 @@ const SingleProductScreen = ({ route, navigation }) => {
     const [visible, setVisible] = useState(false);
     const onToggleSnackBar = () => setVisible(!visible);
     const onDismissSnackBar = () => setVisible(false);
-    const [selectedLanguage, setSelectedLanguage] = useState();
     const [msg, setMsg] = useState()
     const [itemSize, setItemSize] = useState(multiProd[0].productSize)
     const [itemColor, setItemColor] = useState(multiProd[0].productColor)
@@ -27,9 +26,11 @@ const SingleProductScreen = ({ route, navigation }) => {
     const handleAddToCart = async () => {
 
         const date = Date.now()
-        const itemObj = { ...item.item, itemSize, itemColor, qty: itemQty, date, }
-        try {
-            const cart = await AsyncStorage.getItem("cart");
+        const itemObj = { ...item.item, itemSize, itemColor, qty: itemQty, date,availableQty }
+        if(itemQty){
+
+            try {
+                const cart = await AsyncStorage.getItem("cart");
             let parseCart = cart ? JSON.parse(cart) : []
             console.log(parseCart, "parse cart")
             if (parseCart[0]) {
@@ -39,21 +40,21 @@ const SingleProductScreen = ({ route, navigation }) => {
                         return val._id === _id && val.itemSize === itemSize && val.itemColor === itemColor
                     })
                     if (!findProduct) {
-                        console.log("new")
-                        console.log(itemObj, "itemObj", "41")
+                        // console.log("new")
+                        // console.log(itemObj, "itemObj", "41")
                         parseCart.push(itemObj)
                         // console.log( parseCart , "push")
                         AsyncStorage.setItem("cart", JSON.stringify(parseCart));
                         setMsg("item added to cart")
                         setVisible(true)
                     } else {
-                        console.log("already")
+                        // console.log("already")
                         setMsg("you already add this item to cart")
                         setVisible(true)
 
                     }
                     // await AsyncStorage.removeItem("cart")
-
+                    
                 }
                 catch (error) {
                     console.log(error, "error");
@@ -62,23 +63,26 @@ const SingleProductScreen = ({ route, navigation }) => {
                 console.log("else", parseCart)
                 let obj = [{ ...itemObj }]
                 await AsyncStorage.setItem("cart", JSON.stringify(obj));
-
+                
             }
         } catch (error) {
             console.log(error);
         }
+    }else{
+        alert("please add qty")
+    }
 
 
 
     }
 
     const handleCounter = (value) => {
-        console.log(itemQty)
+        // console.log(itemQty)
 
         switch (value) {
             case "add":
                 console.log("add")
-                console.log(availableQty)
+                // console.log(availableQty)
                 if(itemQty < availableQty) {
                     setItemQty(itemQty + 1)
                 }else{
@@ -102,7 +106,7 @@ const SingleProductScreen = ({ route, navigation }) => {
             &&
             item.productColor === itemColor)
             let qty = filter[0] ? filter[0].otherQty : 0
-            console.log(qty + " " + "qtyyFunction")
+            // console.log(qty + " " + "qtyyFunction")
             setAvailableQty(qty)
     }
 
@@ -117,6 +121,7 @@ const SingleProductScreen = ({ route, navigation }) => {
                 }
                 setItemQty(0)
     }
+
 
 
 

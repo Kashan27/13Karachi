@@ -9,7 +9,7 @@ function ItemCard({ item , navigation }) {
         <TouchableOpacity onPress={e=>{navigation.navigate("item" , {item})}} style={styles.container}>
             <Image
                 resizeMode={"contain"}
-                // source={{uri:"https://n3.sdlcdn.com/imgs/a/2/6/New-Fancy-Purse-House-Black-SDL825681176-2-1b9a6.jpg"}}
+                // source={{uri:"://n3.sdlcdn.com/imgs/a/2/6/New-Fancy-Purse-House-Black-SDL825681176-2-1b9a6.jpg"}}
                 source={{ uri: product.imageURL}}
                 style={styles.image}
             />
@@ -23,7 +23,7 @@ function ItemCard({ item , navigation }) {
                     style={{ color: "#426D54", fontWeight: "bold", fontSize: 17 }}
                 >Rs
                     <Text
-                        style={{ fontSize: 22 }}
+                        style={{ fontSize: 17 }}
                     > {product.productPrice}</Text></Text>
             </View>
         </TouchableOpacity>
@@ -33,7 +33,7 @@ function ItemCard({ item , navigation }) {
 const styles = StyleSheet.create({
 
     container: {
-        width: "42%",
+        width: "27%",
         // backgroundColor:"white",
         // marginLeft: 20,
         margin:10,
@@ -48,11 +48,11 @@ const styles = StyleSheet.create({
     },
     image: {
         width: "100%",
-        height: 110,
+        height: 100,
     },
     prodName: {
         fontFamily: "arial",
-        fontSize: 21,
+        fontSize: 18,
     },
     prodPrice: {
 

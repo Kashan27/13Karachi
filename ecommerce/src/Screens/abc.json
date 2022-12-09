@@ -1,0 +1,46 @@
+{
+    "cartItems": [
+        {
+            "_id": "6360f951a64d3c3bd1bc5874",
+            "cartQuantity": 3,
+            "category": "abcd",
+            "hotelname": "seller",
+            "imageURL": "https://www.cameralabs.com/wp-content/uploads/2017/11/best-mirrorless-image-400x300.jpg",
+            "prodarea": "North Karachi",
+            "prodmarketname": "abcd",
+            "productColor": "Small",
+            "productName": "flag",
+            "productPrice": 1233,
+            "productSize": "Small",
+            "productTitle": "abcdefg",
+            "productWeight": 12,
+            "qty": 3,
+            "userEmail": "Ahmed2@gmail.com"
+        },
+        {
+            "_id": "6360f951a64d3c3bd1bc5874",
+            "cartQuantity": 1,
+            "category": "abcd",
+            "hotelname": "seller",
+            "imageURL": "https://www.cameralabs.com/wp-content/uploads/2017/11/best-mirrorless-image-400x300.jpg",
+            "prodarea": "North Karachi",
+            "prodmarketname": "abcd",
+            "productColor": "Large",
+            "productName": "flag",
+            "productPrice": 1233,
+            "productSize": "Large",
+            "productTitle": "abcdefg",
+            "productWeight": 12,
+            "qty": 1,
+            "userEmail": "Ahmed2@gmail.com"
+        }
+    ],
+    "deliveryChargesOne": 100,
+    "deliveryChargesTwo": 0,
+    "hotelDate": "12/9/2022, 7:06:14 PM",
+    "orderCity": "Karachi",
+    "orderContact": "0342",
+    "orderState": "Sindh",
+    "paymentstatus": "Pending",
+    "shippingOne": "jaldkjfalsdd",
+    "shippingTwo": "jfjaldf", "totalBillAmount": 4932, "totalNetAmount": 4932, "userEmail": "abc"}

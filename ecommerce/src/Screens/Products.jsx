@@ -10,6 +10,7 @@ import { Button } from 'react-native-paper';
 import { Chip } from 'react-native-paper';
 import { TouchableWithoutFeedback } from 'react-native';
 import { Autocomplete, AutocompleteItem, Icon } from '@ui-kitten/components';
+// import { styles } from 'react-native-image-slider-banner/src/style';
 
 
 const Products = ({ route, navigation }) => {
@@ -34,16 +35,20 @@ const Products = ({ route, navigation }) => {
     
     
     
-    const handleUpdateShop = () => {
-        setCurrentShop(shop)
-        let filterData = allProd.filter(val => val.hotelname === shop)
+    const handleUpdateShop = (cShop) => {
+        let filterData = allProd.filter(val => val.hotelname === cShop)
+        console.log(cShop)
+        console.log(filterData, "filterData")
         setP(filterData)
+        setCurrentShop(cShop)
+        setValue('');
+        // setData(categories);
 
 
     }
 
     const handleSetCategories = () => {
-        axios.get(`http://${ip}:9000/api/allgetcategory`)
+        axios.get(`https://${ip}/api/allgetcategory`)
         .then(res => {
             // console.log(res.data[0].categoryName,"categoories")
             setCategories(res.data)
@@ -56,11 +61,12 @@ const Products = ({ route, navigation }) => {
     }
 
     const handleFilterByCategory = () => {
-            console.log(value, "value")
-            console.log(value, "value")
-            let filterData = allProd ? allProd.filter(val => val.category === value && val.hotelname === shop) : []
+            let filterData = allProd ? allProd.filter(val => 
+                (value ? val.category === value : true )
+                && 
+                val.hotelname === currentShop) : []
             setP(filterData)
-            console.log(filterData , "filterData")
+            // console.log(filterData , "filterData")
             
     }
 
@@ -69,7 +75,7 @@ const Products = ({ route, navigation }) => {
 
     const onSelect = (index) => {
         setValue(data[index].categoryName);
-        console.log(data[index].categoryName)
+        // console.log(data[index].categoryName)
     };
 
     const onChangeText = (query) => {
@@ -80,7 +86,7 @@ const Products = ({ route, navigation }) => {
     const clearInput = () => {
         setValue('');
         setData(categories);
-        handleUpdateShop()
+        // handleUpdateShop()
     };
 
     const renderOption = (item, index) => (
@@ -92,16 +98,17 @@ const Products = ({ route, navigation }) => {
         // <Text>{item.title}</Text>
     );
 
+
+
+
+
+
     const renderCloseIcon = (props) => (
         <TouchableWithoutFeedback onPress={clearInput}>
             {/* <Icon {...props} name='close' /> */}
             <Text>Clear Filter</Text>
         </TouchableWithoutFeedback>
     );
-
-
-
-
 
     useEffect(() => {
         getProducts()
@@ -113,13 +120,13 @@ const Products = ({ route, navigation }) => {
 
     
     useEffect(() => {
-        console.log(p)
+        // console.log(p)
         handleFilterByCategory()
     }, [value]);
 
     const getShops = (shop) => {
 
-        axios.get(`http://${ip}:9000/api/allsignup`)
+        axios.get(`https://${ip}/api/allsignup`)
             .then(res => {
                 let data = res.data
                 let filterShops = data.filter(val => val.marketname === marketName)
@@ -133,7 +140,7 @@ const Products = ({ route, navigation }) => {
     }
 
     const getProducts = () => {
-        axios.get(`http://${ip}:9000/api/allpostdata`)
+        axios.get(`https://${ip}/api/allpostdata`)
             .then(res => {
                 let data = res.data
                 let filterData = data.filter(val => val.hotelname === currentShop)
@@ -150,64 +157,7 @@ const Products = ({ route, navigation }) => {
 
 
 
-    const products = [
-        {
-            image: "https://th.bing.com/th/id/R.bbe108e338d81f7e8c2388c3816ea646?rik=vuI08%2fKOk%2babUw&pid=ImgRaw&r=0",
-            name: "Ladies Purse",
-            price: '4000'
-        },
-        {
-            image: "https://th.bing.com/th/id/R.bbe108e338d81f7e8c2388c3816ea646?rik=vuI08%2fKOk%2babUw&pid=ImgRaw&r=0",
-            name: "Ladies Purse",
-            price: '4000'
-        },
-        {
-            image: "https://th.bing.com/th/id/R.bbe108e338d81f7e8c2388c3816ea646?rik=vuI08%2fKOk%2babUw&pid=ImgRaw&r=0",
-            name: "Ladies Purse",
-            price: '4000'
-        },
-        {
-            image: "https://th.bing.com/th/id/R.bbe108e338d81f7e8c2388c3816ea646?rik=vuI08%2fKOk%2babUw&pid=ImgRaw&r=0",
-            name: "Ladies Purse",
-            price: '4000'
-        },
-        {
-            image: "https://th.bing.com/th/id/R.bbe108e338d81f7e8c2388c3816ea646?rik=vuI08%2fKOk%2babUw&pid=ImgRaw&r=0",
-            name: "Ladies Purse",
-            price: '4000'
-        },
-        {
-            image: "https://th.bing.com/th/id/R.bbe108e338d81f7e8c2388c3816ea646?rik=vuI08%2fKOk%2babUw&pid=ImgRaw&r=0",
-            name: "Ladies Purse",
-            price: '4000'
-        },
-        {
-            image: "https://th.bing.com/th/id/R.bbe108e338d81f7e8c2388c3816ea646?rik=vuI08%2fKOk%2babUw&pid=ImgRaw&r=0",
-            name: "Ladies Purse",
-            price: '4000'
-        },
-        {
-            image: "https://th.bing.com/th/id/R.bbe108e338d81f7e8c2388c3816ea646?rik=vuI08%2fKOk%2babUw&pid=ImgRaw&r=0",
-            name: "Ladies Purse",
-            price: '4000'
-        },
-        {
-            image: "https://th.bing.com/th/id/R.bbe108e338d81f7e8c2388c3816ea646?rik=vuI08%2fKOk%2babUw&pid=ImgRaw&r=0",
-            name: "Ladies Purse",
-            price: '4000'
-        },
-        {
-            image: "https://th.bing.com/th/id/R.bbe108e338d81f7e8c2388c3816ea646?rik=vuI08%2fKOk%2babUw&pid=ImgRaw&r=0",
-            name: "Ladies Purse",
-            price: '4000'
-        },
-        {
-            image: "https://th.bing.com/th/id/R.bbe108e338d81f7e8c2388c3816ea646?rik=vuI08%2fKOk%2babUw&pid=ImgRaw&r=0",
-            name: "Ladies Purse",
-            price: '4000'
-        },
 
-    ]
     const renderItem = (item) => {
         return (
             <ItemCard navigation={navigation} onPress={e => { console.log("itemcard") }} item={item} />
@@ -225,14 +175,13 @@ const Products = ({ route, navigation }) => {
             <Header navigation={navigation} width={"60%"} showMore={true} search={true} goback={e => { navigation.goBack() }} title="App" />
             <View style={{ width: "100%" }}>
 
-                <View style={{ display: "flex", alignItems: "center", width: "100%", height: 50, marginVertical: 10 }}>
-
+                <View style={styles.shopsList}>
+                    <Text style={styles.shopsHeader}>Shops</Text>
                     <FlatList
                         // onPress={e => { console.log(e.target) }}
-                        ListHeaderComponent={<Text style={{ fontSize: 20 }}>Shops</Text>}
+                        // ListHeaderComponent={<Text style={{ fontSize: 20 }}>Shops</Text>}
                         data={shopList}
                         renderItem={renderShopList}
-                        // numColumns={2}
                         showsVerticalScrollIndicator={false}
                         horizontal={true}
                     />
@@ -240,7 +189,7 @@ const Products = ({ route, navigation }) => {
                 </View>
 
                 <Autocomplete
-                    placeholder='Place your Text'
+                    placeholder='Filter Category'
                     value={value}
                     accessoryRight={renderCloseIcon}
                     onChangeText={onChangeText}
@@ -258,7 +207,7 @@ const Products = ({ route, navigation }) => {
                         <FlatList
                             data={p}
                             renderItem={renderItem}
-                            numColumns={2}
+                            numColumns={3}
                             showsVerticalScrollIndicator={false}
                         />
                         :
@@ -272,3 +221,24 @@ const Products = ({ route, navigation }) => {
 }
 
 export default Products
+
+// style={{ display: "flex", alignItems: "center", width: "100%", height: 50, marginVertical: 10 
+const styles = StyleSheet.create({
+    shopsList: {
+        display:"flex",
+        width:"100%",
+        height:60,
+        flexDirection:"row",
+        // backgroundColor:"red",
+        alignItems:"center",
+    
+        
+    },
+    shopsHeader:{
+        fontSize:20,
+        borderRightColor:"grey",
+        borderRightWidth:1,
+        borderStyle:"solid",
+        paddingRight:7
+    }
+})

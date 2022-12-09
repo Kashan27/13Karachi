@@ -46,7 +46,7 @@ const Markets = ({ navigation }) => {
 
 
   const getData = () => {
-    axios.get(`http://${ip}:9000/api/allgetarea`)
+    axios.get(`https://${ip}/api/allgetarea`)
       .then((res) => {
         // console.log(res.data,"res");
         let data = res.data
@@ -68,7 +68,7 @@ const Markets = ({ navigation }) => {
 
   const getMarket = () => {
 
-    axios.get(`http://${ip}:9000/api/getareaname/${value}`)
+    axios.get(`https://${ip}/api/getareaname/${value}`)
       .then((res) => {
         console.log(res.data, "markets");
         setMarkets(res.data)
