@@ -90,7 +90,9 @@ const CheckOut = ({ navigation, route }) => {
                     console.log(basicCheckboxState, "basicCheckboxState")
                     if (basicCheckboxState.checked) {
                         setLoading(true)
-                        axios.post(`https://${ip}/api/bookingpostdata`,{...obj})
+                        console.log(obj)
+                        // axios.post(`http://192.168.1.106:9000/api/bookingpostdata`,{...obj})
+                        axios.post(`http://${ip}/api/bookingpostdata`,{...obj})
                         .then((res)=>{
                             console.log(res.data,"rreess")
                             if(res.data.success){
@@ -100,6 +102,7 @@ const CheckOut = ({ navigation, route }) => {
                         })
                         .catch((err)=>{
                             setLoading(false)
+                            console.log(err.message)
                             alert("Please try again in few seconds")
                             // alert(err.message)
                         })

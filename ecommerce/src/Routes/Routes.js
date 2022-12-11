@@ -10,8 +10,6 @@ import Header from "../Components/Header/Header";
 import SingleProductScreen from "../Screens/SingleProductScreen";
 import CheckOut from "../Screens/CheckOut";
 import Shops from "../Screens/Shops";
-
-
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 

@@ -18,7 +18,7 @@ const Home = ({ navigation }) => {
 
     useEffect(() => {
         // console.log(Height, "Height")
-        axios.get(`https://${ip}/api/allpostdata`)
+        axios.get(`http://${ip}/api/allpostdata`)
             .then(res => {
                 let data = res.data
                 data = data.slice(-6)
@@ -62,7 +62,7 @@ const Home = ({ navigation }) => {
                 customSlide={({ index, item, style, width }) => (
                     // It's important to put style here because it's got offset inside
                     <View key={index} style={[style, styles.customSlide]}>
-                        <Image source={{ uri: item }} style={styles.customImage} />
+                        <Image source={{ uri: item.img }} style={styles.customImage} />
                     </View>
                 )}
 

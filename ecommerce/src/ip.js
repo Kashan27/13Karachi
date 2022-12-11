@@ -1,4 +1,5 @@
-let ip = "13k.up.railway.app"
+// let ip = "13k.up.railway.app"
+let ip = "192.168.1.106:9000"
 
 
 export default ip

@@ -1,4 +1,4 @@
-import { FlatList, Image, StyleSheet, Text, View } from 'react-native'
+import { FlatList, Image, StyleSheet, Text, View , TouchableOpacity} from 'react-native'
 import Header from '../Components/Header/Header'
 import React, { useEffect } from 'react'
 import { Picker } from '@react-native-picker/picker';
@@ -7,70 +7,83 @@ import { Button, Snackbar } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { parse } from '@babel/core';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import MultiProdImages from '../Components/MultiProductImages/MultiProdImages';
+import axios from 'axios';
+import ip from '../ip';
 
 const SingleProductScreen = ({ route, navigation }) => {
-    
+
     const { item } = route.params
     let { productName, imageURL, productPrice, _id, multiProd } = item.item
+    let [imageList , setImageList] = useState([imageURL,
+        "https://cdn.edenrobe.com/media/amasty/amopttablet/catalog/product/images/Men/Men_Shirts/2022/22_M_MenShirts_EMTSI22-50254_1.webp",
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRr_Dn9cUvCICBFoE5zNkQU4LOnEfw0hFCmjA&usqp=CAU"
+    ])
+    let [image , setImage] = useState(imageURL)
     const [availableQty, setAvailableQty] = useState()
     let [itemQty, setItemQty] = useState(1)
     const [visible, setVisible] = useState(false);
     const onToggleSnackBar = () => setVisible(!visible);
     const onDismissSnackBar = () => setVisible(false);
     const [msg, setMsg] = useState()
-    const [itemSize, setItemSize] = useState(multiProd[0].productSize)
-    const [itemColor, setItemColor] = useState(multiProd[0].productColor)
-
+    const [sizeList , setSizeList] = useState([])
+    const [colorList , setColorList] = useState(["color"])
+    const [itemSize, setItemSize] = useState()
+    const [itemColor, setItemColor] = useState()
 
     // console.log(multiProd[0].productSize,"singleProductScreen")
     const handleAddToCart = async () => {
-
+        axios.get(`http://${ip}/api/getMultipleFiles`)
+            .then(response => {
+                console.log(response.data, "files")
+            })
+            .catch(error => console.log(error.message))
         const date = Date.now()
-        const itemObj = { ...item.item, itemSize, itemColor, qty: itemQty, date,availableQty }
-        if(itemQty){
+        const itemObj = { ...item.item, itemSize, itemColor, qty: itemQty, date, availableQty }
+        if (itemQty) {
 
             try {
                 const cart = await AsyncStorage.getItem("cart");
-            let parseCart = cart ? JSON.parse(cart) : []
-            console.log(parseCart, "parse cart")
-            if (parseCart[0]) {
-                try {
-                    // await AsyncStorage.setItem("cart", JSON.stringify(itemObj));
-                    let findProduct = parseCart.find(val => {
-                        return val._id === _id && val.itemSize === itemSize && val.itemColor === itemColor
-                    })
-                    if (!findProduct) {
-                        // console.log("new")
-                        // console.log(itemObj, "itemObj", "41")
-                        parseCart.push(itemObj)
-                        // console.log( parseCart , "push")
-                        AsyncStorage.setItem("cart", JSON.stringify(parseCart));
-                        setMsg("item added to cart")
-                        setVisible(true)
-                    } else {
-                        // console.log("already")
-                        setMsg("you already add this item to cart")
-                        setVisible(true)
+                let parseCart = cart ? JSON.parse(cart) : []
+                console.log(parseCart, "parse cart")
+                if (parseCart[0]) {
+                    try {
+                        // await AsyncStorage.setItem("cart", JSON.stringify(itemObj));
+                        let findProduct = parseCart.find(val => {
+                            return val._id === _id && val.itemSize === itemSize && val.itemColor === itemColor
+                        })
+                        if (!findProduct) {
+                            // console.log("new")
+                            // console.log(itemObj, "itemObj", "41")
+                            parseCart.push(itemObj)
+                            // console.log( parseCart , "push")
+                            AsyncStorage.setItem("cart", JSON.stringify(parseCart));
+                            setMsg("item added to cart")
+                            setVisible(true)
+                        } else {
+                            // console.log("already")
+                            setMsg("you already add this item to cart")
+                            setVisible(true)
+
+                        }
+                        // await AsyncStorage.removeItem("cart")
 
                     }
-                    // await AsyncStorage.removeItem("cart")
-                    
+                    catch (error) {
+                        console.log(error, "error");
+                    }
+                } else {
+                    console.log("else", parseCart)
+                    let obj = [{ ...itemObj }]
+                    await AsyncStorage.setItem("cart", JSON.stringify(obj));
+
                 }
-                catch (error) {
-                    console.log(error, "error");
-                }
-            } else {
-                console.log("else", parseCart)
-                let obj = [{ ...itemObj }]
-                await AsyncStorage.setItem("cart", JSON.stringify(obj));
-                
+            } catch (error) {
+                console.log(error);
             }
-        } catch (error) {
-            console.log(error);
+        } else {
+            alert("please add qty")
         }
-    }else{
-        alert("please add qty")
-    }
 
 
 
@@ -83,10 +96,10 @@ const SingleProductScreen = ({ route, navigation }) => {
             case "add":
                 console.log("add")
                 // console.log(availableQty)
-                if(itemQty < availableQty) {
+                if (itemQty < availableQty) {
                     setItemQty(itemQty + 1)
-                }else{
-                    setMsg(` ${availableQty ? availableQty : "No" } items in stock`)
+                } else {
+                    setMsg(` ${availableQty ? availableQty : "No"} items in stock`)
                     setVisible(true)
                     // alert(`only ${availableQty} items are available`)
                 }
@@ -105,23 +118,27 @@ const SingleProductScreen = ({ route, navigation }) => {
             item.productSize === itemSize
             &&
             item.productColor === itemColor)
-            let qty = filter[0] ? filter[0].otherQty : 0
-            // console.log(qty + " " + "qtyyFunction")
-            setAvailableQty(qty)
+        let qty = filter[0] ? filter[0].otherQty : 0
+        // console.log(qty + " " + "qtyyFunction")
+        setAvailableQty(qty)
     }
 
     const handleUpdateDetails = (property, value) => {
         switch (property) {
             case "size":
+                let color = multiProd.filter(data => data.productSize === value)
                 setItemSize(value)
+                setColorList(color)
                 break;
-                case "color":
-                    setItemColor(value)
-                    break;
-                }
-                setItemQty(0)
+            case "color":
+                setItemColor(value)
+                break;
+        }
+        setItemQty(0)
     }
 
+
+    
 
 
 
@@ -132,7 +149,30 @@ const SingleProductScreen = ({ route, navigation }) => {
 
     useEffect(() => {
         handleAvailableQty()
+        let uniqueArr = [... new Set(multiProd.map(data => data.productSize))]
+        setSizeList(["size" , ...uniqueArr])
+        console.log(uniqueArr,"uniqueArr")
+
     }, [itemSize, itemColor])
+
+
+
+    /////////////////////////////////    listImage ( Rnder ) //////////////////////////////////
+
+    let renderItem = ({item}) => {
+        // console.log(item)
+        return (
+            <TouchableOpacity
+            onPress={e=>{setImage(item)}}
+            style={styles.imageBorder}>
+
+            <Image
+                style={styles.listImage}
+                resizeMode='contain'
+                source={{ uri: item }} />
+                </TouchableOpacity>
+        )
+    }
 
 
 
@@ -140,12 +180,24 @@ const SingleProductScreen = ({ route, navigation }) => {
     return (
         <View>
             <Header navigation={navigation} title={true} goback={e => { navigation.goBack() }} showMore={true} width={"70%"} />
-            {/* <Text>SingleProductScreen</Text> */}
 
             <View style={styles.container}>
                 <Image
                     resizeMode='contain'
-                    style={styles.image} source={{ uri: imageURL }} />
+                    style={styles.image} source={{ uri: image }} />
+                <View>
+                </View>
+                <View style={styles.imageListContainer}>
+                    {/* <Image
+                        style={{display:"flex" , height: 40, width: 40 }}
+                        resizeMode='contain'
+                        source={{ uri: imageURL }} /> */}
+                    <FlatList
+                        data={imageList}
+                        renderItem={renderItem}
+                        horizontal={true}
+                    />
+                </View>
 
                 <Text style={styles.name}>{productName ? productName : "Name Not Found"}</Text>
                 <Text style={styles.discrip}>Knor Chiken a quick brown fox jumps over the lazy dog Noodles</Text>
@@ -164,10 +216,11 @@ const SingleProductScreen = ({ route, navigation }) => {
                             onValueChange={(itemValue, itemIndex) => {
                                 handleUpdateDetails('size', itemValue)
                             }
-                            }>
-                            {multiProd.map((item, index) => {
+                        }>
+                            {/* <Picker.Item label="Size" value="Size" /> */}
+                            {sizeList.map((item, index) => {
                                 return (
-                                    <Picker.Item label={item.productSize} value={item.productSize} />
+                                    <Picker.Item label={item} value={item} />
                                 )
                             })
                             }
@@ -191,10 +244,11 @@ const SingleProductScreen = ({ route, navigation }) => {
                                 handleUpdateDetails('color', itemValue)
                             }
                             }>
-                            {multiProd.map((item, index) => {
+                            {colorList.map((item, index) => {
                                 let color = item.productColor
+                                console.log(color,colorList,"coloritem255")
                                 return (
-                                    <Picker.Item style={{ backgroundColor: { color } }} label={color} value={color} />
+                                    <Picker.Item  label={color} value={color} />
                                 )
                             })
                             }
@@ -315,8 +369,27 @@ const styles = StyleSheet.create({
     },
     image: {
         width: "100%",
-        height: "50%",
+        height: "40%",
         borderRadius: 50
+    },
+    imageListContainer: {
+        // backgroundColor:"blue",
+        width: "100%",
+        // height: 45,
+        paddingHorizontal: 10
+    },
+    listImage:{
+        height:40,
+        width:45,
+    },  
+    imageBorder:{
+        borderRadius:10,
+        borderWidth:1,
+        borderColor:"purple",
+        borderStyle:"solid",
+        padding:2,
+        marginLeft:2
+
     },
     name: {
         fontSize: 21,

@@ -3,7 +3,9 @@ import { Text, Image, StyleSheet, View, TouchableOpacity } from 'react-native';
 import { Appbar } from 'react-native-paper';
 import { Button, Menu, Divider, Provider } from 'react-native-paper';
 import OptionsMenu from "react-native-menu-platform";
-
+import { useState } from 'react';
+import { useEffect } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 
@@ -19,13 +21,30 @@ import OptionsMenu from "react-native-menu-platform";
 
 const Header = ({ navigation, title, goback, search, showMore, width }) => {
 
+  let [user , setUser] = useState("")
   const home = () => {
     navigation.navigate("home")
   }
   const _handleSearch = () => console.log('Searching');
-
+  
   const login = ( ) =>{navigation.navigate("login")}
   const signup = ( ) =>{navigation.navigate("signup")}
+
+
+
+console.log(user)
+
+  
+  useEffect(() => {
+    let getUser = async()=>{
+    let user = await AsyncStorage.getItem("user")
+    console.log(user,"effect")
+    if(user){
+      setUser(user)
+    }
+    }
+    getUser()
+  },[])
 
 
 
@@ -64,8 +83,11 @@ const Header = ({ navigation, title, goback, search, showMore, width }) => {
           customButton={<Appbar.Action icon="dots-vertical" />}
           buttonStyle={{ width: 32, height: 8, margin: 7.5, resizeMode: "contain" }}
           destructiveIndex={1}
-          options={["Login", "signup" ,"cancel"]}
-          actions={[login , ()=>{navigation.navigate("signup")}]}
+          options={[
+            user ? "Logout" : "Login"
+             ,"signup" 
+             ,"cancel"]}
+          actions={[login , signup]}
         />
         
         :
