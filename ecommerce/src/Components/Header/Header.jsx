@@ -21,30 +21,36 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Header = ({ navigation, title, goback, search, showMore, width }) => {
 
-  let [user , setUser] = useState("")
+  let [currentUser, setUser] = useState("")
   const home = () => {
     navigation.navigate("home")
   }
   const _handleSearch = () => console.log('Searching');
-  
-  const login = ( ) =>{navigation.navigate("login")}
-  const signup = ( ) =>{navigation.navigate("signup")}
+
+  const login = () => { navigation.navigate("login") }
+  const signup = () => { navigation.navigate("signup") }
+  const logout = async () => {
+    await AsyncStorage.removeItem("user")
+    setUser(false)
+  }
 
 
 
-console.log(user)
 
-  
+
+
   useEffect(() => {
-    let getUser = async()=>{
-    let user = await AsyncStorage.getItem("user")
-    console.log(user,"effect")
-    if(user){
-      setUser(user)
-    }
+    let getUser = async () => {
+      let userData = await AsyncStorage.getItem("user")
+      console.log(userData, "effect")
+      if (userData) {
+        setUser(userData)
+      } else {
+        setUser("")
+      }
     }
     getUser()
-  },[])
+  }, [])
 
 
 
@@ -64,7 +70,7 @@ console.log(user)
       {/* header title */}
       {title
         ?
-        <TouchableOpacity onPress={home} style={{ width: width }}><Image  style={styles.logo} source={require("../../icons/logo.png")} /></TouchableOpacity>
+        <TouchableOpacity onPress={home} style={{ width: width }}><Image style={styles.logo} source={require("../../icons/logo.png")} /></TouchableOpacity>
         :
         null}
 
@@ -75,23 +81,25 @@ console.log(user)
         :
         null}
 
-
       {/* show more  */}
       {showMore
         ?
         <OptionsMenu
-          customButton={<Appbar.Action icon="dots-vertical" />}
-          buttonStyle={{ width: 32, height: 8, margin: 7.5, resizeMode: "contain" }}
-          destructiveIndex={1}
-          options={[
-            user ? "Logout" : "Login"
-             ,"signup" 
-             ,"cancel"]}
-          actions={[login , signup]}
-        />
-        
-        :
-        null}
+        customButton={<Appbar.Action icon="dots-vertical" />}
+        buttonStyle={{ width: 32, height: 8, margin: 7.5, resizeMode: "contain" }}
+        destructiveIndex={1}
+        options={[
+          currentUser ? "Logout" : "Login"
+          , "signup"
+          , "cancel"]}
+          actions={[
+            currentUser ? logout : login
+            , signup]}
+            />
+            
+            :
+            null}
+            {console.log(currentUser,"user,line84,header")}
 
 
     </Appbar.Header>

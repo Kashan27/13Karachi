@@ -42,10 +42,11 @@ export const Login = ({ navigation }) => {
         .then(async (response) => {
           try {
             await AsyncStorage.setItem("user", JSON.stringify(response.data))
+            navigation.navigate("home")
           } catch (err) {
             console.log(err)
           }
-          console.log(response.data);
+          // console.log(response.data);
           setLoading(false)
         })
         .catch(err => {
@@ -67,15 +68,15 @@ export const Login = ({ navigation }) => {
 
 
   useEffect(() => {
-    let getUser = async()=>{
-    let user = await AsyncStorage.getItem("user")
-    console.log(user,"effect")
-    if(user){
-      navigation.navigate("home")
-    }
+    let getUser = async () => {
+      let user = await AsyncStorage.getItem("user")
+      console.log(user, "effect")
+      if (user) {
+        navigation.navigate("home")
+      }
     }
     getUser()
-  },[])
+  }, [])
 
 
 

@@ -7,6 +7,7 @@ import { Button, Menu, Divider, Provider } from 'react-native-paper';
 import Slider from '../Components/Slider/Slider';
 import ip from '../ip';
 import ItemCard from '../Components/Card/Card';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 
@@ -15,7 +16,6 @@ import ItemCard from '../Components/Card/Card';
 const Height = Dimensions.get("screen").height;
 const Home = ({ navigation }) => {
     let [products, setProducts] = useState([])
-
     useEffect(() => {
         // console.log(Height, "Height")
         axios.get(`http://${ip}/api/allpostdata`)
@@ -32,9 +32,9 @@ const Home = ({ navigation }) => {
 
 
     const sliderImages = [
-        { img: "://th.bing.com/th/id/OIP.xEbcztsACaZL-Aw5DeLuZwHaDZ?w=285&h=160&c=7&r=0&o=5&pid=1.7" },
-        { img: "://th.bing.com/th/id/R.2db5a3f2be76363303d7c101364da461?rik=zfZFg04CcoCzXQ&pid=ImgRaw&r=0" },
-        { img: '://th.bing.com/th/id/OIP.rjVa-ZNOK3w_PQ5x6UyCxwHaFL?pid=ImgDet&rs=1' }
+        { img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5a5uCP-n4teeW2SApcIqUrcQApev8ZVCJkA&usqp=CAU' },
+        { img: "https://neilpatel.com/wp-content/uploads/2017/12/ecommerce-seo-tips.jpg" },
+        { img: "http://bloomidea.com/sites/default/files/styles/og_image/public/blog/Tipos%20de%20come%CC%81rcio%20electro%CC%81nico_0.png?itok=jC9MlQZq" },
     ]
     const [visible, setVisible] = React.useState(false);
     const openMenu = () => setVisible(true);
@@ -58,13 +58,12 @@ const Home = ({ navigation }) => {
             {/* <Text style={{ textAlign: "center" }} onPress={e => { navigation.navigate("login") }} >Login</Text> */}
 
             <Slider style={{ zIndex: -1 }} images={sliderImages}
-
-                customSlide={({ index, item, style, width }) => (
-                    // It's important to put style here because it's got offset inside
-                    <View key={index} style={[style, styles.customSlide]}>
-                        <Image source={{ uri: item.img }} style={styles.customImage} />
-                    </View>
-                )}
+                // customSlide={({ index, item, style, width }) => (
+                //     // It's important to put style here because it's got offset inside
+                //     <View key={index} style={[style, styles.customSlide]}>
+                //         <Image source={{ uri: item.img }} style={styles.customImage} />
+                //     </View>
+                // )}
 
 
             />

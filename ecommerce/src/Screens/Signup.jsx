@@ -1,6 +1,6 @@
 
 import React from 'react'
-import { View, Text } from 'react-native';
+import { View, Text, Image ,ScrollView} from 'react-native';
 import {
   StyleSheet,
   ImageBackground,
@@ -10,32 +10,31 @@ import { TextInput, Button, FlatList } from 'react-native-paper';
 import axios from 'axios';
 import { useState } from 'react';
 import Header from '../Components/Header/Header';
+import banner from '../images/login/banner.jpeg';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 
-
-
-
-
-
- const Signup = ({navigation}) => {
+const Signup = ({ navigation }) => {
 
   let [loading, setLoading] = useState(false)
   let [input, setInput] = useState({ name: "", email: "", address: "", contact: "+92", password: "", confirmPassword: "" })
 
 
 
-  const updateInput = (val, property) => {
+  const updateInput = (property , val) => {
 
     setInput({ ...input, [property]: val })
 
-    console.log(input)
+    console.log(input,"input")
 
   }
 
   const handleSignup = async (event) => {
+   
     let { name, email, address, contact, password, confirmPassword } = input
-    let userData = {name, email, address, contact, password , role:"User"}
+    let userData = { name, email, address, contact, password, role: "User" }
     if (name, email, address, contact, password, confirmPassword) {
       if (!input.email.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)) {
         alert("Email is not in correct format")
@@ -46,13 +45,27 @@ import Header from '../Components/Header/Header';
           if (password !== confirmPassword) {
             alert("passwords are not same")
           } else {
-            console.log(axios)
-            axios.post("http://192.168.126.82:9000/api/signup", {userData})
-              .then((response) => {
+            setLoading(true)
+            axios.post("http://192.168.1.106:9000/api/signup", { ...userData })
+              .then(async(response) => {
                 console.log(response.data);
+                setLoading(false)
+                try{
+                  let user = await AsyncStorage.getItem("user")
+                  if(response.data.success){
+                    if(user){
+                      navigation.navigate("home")
+                    }else{
+                      navigation.navigate("login")
+                    }
+                  }
+                }catch(err){
+                  console.log(err.message)
+                }
               })
               .catch(err => {
-                console.log(err.message)
+                setLoading(false)
+                console.log(err)
               })
           }
         }
@@ -64,99 +77,186 @@ import Header from '../Components/Header/Header';
   }
 
 
-  const image = { src: "../images/background/background.jpg" };
-  return (<>
-          <Header navigation={navigation} showMore={true} search={true} goback={e=>{navigation.goBack()}} title="App" />
-    <ImageBackground style={styles.container} >
+
+  return (
+    <View
+      style={{ backgroundColor: "white" }}>
+      <Header navigation={navigation} goback={e => { navigation.goBack() }} title="App" />
+      <Image
+        resizeMode='stretch'
+        style={styles.banner}
+        source={banner}
+      />
+
+
+
+      <Text style={styles.heading}>Signup</Text>
       <View style={styles.loginContainer} >
-        <Text style={styles.heading}>Signup</Text>
         <View style={styles.inputContainer}>
 
-          <TextInput
-            onChangeText={e => { updateInput(e, "name") }}
-            style={styles.input}
-            mode="Flat"
-            placeholder='Name'
-            textColor='white'
-          ></TextInput>
-          <TextInput
-            onChangeText={e => { updateInput(e, "email") }}
-            style={styles.input}
-            mode="Flat"
-            placeholder='Email'
-          ></TextInput>
-          <TextInput
-            onChangeText={e => { updateInput(e, "address") }}
-            style={styles.input}
-            mode="Flat"
-            placeholder='address'
+        <ScrollView >
+
+
+          {/* Inputs           ------------------------------------------------------- */}
+
+          <View style={{ display: "flex", justifyContent: "space-between", flexDirection: "row" }}>
+            <Ionicons name='person-outline' size={28} style={{ marginTop: 10 }} />
+            <TextInput
+              // icon="account-outline"
+              onChangeText={e => { updateInput("name", e) }}
+              style={styles.input}
+              mode="Flat"
+              placeholder='User Name'
+            // textColor='white'
             ></TextInput>
-          <TextInput
-            onChangeText={e => { updateInput(e, "contact") }}
-            style={styles.input}
-            mode="Flat"
-            placeholder='contact'
-            keyboardType="numeric"
-          ></TextInput>
-          <TextInput
-            onChangeText={e => { updateInput(e, "password") }}
-            style={styles.input}
-            mode="Flat"
-            secureTextEntry={true}
-            placeholder='Password'
-            ></TextInput>
-          <TextInput
-            onChangeText={e => { updateInput(e, "confirmPassword") }}
-            style={styles.input}
-            mode="Flat"
-            secureTextEntry={true}
-            placeholder='Confirm Password'
-          ></TextInput>
-          <View style={{ padding: 30 }}>
-            <Button loading={loading} onPress={e => { handleSignup() }} mode="contained" style={styles.button}><Text style={{ fontSize: 20 }}>Signup</Text></Button>
-            <Text onPress={e=>{navigation.navigate("login")}} style={styles.text}>Already Registered ?</Text>
           </View>
+
+          <View style={{ display: "flex", justifyContent: "space-between", flexDirection: "row" }}>
+            <Ionicons name='mail-outline' size={28} style={{ marginTop: 10 }} />
+            <TextInput
+              // icon="account-outline"
+              onChangeText={e => { updateInput("email", e) }}
+              style={styles.input}
+              mode="Flat"
+              placeholder='Email'
+            // textColor='white'
+            ></TextInput>
+          </View>
+
+          <View style={{ display: "flex", justifyContent: "space-between", flexDirection: "row" }}>
+            <Ionicons name='location-outline' size={28} style={{ marginTop: 10 }} />
+            <TextInput
+              onChangeText={e => { updateInput("address", e) }}
+              style={styles.input}
+              mode="Flat"
+              placeholder='Address'
+            ></TextInput>
+          </View>
+
+          <View style={{ display: "flex", justifyContent: "space-between", flexDirection: "row" }}>
+            <Ionicons name='call-outline' size={28} style={{ marginTop: 10 }} />
+            <TextInput
+              onChangeText={e => { updateInput("contact", e) }}
+              style={styles.input}
+              mode="Flat"
+              keyboardType='numeric'
+              placeholder='Phone'
+            ></TextInput>
+          </View>
+
+          <View style={{ display: "flex", justifyContent: "space-between", flexDirection: "row" }}>
+            <Ionicons name='key-outline' size={28} style={{ marginTop: 10 }} />
+            <TextInput
+              onChangeText={e => { updateInput("password", e) }}
+              style={styles.input}
+              mode="Flat"
+              secureTextEntry={true}
+              placeholder='Password'
+            ></TextInput>
+          </View>
+
+          <View style={{ display: "flex", justifyContent: "space-between", flexDirection: "row" }}>
+            <Ionicons name='key-outline' size={28} style={{ marginTop: 10 }} />
+            <TextInput
+              onChangeText={e => { updateInput("confirmPassword", e) }}
+              style={styles.input}
+              mode="Flat"
+              secureTextEntry={true}
+              placeholder='Password'
+              ></TextInput>
+          </View>
+
+        </ScrollView>
+              </View>
+
+
+        {/* SignupButton */}
+        <View style={styles.loginButton}>
+          <Button
+            onPress={e => { handleSignup() }}
+            mode="contained"
+            style={styles.button}
+            loading={loading}
+          >Register</Button>
         </View>
+
+
+
+        {/* already Register */}
+        <Text style={styles.register}>
+          Already Register ?
+          <Text onPress={e => { navigation.navigate("login") }} style={{ color: "#049f99" }}>
+            Login
+          </Text>
+        </Text>
       </View>
 
-    </ImageBackground>
-</>
+
+    </View>
   )
 }
 
 
-
-
 const styles = StyleSheet.create({
   button: {
-    width: 150,
+    width: "75%",
+    backgroundColor: "#049f99",
+    borderRadius: 5,
   },
+  banner: {
+    width: "100%",
+    height: 250,
 
+  },
   container: {
+    backgroundColor: "#ffffff",
     height: "100%",
     width: "100%",
     display: "flex",
     justifyContent: "center",
     alignItems: "center"
   },
+  register: {
+    fontSize: 15,
+    fontWeight: "bold",
+    padding: 10,
+    marginLeft: 20,
+    marginTop: 10,
 
+  },
+  forgotPassword: {
+    fontSize: 18,
+    fontWeight: "bold",
+    padding: 10,
+    marginLeft: 20,
+    marginTop: 10,
+    color: "#049f99"
+  },
   loginContainer: {
-    height: 650,
-    width: "80%",
-    // backgroundColor:"grey",
+    height: 550,
+    width: "100%",
+    // displ
+    backgroundColor: "white",
     // opacity:0.3,
-    borderRadius: 20,
-    backgroundColor: "rgba(0, 0, 0, 0.3)",
-    marginTop: -200,
+    // borderRadius: 20,
+    // backgroundColor: "rgba(0, 0, 0, 0.3)",
+    // marginTop: -100,
+  },
+  loginButton: {
+    width: "100%",
+    display: "flex",
+    alignItems: "center",
+    marginTop: 20,
+
   },
   heading: {
-    fontSize: 60,
-    color: "white",
-    textAlign: "center",
-    padding: 20
+    fontSize: 40,
+    // color: "white",
+    // textAlign: "center",
+    paddingHorizontal: 20
   },
   input: {
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    backgroundColor: "white",
     width: "80%",
     fontSize: 20,
 
@@ -165,11 +265,10 @@ const styles = StyleSheet.create({
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    height: "35%",
+    height: "45%",
     marginTop: 20,
   },
   text: {
-    color: "white",
     fontSize: 20,
     textAlign: "center",
     padding: 30,
