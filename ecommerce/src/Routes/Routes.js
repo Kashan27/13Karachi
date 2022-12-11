@@ -67,6 +67,7 @@ const TabNav = () => {
             <Tab.Screen name="home" component={Home} />
             <Tab.Screen name="Area" component={Markets} />
             <Tab.Screen name="cart" component={Cart} />
+            <Tab.Screen name="successorder" component={SuccessOrder} />
             {/* <Tab.Screen name="signup" component={Signup} /> */}
             {/* <Tab.Screen name="login" component={Login} /> */}
             {/* <Tab.Screen name="products" component={Products} />  */}

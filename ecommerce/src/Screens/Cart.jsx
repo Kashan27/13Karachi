@@ -1,11 +1,11 @@
-import { StyleSheet, Text, View, FlatList , Dimensions } from 'react-native'
+import { StyleSheet, Text, View, FlatList, Dimensions , ScrollView } from 'react-native'
 import React from 'react'
 import Header from '../Components/Header/Header';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useState } from 'react';
 import CartCard from '../Components/Cart_Card/CartCard';
 import { useWindowDimensions } from 'react-native';
-import { Button , Paragraph, Dialog, Portal, Provider ,Snackbar } from 'react-native-paper';
+import { Button, Paragraph, Dialog, Portal, Provider, Snackbar } from 'react-native-paper';
 
 
 
@@ -24,10 +24,10 @@ const Cart = ({ navigation }) => {
   const [msg, setMsg] = useState()
 
 
-let handleSnackBar = (message , visible) => {
-  setMsg(message);
-  setVisible(visible)
-}
+  let handleSnackBar = (message, visible) => {
+    setMsg(message);
+    setVisible(visible)
+  }
 
   //        useEffect------
   useEffect(() => {
@@ -59,10 +59,10 @@ let handleSnackBar = (message , visible) => {
     console.log(index)
     return (
       <CartCard
-       handleOrderQty={handleOrderQty}
-       handleSnack={handleSnackBar}
-       removeItem={handleRemoveItem}
-       index={index} item={item} />
+        handleOrderQty={handleOrderQty}
+        handleSnack={handleSnackBar}
+        removeItem={handleRemoveItem}
+        index={index} item={item} />
     )
   }
 
@@ -90,81 +90,84 @@ let handleSnackBar = (message , visible) => {
   }
 
 
-const handleOrderQty = async (itemQty , index) => {
+  const handleOrderQty = async (itemQty, index) => {
     console.log(itemQty)
     cart[index].qty = itemQty
     setCart(cart)
     await AsyncStorage.setItem("cart", JSON.stringify(cart))
-}
+  }
 
 
-// console.log(Math.round(height))
+  // console.log(Math.round(height))
 
   return (
-<>
-    <View style={{height:803}}>
-      <Header width={"60%"} navigation={navigation} showMore={true} search={true} goback={e => { navigation.goBack() }} title="App" />
+    <>
+      <View style={{ height: 803 }}>
+        <Header width={"60%"} navigation={navigation} showMore={true} search={true} goback={e => { navigation.goBack() }} title="App" />
 
-      <View>
-        {/* Cart Items */}
-        <FlatList
-          data={cart}
-          renderItem={renderItem}
-        />
+        <View>
+          {/* Cart Items */}
+          <View style={{height:"55%" , elevation:1}}>
+          <FlatList
+            data={cart}
+            renderItem={renderItem}
+            />
+            </View>
 
-        {/* Order Summary */}
-        <View style={{ display: "flex", alignItems: "center" }} >
-          <View style={styles.summaryContainer}>
-            <Text style={styles.summaryHeading}>Order Summary</Text>
-            <View style={styles.summaryDetailsContainer}>
-              <View style={styles.summaryTextContainer}>
-                <Text style={styles.summaryText}>SubTotal</Text>
-                <Text style={styles.summaryText}>PKR {subTotal}</Text>
+          {/* Order Summary */}
+
+          <View style={{ display: "flex", alignItems: "center"}} >
+              <View style={styles.summaryContainer}>
+                <Text style={styles.summaryHeading}>Order Summary</Text>
+                <View style={styles.summaryDetailsContainer}>
+                  <View style={styles.summaryTextContainer}>
+                    <Text style={styles.summaryText}>SubTotal</Text>
+                    <Text style={styles.summaryText}>PKR {subTotal}</Text>
+                  </View>
+                  <View style={styles.seperator}></View>
+                  <View style={styles.summaryTextContainer}>
+                    <Text style={styles.summaryText}>Delivery Charges</Text>
+                    <Text style={styles.summaryText}>PKR 100</Text>
+                  </View>
+                </View>
               </View>
-              <View style={styles.seperator}></View>
-              <View style={styles.summaryTextContainer}>
-                <Text style={styles.summaryText}>Delivery Charges</Text>
-                <Text style={styles.summaryText}>PKR 100</Text>
-              </View>
+          </View>
+
+
+          {/* Procedd to checkOut */}
+
+          <View style={{ display: 'flex', alignItems: "center" }}>
+            <View style={styles.checkOutContainer} >
+              <Button
+                onPress={e => { navigation.navigate("checkout", { subTotal }) }}
+                mode="contained"
+              // width="45%"
+              >Proceed to Checkout</Button>
+              <Text style={styles.totalAmount}>PKR {subTotal + 100}</Text>
             </View>
           </View>
+
+
+
+
         </View>
-
-
-        {/* Procedd to checkOut */}
-
-        <View style={{ display: 'flex', alignItems: "center" }}>
-          <View style={styles.checkOutContainer} >
-            <Button
-            onPress={e=>{navigation.navigate("checkout",{subTotal})}}
-              mode="contained"
-            // width="45%"
-            >Proceed to Checkout</Button>
-            <Text style={styles.totalAmount}>PKR {subTotal + 100}</Text>
-          </View>
-        </View>
-
-
-
-
       </View>
-    </View>
-    {/* Snack bar */}
-        <Snackbar
-          visible={visible}
-          onDismiss={onDismissSnackBar}
-          action={{
-            label: 'OK',
-            onPress: () => {
-              // Do something
-            },
-          }}>
-          {msg}
-        </Snackbar>
+      {/* Snack bar */}
+      <Snackbar
+        visible={visible}
+        onDismiss={onDismissSnackBar}
+        action={{
+          label: 'OK',
+          onPress: () => {
+            // Do something
+          },
+        }}>
+        {msg}
+      </Snackbar>
 
-              {/* Dialog box */}
+      {/* Dialog box */}
 
-        {/* <Portal>
+      {/* <Portal>
           <Dialog visible={visibleDialog} onDismiss={hideDialog}>
             <Dialog.Title>Select Payment Method</Dialog.Title>
             <Dialog.Content>
@@ -180,7 +183,7 @@ const handleOrderQty = async (itemQty , index) => {
         </Portal> */}
 
 
-        </>
+    </>
   )
 }
 
