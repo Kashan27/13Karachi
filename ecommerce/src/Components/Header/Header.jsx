@@ -1,7 +1,9 @@
 import * as React from 'react';
 import { Text, Image, StyleSheet, View, TouchableOpacity } from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import { Menu, Pressable } from 'native-base';
 import { Appbar } from 'react-native-paper';
-import { Button, Menu, Divider, Provider } from 'react-native-paper';
+// import { Button, Menu, Divider, Provider } from 'react-native-paper';
 import OptionsMenu from "react-native-menu-platform";
 import { useState } from 'react';
 import { useEffect } from 'react';
@@ -31,7 +33,7 @@ const Header = ({ navigation, title, goback, search, showMore, width }) => {
   const signup = () => { navigation.navigate("signup") }
   const logout = async () => {
     await AsyncStorage.removeItem("user")
-    setUser(false)
+    setUser("")
   }
 
 
@@ -58,7 +60,6 @@ const Header = ({ navigation, title, goback, search, showMore, width }) => {
     <Appbar.Header mode="center-aligned">
 
 
-
       {/* goback action */}
       {goback
         ?
@@ -81,25 +82,29 @@ const Header = ({ navigation, title, goback, search, showMore, width }) => {
         :
         null}
 
-      {/* show more  */}
-      {showMore
-        ?
-        <OptionsMenu
-        customButton={<Appbar.Action icon="dots-vertical" />}
-        buttonStyle={{ width: 32, height: 8, margin: 7.5, resizeMode: "contain" }}
-        destructiveIndex={1}
-        options={[
-          false ? "Logout" : "Login"
-          , "signup"
-          , "cancel"]}
-          actions={[
-            false ? logout : login
-            , signup]}
-            />
-            
-            :
-            null}
-            {console.log(currentUser,"user,line84,header")}
+     
+
+
+
+     {/* MENU */}
+
+      <Menu shadow={2} w="190" trigger={triggerProps => {
+        return <Pressable accessibilityLabel="More options menu" {...triggerProps}>
+          {/* <HamburgerIcon /> */}
+          <Ionicons size={30} name="menu-outline" />
+        </Pressable>;
+      }}>
+        {currentUser ?
+          <>
+            <Menu.Item onPress={e => { logout() }}>Logout</Menu.Item>
+            <Menu.Item onPress={e => { navigation.navigate('profile') }}>Profile</Menu.Item>
+          </>
+          :
+          <Menu.Item onPress={e => { login() }}>Login</Menu.Item>
+        }
+        <Menu.Item onPress={e => { navigation.navigate('cart') }}>Cart</Menu.Item>
+        <Menu.Item onPress={e => { signup() }}>Signup</Menu.Item>
+      </Menu>
 
 
     </Appbar.Header>

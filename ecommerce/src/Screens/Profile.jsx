@@ -1,12 +1,12 @@
 import { StyleSheet, Text, View } from 'react-native'
-import { useEffect } from 'react';
+import { useEffect , useState } from 'react';
 import React from 'react'
 import axios from 'axios';
 import ip from '../ip';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Profile = () => {
-    let [user , setUser] = userState()
+    let [user , setUser] = useState()
 
     let handleGetUserProfile = async () => {
         try {

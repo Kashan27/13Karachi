@@ -7,6 +7,8 @@ import Routes from './Routes/Routes';
 import { ApplicationProvider , IconRegistry } from '@ui-kitten/components';
 import * as eva from '@eva-design/eva';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
+import { NativeBaseProvider, Text, Box } from "native-base";
+
 
 
 
@@ -39,10 +41,13 @@ const App = () => {
 
   return (
     <>
+    <NativeBaseProvider>
+
       <IconRegistry icons={EvaIconsPack} />
       <ApplicationProvider {...eva} theme={eva.light}>
         <Routes />
       </ApplicationProvider>
+    </NativeBaseProvider>
     </>
   );
 };
