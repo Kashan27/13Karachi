@@ -33,7 +33,7 @@ const SingleProductScreen = ({ route, navigation }) => {
 
     // console.log(multiProd[0].productSize,"singleProductScreen")
     const handleAddToCart = async () => {
-        axios.get(`http://${ip}/api/getMultipleFiles`)
+        axios.get(`https://${ip}/api/getMultipleFiles`)
             .then(response => {
                 console.log(response.data, "files")
             })

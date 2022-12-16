@@ -1,13 +1,13 @@
 import axios from 'axios';
 import React from 'react'
 import { useEffect, useState } from 'react';
-import { View, TouchableOpacity, Text, Image, StyleSheet, FlatList, } from 'react-native'
+import { View, TouchableOpacity,  Image, StyleSheet, FlatList, } from 'react-native'
 import ItemCard from '../Components/Card/Card';
 import Header from '../Components/Header/Header';
 import ShopsSlider from '../Components/ShopSlider/ShopsSlider';
 import ip from "../ip"
 import { Button } from 'react-native-paper';
-
+import { Card, Layout, Text } from '@ui-kitten/components';
 
 
 
@@ -32,7 +32,7 @@ const Shops = ({ route, navigation }) => {
         setCurrentMarket(cMarket)
         console.log(cMarket)
         console.log(shops)
-        let filterData = shops.filter(val => val.marketname === currentMarket)
+        let filterData = shops.filter(val => val.marketname === cMarket)
         console.log(filterData)
         setShopsList(filterData)
 
@@ -49,7 +49,7 @@ const Shops = ({ route, navigation }) => {
 
     const getProducts = () => {
         console.log(marketName)
-        axios.get(`http://${ip}/api/getmarket/${marketName}`)
+        axios.get(`https://${ip}/api/getmarket/${marketName}`)
             .then(res => {
                 let data = res.data
                 // console.log(data , "shops")
@@ -66,11 +66,22 @@ const Shops = ({ route, navigation }) => {
     const renderItem = ({item}) => {
         return (
             // <ItemCard navigation={navigation} onPress={e => { console.log("itemcard") }} item={item} />
-            <TouchableOpacity onPress={e=>{navigation.navigate("products" , {shop:item.hotelname , marketName})}} style={styles.shops}>
-                <Text style={styles.shopName}>
-                    {item.hotelname}
-                </Text>
-            </TouchableOpacity>
+            // <TouchableOpacity onPress={e=>{navigation.navigate("products" , {shop:item.hotelname , marketName})}} style={styles.shops}>
+            //     <Text style={styles.shopName}>
+            //         {item.hotelname}
+            //     </Text>
+            // </TouchableOpacity>
+            // <TouchableOpacity style={styles.shops}>
+
+            <Card
+             onPress={e=>{navigation.navigate("products" , {shop:item.hotelname , marketName})}}
+              style={styles.card} status='primary'
+              appearance="filled"
+              
+              >
+            <Text style={styles.shopName}>{item.hotelname}</Text>
+          </Card>
+                // </TouchableOpacity>
         )
     }
     const renderMarkets = (item) => {
@@ -90,7 +101,7 @@ const Shops = ({ route, navigation }) => {
                     <FlatList
                         // onPress={e => { console.log(e.target) }}
                         
-                        ListHeaderComponent={<Text style={{ fontSize: 20 }}>Markets</Text>}
+                        // ListHeaderComponent={<Text style={{ fontSize: 20 }}>Markets</Text>}
                         data={markets}
                         renderItem={renderMarkets}
                         // numColumns={2}
@@ -128,6 +139,10 @@ const Shops = ({ route, navigation }) => {
 
 
 const styles = StyleSheet.create({
+    card:{
+        color:"red",
+        margin:15,
+    },
     mainShopContainer:{
         width: "100%",
         display: "flex",
@@ -138,20 +153,21 @@ const styles = StyleSheet.create({
     shops:{
         backgroundColor:"white",
         elevation:0.8,
-        margin:20,
+        margin:15,
         // borderColor:"none",
         // borderWidth:1,
         borderRadius:5,
-        width:"40%",
-        height:50,
+        // width:"45%",
+        // height:50,
         textAlign:"center",
         display:"flex",
         alignItems:"center",
         justifyContent:"center",
     },
     shopName:{
-        fontSize:22,
+        fontSize:20,
     }
+    
 })
 
 

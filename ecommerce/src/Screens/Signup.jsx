@@ -46,7 +46,7 @@ const Signup = ({ navigation }) => {
             alert("passwords are not same")
           } else {
             setLoading(true)
-            axios.post("http://192.168.1.106:9000/api/signup", { ...userData })
+            axios.post("https://192.168.1.106:9000/api/signup", { ...userData })
               .then(async(response) => {
                 console.log(response.data);
                 setLoading(false)

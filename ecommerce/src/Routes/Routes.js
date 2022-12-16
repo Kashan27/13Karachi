@@ -13,6 +13,8 @@ import Shops from "../Screens/Shops";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import ForgotPass from "../Screens/ForgotPass";
 import NewPass from "../Screens/NewPass";
+import Profile from "../Screens/Profile";
+import OrderStatus from "../Screens/OrderStatus";
 
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -68,10 +70,8 @@ const TabNav = () => {
             <Tab.Screen name="home" component={Home} />
             <Tab.Screen name="Area" component={Markets} />
             <Tab.Screen name="cart" component={Cart} />
-            {/* <Tab.Screen name="successorder" component={SuccessOrder} /> */}
-            {/* <Tab.Screen name="signup" component={Signup} /> */}
-            {/* <Tab.Screen name="login" component={Login} /> */}
-            {/* <Tab.Screen name="products" component={Products} />  */}
+            <Tab.Screen name="orderstatus" component={OrderStatus} />
+            
         </Tab.Navigator >
     )
 }
@@ -91,6 +91,7 @@ const StackNav = () => {
             >
                 {/* <Stack.Screen name="markets" component={Markets} /> */}
                 <Stack.Screen  name="test" component={TabNav} />
+                <Stack.Screen name="profile" component={Profile} />
                 <Stack.Screen name="login" component={Login} />
                 <Stack.Screen name="forgotpass" component={ForgotPass} />
                 <Stack.Screen name="newpass" component={NewPass} />

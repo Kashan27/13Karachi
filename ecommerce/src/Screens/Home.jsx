@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, FlatList, ScrollView, Dimensions } from 'react-
 import React from 'react'
 import { useRef } from 'react';
 import Header from '../Components/Header/Header'
-import { useState, useEffect} from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Button, Menu, Divider, Provider } from 'react-native-paper';
 import Slider from '../Components/Slider/Slider';
@@ -19,6 +19,10 @@ import emailjs from '@emailjs/browser';
 const Height = Dimensions.get("screen").height;
 const Home = ({ navigation }) => {
     let [products, setProducts] = useState([])
+    let [categories, setCategories] = useState([])
+
+
+
     useEffect(() => {
         // console.log(Height, "Height")
         axios.get(`https://${ip}/api/allpostdata`)
@@ -30,21 +34,17 @@ const Home = ({ navigation }) => {
             .catch(error => {
                 console.log(error)
             })
-       
-        // var templateParams = {
-        //     hostname:"api.emailjs.com",
-        //     to_name:"muhammadkashan267@gmail.com",
-        //     message:"Reset password",
-        //     name: 'James',
-        //     notes: 'Check this out!',
-        // };
+        axios.get(`http://${ip}/api/allgetcategory`)
+            .then(res => {
+                // console.log(res.data[0].categoryName,"categoories")
+                setCategories(res.data)
+                // console.log(res.data)
+            })
+            .catch(err => {
+                console.log(err)
+            })
 
-        // emailjs.send('service_0976cj6', 'template_o58p24g', templateParams , '5j3kaLIoX1Scspn_0')
-        //     .then(function (response) {
-        //         console.log('SUCCESS!', response.status, response.text);
-        //     }, function (error) {
-        //         console.log('FAILED...', error);
-        //     });
+
 
 
     }, []);
@@ -86,8 +86,19 @@ const Home = ({ navigation }) => {
 
 
             />
+            {/*Categories  */}
+            <View>
+                <FlatList
+                    data={categories}
+                    renderItem={item => <Text style={styles.categoryName}>{item.item.categoryName}</Text>}
+                    horizontal={true}
+                    showsHorizontalScrollIndicator={false}
+                />
+            </View>
 
 
+
+            {/* Recently added */}
             <View>
                 <Text style={styles.text}>Recently Added</Text>
             </View>
@@ -125,8 +136,10 @@ const styles = StyleSheet.create({
         margin: 5,
         textAlign: "center",
         padding: 5
-
-
+    },
+    categoryName:{
+        padding:10,
+        fontSize:20
     }
 
 })

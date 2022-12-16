@@ -89,11 +89,11 @@ const Header = ({ navigation, title, goback, search, showMore, width }) => {
         buttonStyle={{ width: 32, height: 8, margin: 7.5, resizeMode: "contain" }}
         destructiveIndex={1}
         options={[
-          currentUser ? "Logout" : "Login"
+          false ? "Logout" : "Login"
           , "signup"
           , "cancel"]}
           actions={[
-            currentUser ? logout : login
+            false ? logout : login
             , signup]}
             />
             

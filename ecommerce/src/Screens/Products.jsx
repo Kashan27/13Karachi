@@ -42,13 +42,12 @@ const Products = ({ route, navigation }) => {
         setP(filterData)
         setCurrentShop(cShop)
         setValue('');
-        // setData(categories);
 
 
     }
 
     const handleSetCategories = () => {
-        axios.get(`http://${ip}/api/allgetcategory`)
+        axios.get(`https://${ip}/api/allgetcategory`)
         .then(res => {
             // console.log(res.data[0].categoryName,"categoories")
             setCategories(res.data)

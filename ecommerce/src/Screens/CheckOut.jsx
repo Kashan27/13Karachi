@@ -92,7 +92,7 @@ const CheckOut = ({ navigation, route }) => {
                         setLoading(true)
                         console.log(obj)
                         // axios.post(`http://192.168.1.106:9000/api/bookingpostdata`,{...obj})
-                        axios.post(`http://${ip}/api/bookingpostdata`,{...obj})
+                        axios.post(`https://${ip}/api/bookingpostdata`,{...obj})
                         .then((res)=>{
                             console.log(res.data,"rreess")
                             if(res.data.success){

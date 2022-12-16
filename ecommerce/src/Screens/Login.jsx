@@ -38,7 +38,7 @@ export const Login = ({ navigation }) => {
     let { email, password } = userDetails
     if (email && password) {
       setLoading(true)
-      axios.post(`http://${ip}/api/signin`, { email, password })
+      axios.post(`https://${ip}/api/signin`, { email, password })
         .then(async (response) => {
           try {
             await AsyncStorage.setItem("user", JSON.stringify(response.data))

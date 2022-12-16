@@ -1,116 +1,50 @@
 {
-    "config": {
-        "adapter": [Function xhrAdapter
-        ],
-        "data": "{\"obj\":{\"userEmail\":\"muhammadkashan\",\"orderContact\":\"123456abc\",\"hotelDate\":\"12/9/2022, 8:11:27 PM\",\"paymentstatus\":\"Pending\",\"shippingOne\":\"abc\",\"shippingTwo\":\"\",\"orderCity\":\"Karachi\",\"orderState\":\"Sindh\",\"totalBillAmount\":2466,\"deliveryChargesOne\":100,\"deliveryChargesTwo\":0,\"totalNetAmount\":2566,\"cartItems\":[{\"_id\":\"6360f951a64d3c3bd1bc5874\",\"cartQuantity\":1,\"hotelname\":\"seller\",\"imageURL\":\"https://www.cameralabs.com/wp-content/uploads/2017/11/best-mirrorless-image-400x300.jpg\",\"productName\":\"flag\",\"productPrice\":1233,\"qty\":1,\"userEmail\":\"Ahmed2@gmail.com\",\"prodarea\":\"North Karachi\",\"prodmarketname\":\"abcd\",\"productTitle\":\"abcdefg\",\"productWeight\":12,\"category\":\"abcd\",\"productSize\":\"Small\",\"productColor\":\"Small\"},{\"_id\":\"6360f951a64d3c3bd1bc5874\",\"cartQuantity\":1,\"hotelname\":\"seller\",\"imageURL\":\"https://www.cameralabs.com/wp-content/uploads/2017/11/best-mirrorless-image-400x300.jpg\",\"productName\":\"flag\",\"productPrice\":1233,\"qty\":1,\"userEmail\":\"Ahmed2@gmail.com\",\"prodarea\":\"North Karachi\",\"prodmarketname\":\"abcd\",\"productTitle\":\"abcdefg\",\"productWeight\":12,\"category\":\"abcd\",\"productSize\":\"Large\",\"productColor\":\"Large\"}]}}",
-        "headers": {
-            "Accept": "application/json, text/plain, */*",
-            "Content-Type": "application/json"
+    "__v": 0,
+    "_id": "6365861747d99219e9be2dd1",
+    "cartItems": [
+        {
+            "_id": "6360f951a64d3c3bd1bc5874",
+            "cartQuantity": 1,
+            "category": "abcd",
+            "dt": "2022-11-04T21:37:27.788Z",
+            "hotelname": "seller",
+            "imageURL": "https://res.cloudinary.com/fimgcloud/image/upload/v1667299662/coxxie94fipqj08cualw.png",
+            "prodarea": "North Karachi",
+            "prodmarketname": "abcd",
+            "productName": "flag",
+            "productPrice": 1233,
+            "productTitle": "abcdefg",
+            "productWeight": "12",
+            "qty": 12,
+            "userEmail": "Ahmed2@gmail.com"
         },
-        "maxBodyLength": -1,
-        "maxContentLength": -1,
-        "method": "post",
-        "timeout": 0,
-        "transformRequest": [
-            [Function transformRequest
-            ]
-        ],
-        "transformResponse": [
-            [Function transformResponse
-            ]
-        ],
-        "transitional": {
-            "clarifyTimeoutError": false,
-            "forcedJSONParsing": true,
-            "silentJSONParsing": true
-        },
-        "url": "https://13k.up.railway.app/api/bookingpostdata",
-        "validateStatus": [Function validateStatus
-        ],
-        "xsrfCookieName": "XSRF-TOKEN",
-        "xsrfHeaderName": "X-XSRF-TOKEN"
-    },
-    "data": {
-        "Order": {
-            "__v": 0,
-            "_id": "6393501f04c12c8edf7c50c6",
-            "cartItems": [Array
-            ]
-        },
-        "success": true
-    },
-    "headers": {
-        "access-control-allow-origin": "*",
-        "content-length": "82",
-        "content-type": "application/json; charset=utf-8",
-        "date": "Fri, 09 Dec 2022 15:11:27 GMT",
-        "etag": "W/\"52-QmSN6mFBf3OZLVjfAmJ3Q++hf2c\"",
-        "server": "railway",
-        "x-envoy-upstream-service-time": "264",
-        "x-powered-by": "Express"
-    },
-    "request": {
-        "DONE": 4,
-        "HEADERS_RECEIVED": 2,
-        "LOADING": 3,
-        "OPENED": 1,
-        "UNSENT": 0,
-        "_aborted": false,
-        "_cachedResponse": undefined,
-        "_hasError": false,
-        "_headers": {
-            "accept": "application/json, text/plain, */*",
-            "content-type": "application/json"
-        },
-        "_incrementalEvents": false,
-        "_lowerCaseResponseHeaders": {
-            "access-control-allow-origin": "*",
-            "content-length": "82",
-            "content-type": "application/json; charset=utf-8",
-            "date": "Fri, 09 Dec 2022 15:11:27 GMT",
-            "etag": "W/\"52-QmSN6mFBf3OZLVjfAmJ3Q++hf2c\"",
-            "server": "railway",
-            "x-envoy-upstream-service-time": "264",
-            "x-powered-by": "Express"
-        },
-        "_method": "POST",
-        "_perfKey": "network_XMLHttpRequest_https://13k.up.railway.app/api/bookingpostdata",
-        "_performanceLogger": {
-            "_closed": false,
-            "_extras": [Object
-            ],
-            "_pointExtras": [Object
-            ],
-            "_points": [Object
-            ],
-            "_timespans": [Object
-            ]
-        },
-        "_requestId": null,
-        "_response": "{\"success\":true,\"Order\":{\"_id\":\"6393501f04c12c8edf7c50c6\",\"cartItems\":[],\"__v\":0}}",
-        "_responseType": "",
-        "_sent": true,
-        "_subscriptions": [],
-        "_timedOut": false,
-        "_trackingName": "unknown",
-        "_url": "https://13k.up.railway.app/api/bookingpostdata",
-        "readyState": 4,
-        "responseHeaders": {
-            "access-control-allow-origin": "*",
-            "content-length": "82",
-            "content-type": "application/json; charset=utf-8",
-            "date": "Fri, 09 Dec 2022 15:11:27 GMT",
-            "etag": "W/\"52-QmSN6mFBf3OZLVjfAmJ3Q++hf2c\"",
-            "server": "railway",
-            "x-envoy-upstream-service-time": "264",
-            "x-powered-by": "Express"
-        },
-        "responseURL": "https://13k.up.railway.app/api/bookingpostdata",
-        "status": 201,
-        "timeout": 0,
-        "upload": {},
-        "withCredentials": true
-    },
-    "status": 201,
-    "statusText": undefined
-} 
+        {
+            "_id": "6360f906a64d3c3bd1bc5849",
+            "cartQuantity": 1,
+            "category": "abcd",
+            "dt": "2022-11-04T21:37:27.788Z",
+            "hotelname": "seller",
+            "imageURL": "https://res.cloudinary.com/fimgcloud/image/upload/v1667299586/mvejf7ob8v3c15rirp5t.png",
+            "prodarea": "North Karachi",
+            "prodmarketname": "abcd",
+            "productName": "flag",
+            "productPrice": 1233,
+            "productTitle": "test",
+            "productWeight": "12",
+            "qty": 12,
+            "userEmail": "Ahmed2@gmail.com"
+        }
+    ],
+    "deliveryChargesOne": 200,
+    "deliveryChargesTwo": 0,
+    "hotelDate": "11/5/2022, 2:37:27 AM",
+    "orderCity": "",
+    "orderContact": 998907,
+    "orderState": "Sindh",
+    "paymentstatus": "Pending",
+    "shippingOne": "",
+    "shippingTwo": "",
+    "totalBillAmount": 2466,
+    "totalNetAmount": 2466,
+    "userEmail": "naeem@gmail.com"
+}
