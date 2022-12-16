@@ -13,7 +13,7 @@ import Header from '../Components/Header/Header';
 import banner from '../images/login/banner.jpeg';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import ip from '../ip';
 // import { TextInput } from 'react-native-paper';
 
 
@@ -38,7 +38,7 @@ export const Login = ({ navigation }) => {
     let { email, password } = userDetails
     if (email && password) {
       setLoading(true)
-      axios.post("http://192.168.1.106:9000/api/signin", { email, password })
+      axios.post(`http://${ip}/api/signin`, { email, password })
         .then(async (response) => {
           try {
             await AsyncStorage.setItem("user", JSON.stringify(response.data))
@@ -121,7 +121,7 @@ export const Login = ({ navigation }) => {
             ></TextInput>
           </View>
         </View>
-        <Text style={styles.forgotPassword}>
+        <Text onPress={e=>{navigation.navigate("forgotpass")}} style={styles.forgotPassword}>
           Forgot Password?
         </Text>
         <View style={styles.loginButton}>

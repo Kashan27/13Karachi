@@ -1,13 +1,16 @@
 import { StyleSheet, Text, View, FlatList, ScrollView, Dimensions } from 'react-native'
 import React from 'react'
+import { useRef } from 'react';
 import Header from '../Components/Header/Header'
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect} from 'react';
 import axios from 'axios';
 import { Button, Menu, Divider, Provider } from 'react-native-paper';
 import Slider from '../Components/Slider/Slider';
 import ip from '../ip';
 import ItemCard from '../Components/Card/Card';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import emailjs from '@emailjs/browser';
+
 
 
 
@@ -18,7 +21,7 @@ const Home = ({ navigation }) => {
     let [products, setProducts] = useState([])
     useEffect(() => {
         // console.log(Height, "Height")
-        axios.get(`http://${ip}/api/allpostdata`)
+        axios.get(`https://${ip}/api/allpostdata`)
             .then(res => {
                 let data = res.data
                 data = data.slice(-6)
@@ -27,14 +30,30 @@ const Home = ({ navigation }) => {
             .catch(error => {
                 console.log(error)
             })
+       
+        // var templateParams = {
+        //     hostname:"api.emailjs.com",
+        //     to_name:"muhammadkashan267@gmail.com",
+        //     message:"Reset password",
+        //     name: 'James',
+        //     notes: 'Check this out!',
+        // };
+
+        // emailjs.send('service_0976cj6', 'template_o58p24g', templateParams , '5j3kaLIoX1Scspn_0')
+        //     .then(function (response) {
+        //         console.log('SUCCESS!', response.status, response.text);
+        //     }, function (error) {
+        //         console.log('FAILED...', error);
+        //     });
+
 
     }, []);
 
 
     const sliderImages = [
-        { img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5a5uCP-n4teeW2SApcIqUrcQApev8ZVCJkA&usqp=CAU' },
-        { img: "https://neilpatel.com/wp-content/uploads/2017/12/ecommerce-seo-tips.jpg" },
-        { img: "http://bloomidea.com/sites/default/files/styles/og_image/public/blog/Tipos%20de%20come%CC%81rcio%20electro%CC%81nico_0.png?itok=jC9MlQZq" },
+        { img: 'httpss://cdn.pixabay.com/photo/2018/08/29/17/07/ecommerce-3640321__340.jpg' },
+        { img: "httpss://neilpatel.com/wp-content/uploads/2017/12/ecommerce-seo-tips.jpg" },
+        { img: "https://bloomidea.com/sites/default/files/styles/og_image/public/blog/Tipos%20de%20come%CC%81rcio%20electro%CC%81nico_0.png?itok=jC9MlQZq" },
     ]
     const [visible, setVisible] = React.useState(false);
     const openMenu = () => setVisible(true);
@@ -45,7 +64,7 @@ const Home = ({ navigation }) => {
 
     const renderItem = (item) => {
         return (
-            <ItemCard navigation={navigation}  item={item} />
+            <ItemCard navigation={navigation} item={item} />
         )
     }
 
@@ -58,12 +77,12 @@ const Home = ({ navigation }) => {
             {/* <Text style={{ textAlign: "center" }} onPress={e => { navigation.navigate("login") }} >Login</Text> */}
 
             <Slider style={{ zIndex: -1 }} images={sliderImages}
-                // customSlide={({ index, item, style, width }) => (
-                //     // It's important to put style here because it's got offset inside
-                //     <View key={index} style={[style, styles.customSlide]}>
-                //         <Image source={{ uri: item.img }} style={styles.customImage} />
-                //     </View>
-                // )}
+            // customSlide={({ index, item, style, width }) => (
+            //     // It's important to put style here because it's got offset inside
+            //     <View key={index} style={[style, styles.customSlide]}>
+            //         <Image source={{ uri: item.img }} style={styles.customImage} />
+            //     </View>
+            // )}
 
 
             />

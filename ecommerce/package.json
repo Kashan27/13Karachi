@@ -10,8 +10,10 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@emailjs/browser": "^3.10.0",
     "@eva-design/eva": "^2.1.1",
     "@react-native-async-storage/async-storage": "^1.17.11",
+    "@react-native-community/cli-platform-android": "^10.0.0",
     "@react-native-picker/picker": "^2.4.8",
     "@react-navigation/bottom-tabs": "^6.4.0",
     "@react-navigation/native": "^6.0.13",

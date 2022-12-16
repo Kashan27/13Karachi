@@ -11,7 +11,8 @@ import SingleProductScreen from "../Screens/SingleProductScreen";
 import CheckOut from "../Screens/CheckOut";
 import Shops from "../Screens/Shops";
 import Ionicons from 'react-native-vector-icons/Ionicons';
-
+import ForgotPass from "../Screens/ForgotPass";
+import NewPass from "../Screens/NewPass";
 
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -67,7 +68,7 @@ const TabNav = () => {
             <Tab.Screen name="home" component={Home} />
             <Tab.Screen name="Area" component={Markets} />
             <Tab.Screen name="cart" component={Cart} />
-            <Tab.Screen name="successorder" component={SuccessOrder} />
+            {/* <Tab.Screen name="successorder" component={SuccessOrder} /> */}
             {/* <Tab.Screen name="signup" component={Signup} /> */}
             {/* <Tab.Screen name="login" component={Login} /> */}
             {/* <Tab.Screen name="products" component={Products} />  */}
@@ -91,6 +92,8 @@ const StackNav = () => {
                 {/* <Stack.Screen name="markets" component={Markets} /> */}
                 <Stack.Screen  name="test" component={TabNav} />
                 <Stack.Screen name="login" component={Login} />
+                <Stack.Screen name="forgotpass" component={ForgotPass} />
+                <Stack.Screen name="newpass" component={NewPass} />
                 <Stack.Screen name="signup" component={Signup} />
                 <Stack.Screen name="shops" component={Shops} />
                 <Stack.Screen name="products" component={Products} />

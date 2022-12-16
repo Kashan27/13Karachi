@@ -48,7 +48,7 @@ const Products = ({ route, navigation }) => {
     }
 
     const handleSetCategories = () => {
-        axios.get(`https://${ip}/api/allgetcategory`)
+        axios.get(`http://${ip}/api/allgetcategory`)
         .then(res => {
             // console.log(res.data[0].categoryName,"categoories")
             setCategories(res.data)
@@ -140,7 +140,7 @@ const Products = ({ route, navigation }) => {
     }
 
     const getProducts = () => {
-        axios.get(`https://${ip}/api/allpostdata`)
+        axios.get(`http://${ip}/api/allpostdata`)
             .then(res => {
                 let data = res.data
                 let filterData = data.filter(val => val.hotelname === currentShop)
