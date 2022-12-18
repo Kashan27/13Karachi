@@ -76,7 +76,7 @@ const Header = ({ navigation, title, goback, search, showMore, width }) => {
         null}
 
       {/* search */}
-      {search
+      {false
         ?
         <Appbar.Action icon="magnify" onPress={_handleSearch} />
         :
@@ -94,15 +94,16 @@ const Header = ({ navigation, title, goback, search, showMore, width }) => {
           <Ionicons size={30} name="menu-outline" />
         </Pressable>;
       }}>
+        <Menu.Item onPress={e => { navigation.navigate('cart') }}>Cart</Menu.Item>
         {currentUser ?
           <>
             <Menu.Item onPress={e => { logout() }}>Logout</Menu.Item>
             <Menu.Item onPress={e => { navigation.navigate('profile') }}>Profile</Menu.Item>
+            <Menu.Item onPress={e => { navigation.navigate('orderstatus') }}>Profile</Menu.Item>
           </>
           :
           <Menu.Item onPress={e => { login() }}>Login</Menu.Item>
         }
-        <Menu.Item onPress={e => { navigation.navigate('cart') }}>Cart</Menu.Item>
         <Menu.Item onPress={e => { signup() }}>Signup</Menu.Item>
       </Menu>
 

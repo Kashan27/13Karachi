@@ -87,7 +87,7 @@ export const Login = ({ navigation }) => {
   return (
     <View
       style={{ backgroundColor: "white" }}>
-      <Header navigation={navigation} goback={e => { navigation.goBack() }} title="App" />
+      <Header navigation={navigation} width={"75%"} search={false} goback={e => { navigation.goBack() }} title="App" />
       <Image
         resizeMode='stretch'
         style={styles.banner}

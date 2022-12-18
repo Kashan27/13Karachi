@@ -45,7 +45,7 @@ const TabNav = () => {
             screenOptions={
                 ({ route }) => ({
                     tabBarLabel: ({ focused }) => {
-                        return <Text style={{ fontSize: 14, fontWeight: '600', color: "tomato" }}>{route.name}</Text>
+                        return <Text style={{ fontSize: 14, fontWeight: '600', color: "grey" }}>{route.name}</Text>
                     },
                     tabBarIcon: ({ focused, color, size }) => {
                         let iconName;
@@ -62,7 +62,7 @@ const TabNav = () => {
                         return <Ionicons name={iconName} size={28} color={color} />;
                     },
                     headerShown:false,
-                    tabBarActiveTintColor: 'tomato',
+                    tabBarActiveTintColor: '#049f99',
                     tabBarInactiveTintColor: 'gray',
                     // tabBarShowLabel: false,
                 })}

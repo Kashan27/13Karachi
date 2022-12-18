@@ -97,6 +97,20 @@ const Cart = ({ navigation }) => {
     await AsyncStorage.setItem("cart", JSON.stringify(cart))
   }
 
+  const handleCheckOut = async () => {
+      try{
+        let user = await AsyncStorage.getItem('user')
+        if(user){
+          navigation.navigate('checkout' , {subTotal})
+        }else{
+          navigation.navigate('login')
+        }
+      }
+      catch(err){
+        console.log(err)
+      }
+  }
+
 
   // console.log(Math.round(height))
 
@@ -139,7 +153,7 @@ const Cart = ({ navigation }) => {
           <View style={{ display: 'flex', alignItems: "center" }}>
             <View style={styles.checkOutContainer} >
               <Button
-                onPress={e => { navigation.navigate("checkout", { subTotal }) }}
+                onPress={e => { handleCheckOut() }}
                 mode="contained"
               // width="45%"
               >Proceed to Checkout</Button>

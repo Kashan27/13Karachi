@@ -1,104 +1,27 @@
-{
-        "__v": 0,
-        "_id": "639d39e370e84b48024f6d02",
-        "cartItems": [
-                {
-                        "_id": "637f7bc17bf5de582e60648d",
-                        "cartQuantity": 3,
-                        "category": "testproduc",
-                        "dt": "2022-12-17T03:39:15.504Z",
-                        "hotelname": "kashan",
-                        "imageURL": "https://th.bing.com/th/id/R.b6de7e7313a09af1786f0720e4e59c07?rik=dUwLUNOfP%2b7DeA&pid=ImgRaw&r=0",
-                        "prodarea": "Clifton",
-                        "prodmarketname": "nil",
-                        "productColor": "Small",
-                        "productName": "t-shirt2",
-                        "productPrice": 400,
-                        "productSize": "Small",
-                        "productTitle": "tshirt test",
-                        "productWeight": "5",
-                        "qty": 3,
-                        "userEmail": "terakarachi@gmail.com"
-                },
-                {
-                        "_id": "637f7bc17bf5de582e60648d",
-                        "cartQuantity": 2,
-                        "category": "testproduc",
-                        "dt": "2022-12-17T03:39:15.504Z",
-                        "hotelname": "Super Admin",
-                        "imageURL": "https://th.bing.com/th/id/R.b6de7e7313a09af1786f0720e4e59c07?rik=dUwLUNOfP%2b7DeA&pid=ImgRaw&r=0",
-                        "prodarea": "Clifton",
-                        "prodmarketname": "nil",
-                        "productColor": "Small",
-                        "productName": "t-shirt2",
-                        "productPrice": 400,
-                        "productSize": "Small",
-                        "productTitle": "tshirt test",
-                        "productWeight": "5",
-                        "qty": 2,
-                        "userEmail": "terakarachi@gmail.com"
-                },
-                {
-                        "_id": "6377ceca5ab86c7d347de0a9",
-                        "cartQuantity": 1,
-                        "category": "abcdefg",
-                        "dt": "2022-12-17T03:39:15.505Z",
-                        "hotelname": "Super Admin",
-                        "imageURL": "https://res.cloudinary.com/fimgcloud/image/upload/v1668796086/zpagcnruw1gmo8bqdftq.png",
-                        "prodarea": "Clifton",
-                        "prodmarketname": "nil",
-                        "productColor": "Medium",
-                        "productName": "t-shirt2",
-                        "productPrice": 12,
-                        "productSize": "Medium",
-                        "productTitle": "abcd",
-                        "productWeight": "1",
-                        "qty": 1,
-                        "userEmail": "terakarachi@gmail.com"
-                },
-                {
-                        "_id": "637f7bc17bf5de582e60648d",
-                        "cartQuantity": 1,
-                        "category": "testproduc",
-                        "dt": "2022-12-17T03:39:15.505Z",
-                        "hotelname": "Super Admin",
-                        "imageURL": "https://th.bing.com/th/id/R.b6de7e7313a09af1786f0720e4e59c07?rik=dUwLUNOfP%2b7DeA&pid=ImgRaw&r=0",
-                        "prodarea": "Clifton",
-                        "prodmarketname": "nil",
-                        "productColor": "Large",
-                        "productName": "t-shirt2",
-                        "productPrice": 400,
-                        "productSize": "Large",
-                        "productTitle": "tshirt test",
-                        "productWeight": "5",
-                        "qty": 1,
-                        "userEmail": "terakarachi@gmail.com"
-                },
-                {
-                        "_id": "6360f951a64d3c3bd1bc5874",
-                        "cartQuantity": 2,
-                        "category": "abcd",
-                        "dt": "2022-12-17T03:39:15.505Z",
-                        "hotelname": "seller",
-                        "imageURL": "https://www.cameralabs.com/wp-content/uploads/2017/11/best-mirrorless-image-400x300.jpg",
-                        "prodarea": "North Karachi",
-                        "prodmarketname": "abcd",
-                        "productColor": "Small",
-                        "productName": "flag",
-                        "productPrice": 1233,
-                        "productSize": "Small",
-                        "productTitle": "abcdefg",
-                        "productWeight": "12",
-                        "qty": 2,
-                        "userEmail": "Ahmed2@gmail.com"
-                }
-        ],
-        "deliveryChargesOne": 100,
-        "deliveryChargesTwo": 0,
-        "hotelDate": "17/12/2022, 08:39:13",
-        "orderCity": "Karachi",
-        "orderContact": 899446,
-        "orderState": "Sindh",
-        "paymentstatus": "Pending",
-        "shippingOne": "Dbhsjs",
-        "shippingTwo": "Sbshhs", "totalBillAmount": 4878, "totalNetAmount": 4978, "userEmail": "muhammadkashan267@gmail.com"} item
+[
+        {
+                "__v": 0,
+                "_id": "639601bb3d1c0a15d4cf5e67",
+                "cartItems": [
+                        [Object
+                        ],
+                        [Object
+                        ],
+                        [Object
+                        ]
+                ],
+                "deliveryChargesOne": 100,
+                "deliveryChargesTwo": 0,
+                "hotelDate": "12/11/2022, 9:13:47 PM",
+                "orderCity": "Karachi",
+                "orderContact": 3343543215,
+                "orderState": "Sindh",
+                "paymentstatus": "Pending",
+                "shippingOne": "ABC road karachi",
+                "shippingTwo": "null", "totalBillAmount": 4899, "totalNetAmount": 4999, "userEmail": "muhammadkashan267@gmail.com"}, {"__v": 0, "_id": "639cbf5970e84b48024f6ce4", "cartItems": [[Object], [Object]], "deliveryChargesOne": 100, "deliveryChargesTwo": 0, "hotelDate": "16/12/2022,
+                23: 56: 22", "orderCity": "Karachi", "orderContact": 3343543215, "orderState": "Sindh", "paymentstatus": "Pending", "shippingOne": "Garden", "shippingTwo": "Garden
+", "totalBillAmount": 2000, "totalNetAmount": 2100, "userEmail": "muhammadkashan267@gmail.com"}, {"__v": 0, "_id": "639cbf9c70e84b48024f6ce6", "cartItems": [[Object], [Object]], "deliveryChargesOne": 100, "deliveryChargesTwo": 0, "hotelDate": "16/12/2022,
+                23: 57: 31", "orderCity": "Karachi", "orderContact": 3343543215, "orderState": "Sindh", "paymentstatus": "Pending", "shippingOne": "Garden", "shippingTwo": "Garden
+", "totalBillAmount": 2000, "totalNetAmount": 2100, "userEmail": "muhammadkashan267@gmail.com"}, {"__v": 0, "_id": "639d39e370e84b48024f6d02", "cartItems": [[Object], [Object], [Object], [Object], [Object]], "deliveryChargesOne": 100, "deliveryChargesTwo": 0, "hotelDate": "17/12/2022,
+                08: 39: 13", "orderCity": "Karachi", "orderContact": 899446, "orderState": "Sindh", "paymentstatus": "Pending", "shippingOne": "Dbhsjs", "shippingTwo": "Sbshhs
+", "totalBillAmount": 4878, "totalNetAmount": 4978, "userEmail": "muhammadkashan267@gmail.com"}]
