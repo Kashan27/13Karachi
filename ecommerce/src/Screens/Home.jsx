@@ -9,7 +9,7 @@ import Slider from '../Components/Slider/Slider';
 import ip from '../ip';
 import ItemCard from '../Components/Card/Card';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import emailjs from '@emailjs/browser';
+
 
 
 
@@ -20,8 +20,7 @@ const Height = Dimensions.get("screen").height;
 const Home = ({ navigation }) => {
     let [products, setProducts] = useState([])
     let [categories, setCategories] = useState([])
-
-
+    let [carousel , setCarousel] = useState([])
 
     useEffect(() => {
         // console.log(Height, "Height")
@@ -34,7 +33,7 @@ const Home = ({ navigation }) => {
             .catch(error => {
                 console.log(error)
             })
-        axios.get(`http://${ip}/api/allgetcategory`)
+        axios.get(`https://${ip}/api/allgetcategory`)
             .then(res => {
                 // console.log(res.data[0].categoryName,"categoories")
                 setCategories(res.data)
@@ -43,23 +42,13 @@ const Home = ({ navigation }) => {
             .catch(err => {
                 console.log(err)
             })
+        
+        }, []);
+        
 
-
-
-
-    }, []);
-
-
-    const sliderImages = [
-        { img: 'httpss://cdn.pixabay.com/photo/2018/08/29/17/07/ecommerce-3640321__340.jpg' },
-        { img: "httpss://neilpatel.com/wp-content/uploads/2017/12/ecommerce-seo-tips.jpg" },
-        { img: "https://bloomidea.com/sites/default/files/styles/og_image/public/blog/Tipos%20de%20come%CC%81rcio%20electro%CC%81nico_0.png?itok=jC9MlQZq" },
-    ]
-    const [visible, setVisible] = React.useState(false);
     const openMenu = () => setVisible(true);
     const closeMenu = () => setVisible(false);
     const login = () => navigation.navigate("login");
-    const [selectedLanguage, setSelectedLanguage] = useState();
 
 
     const renderItem = (item) => {
@@ -73,10 +62,9 @@ const Home = ({ navigation }) => {
         <View>
             <Header style={{ zIndex: 1 }} navigation={navigation} login={login} width={"80%"} close={closeMenu} showMore={true} title="App" />
 
-            {/* <Text>Home</Text> */}
-            {/* <Text style={{ textAlign: "center" }} onPress={e => { navigation.navigate("login") }} >Login</Text> */}
+          
 
-            <Slider style={{ zIndex: -1 }} images={sliderImages}
+            <Slider style={{ zIndex: -1 }}
             // customSlide={({ index, item, style, width }) => (
             //     // It's important to put style here because it's got offset inside
             //     <View key={index} style={[style, styles.customSlide]}>
@@ -137,9 +125,9 @@ const styles = StyleSheet.create({
         textAlign: "center",
         padding: 5
     },
-    categoryName:{
-        padding:10,
-        fontSize:20
+    categoryName: {
+        padding: 10,
+        fontSize: 20
     }
 
 })

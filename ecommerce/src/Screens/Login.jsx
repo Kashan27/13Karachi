@@ -14,6 +14,7 @@ import banner from '../images/login/banner.jpeg';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ip from '../ip';
+import themeColor from '../themeColor/themeColor'
 // import { TextInput } from 'react-native-paper';
 
 
@@ -134,7 +135,7 @@ export const Login = ({ navigation }) => {
         </View>
         <Text style={styles.register}>
           Don't have an account ?
-          <Text onPress={e => { navigation.navigate("signup") }} style={{ color: "#049f99" }}>
+          <Text onPress={e => { navigation.navigate("signup") }} style={{ color: themeColor }}>
             Register
           </Text>
         </Text>
@@ -170,7 +171,7 @@ export const Login = ({ navigation }) => {
 const styles = StyleSheet.create({
   button: {
     width: "75%",
-    backgroundColor: "#049f99",
+    backgroundColor: themeColor,
     borderRadius: 5,
   },
   banner: {
@@ -200,7 +201,7 @@ const styles = StyleSheet.create({
     padding: 10,
     marginLeft: 20,
     marginTop: 10,
-    color: "#049f99"
+    color: themeColor
   },
   loginContainer: {
     height: 550,

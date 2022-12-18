@@ -8,6 +8,7 @@ import Header from '../Components/Header/Header';
 import banner from '../images/login/banner.jpeg';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import themeColor from '../themeColor/themeColor'
 import ip from '../ip';
 
 
@@ -20,7 +21,7 @@ const ForgotPass = ({ navigation }) => {
     const [code , setCode] = useState();
     const [inputCode , setInputCode] = useState();
     const [email , setEmail] = useState('') 
-
+console.log(themeColor)
     const handleInput = (e) => {
         setEmail(e)
         console.log(email)
@@ -104,7 +105,7 @@ const ForgotPass = ({ navigation }) => {
                     >Send Reset Code</Button>
                 </View>
                 <Text style={styles.resend}>
-                    <Text onPress={e => { navigation.navigate("signup") }} style={{ color: "#049f99" }}>
+                    <Text onPress={e => { navigation.navigate("signup") }} style={{ color: themeColor }}>
                         Resend Code
                     </Text>
                 </Text>
@@ -156,7 +157,7 @@ const ForgotPass = ({ navigation }) => {
 const styles = StyleSheet.create({
     button: {
         width: "75%",
-        backgroundColor: "#049f99",
+        backgroundColor: themeColor,
         borderRadius: 5,
     },
     banner: {
@@ -179,7 +180,7 @@ const styles = StyleSheet.create({
         padding: 10,
         marginLeft: 20,
         marginTop: 10,
-        color: "#049f99"
+        color: themeColor
     },
     loginContainer: {
         height: 400,

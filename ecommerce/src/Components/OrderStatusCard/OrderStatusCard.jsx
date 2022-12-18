@@ -199,6 +199,6 @@ const styles = StyleSheet.create({
   textStatus:{
     fontSize:17,
     fontWeight: "bold",  
-    color:"#049f99"
+    color:themeColor
   }
 })

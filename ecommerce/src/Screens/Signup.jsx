@@ -13,6 +13,8 @@ import Header from '../Components/Header/Header';
 import banner from '../images/login/banner.jpeg';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import themeColor from '../themeColor/themeColor'
+
 
 
 
@@ -81,7 +83,7 @@ const Signup = ({ navigation }) => {
   return (
     <View
       style={{ backgroundColor: "white" }}>
-      <Header navigation={navigation} goback={e => { navigation.goBack() }} title="App" />
+      <Header width="71%" navigation={navigation} goback={e => { navigation.goBack() }} title="App" />
       <Image
         resizeMode='stretch'
         style={styles.banner}
@@ -185,7 +187,7 @@ const Signup = ({ navigation }) => {
         {/* already Register */}
         <Text style={styles.register}>
           Already Register ?
-          <Text onPress={e => { navigation.navigate("login") }} style={{ color: "#049f99" }}>
+          <Text onPress={e => { navigation.navigate("login") }} style={{ color: themeColor }}>
             Login
           </Text>
         </Text>
@@ -200,7 +202,7 @@ const Signup = ({ navigation }) => {
 const styles = StyleSheet.create({
   button: {
     width: "75%",
-    backgroundColor: "#049f99",
+    backgroundColor: themeColor,
     borderRadius: 5,
   },
   banner: {
@@ -230,7 +232,7 @@ const styles = StyleSheet.create({
     padding: 10,
     marginLeft: 20,
     marginTop: 10,
-    color: "#049f99"
+    color: themeColor
   },
   loginContainer: {
     height: 550,

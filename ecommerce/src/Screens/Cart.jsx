@@ -5,6 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useState } from 'react';
 import CartCard from '../Components/Cart_Card/CartCard';
 import { useWindowDimensions } from 'react-native';
+import themeColor from '../themeColor/themeColor';
 import { Button, Paragraph, Dialog, Portal, Provider, Snackbar } from 'react-native-paper';
 
 
@@ -155,6 +156,7 @@ const Cart = ({ navigation }) => {
               <Button
                 onPress={e => { handleCheckOut() }}
                 mode="contained"
+                buttonColor={themeColor}
               // width="45%"
               >Proceed to Checkout</Button>
               <Text style={styles.totalAmount}>PKR {subTotal + 100}</Text>

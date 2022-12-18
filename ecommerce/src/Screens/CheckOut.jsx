@@ -5,6 +5,7 @@ import { Input, Text, Autocomplete, AutocompleteItem, CheckBox, Radio, RadioGrou
 import { Button } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
+import themeColor from '../themeColor/themeColor';
 import ip from '../ip';
 
 const CheckOut = ({ navigation, route }) => {
@@ -200,6 +201,7 @@ const CheckOut = ({ navigation, route }) => {
 
                         <Text category="h5">Payment Method</Text>
                         <Radio
+                            
                             style={styles.radio}
                             checked={activeChecked}
                             onChange={nextChecked => setActiveChecked(nextChecked)}>
@@ -223,6 +225,7 @@ const CheckOut = ({ navigation, route }) => {
                     <Button
                         loading={loading}
                         style={styles.button}
+                        buttonColor={themeColor}
                         // icon="cart"
                         mode="contained"
                         onPress={() => { handleConfirmOrder() }}

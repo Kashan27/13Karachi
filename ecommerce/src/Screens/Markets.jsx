@@ -3,7 +3,7 @@ import { View, Text, ScrollView, FlatList, TouchableOpacity, StyleSheet, ImageBa
 import { IndexPath, Layout, Select, SelectItem } from '@ui-kitten/components';
 import { List, ListItem } from '@ui-kitten/components';
 import { Button } from 'react-native-paper';
-import { Spinner , HStack} from 'native-base';
+import { Spinner, HStack } from 'native-base';
 // import { List } from 'react-native-paper';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { useState, useEffect } from 'react';
@@ -31,15 +31,11 @@ const Item = ({ item, onPress, backgroundColor, textColor }) => (
 
 
 const Markets = ({ navigation }) => {
-  const [loading , setLoading] = useState(false)
+  const [loading, setLoading] = useState(false)
   let [dropDownData, setdropDownData] = useState(["adf", "adfds", "dfasdfsd", "adsfdsf"])
   const [selectedIndex, setSelectedIndex] = React.useState(new IndexPath(0));
   const [message, setMessage] = useState("Select an Area")
-  const [open, setOpen] = useState(false);
-  const [value, setValue] = useState(null);
-  const [items, setItems] = useState(dropDownData);
   const [markets, setMarkets] = useState()
-  const [mName, setmName] = useState('')
   const [expanded, setExpanded] = React.useState(true);
   const [displayValue, setDisplayValue] = useState("Select Area");
   const handlePress = () => setExpanded(!expanded);
@@ -84,18 +80,18 @@ const Markets = ({ navigation }) => {
           let obj = { title: res.data[i].marketName }
           arr.push(obj)
         }
-        if(arr[0]){
+        if (arr[0]) {
           setMessage(`Available Markets in ${index}`)
-        }else if (index === "select area"){
+        } else if (index === "select area") {
           setMessage(`Select an area`)
         }
-        else{
+        else {
           setMessage(`No Markets available in ${index}`)
         }
         setLoading(false)
         setMarkets(arr)
-        
-        
+
+
       })
       .catch(err => {
         setLoading(false)
@@ -103,17 +99,6 @@ const Markets = ({ navigation }) => {
       })
   }
 
-
-  const renderItem = ({ item }) => {
-
-    console.log(item.areaName)
-    return (
-      <Item
-        onPress={() => { navigation.navigate("shops", { area: item.areaName, markets, marketName: item.marketName }) }}
-        item={item}
-      />
-    );
-  }
 
 
   const renderListItem = ({ item, index }) => (
@@ -149,48 +134,26 @@ const Markets = ({ navigation }) => {
         textColor='#049f99'
         buttonColor='#e6fffe'
         mode="filled">
-       
-          {/* {markets[0] ?
-          `Available Markets in ${displayValue}`
-          :
-          `No Markets are availbale in ${displayValue}`
-          } */}
-  {message}
-        
+
+
+        {message}
+
       </Button>
 
 
+
+{/* Markets List */}
+
       <List
-        // style={styles.container}
         data={markets}
         renderItem={renderListItem}
       />
       {loading ?
-<Spinner size='lg' accessibilityLabel="Loading posts" />
+        <Spinner size='lg' accessibilityLabel="Loading posts" />
         :
         null
       }
 
-
-
-
-
-
-      {/* <View style={{ display: "flex", alignItems: "center" }}>
-        <View style={styles.marketsContainer} >
-          <Text style={styles.heading}>Markets</Text>
-          <View style={styles.inputContainer}>
-            <FlatList
-              data={markets}
-              renderItem={renderItem}
-              style={{ width: "100%" }}
-              keyExtractor={(item) => item._id}
-            />
-
-
-          </View>
-        </View>
-      </View> */}
 
     </ImageBackground>
   )

@@ -21,6 +21,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import SuccessOrder from "../Screens/SuccessOrder";
+import themeColor from "../themeColor/themeColor";
 
 
 
@@ -62,7 +63,7 @@ const TabNav = () => {
                         return <Ionicons name={iconName} size={28} color={color} />;
                     },
                     headerShown:false,
-                    tabBarActiveTintColor: '#049f99',
+                    tabBarActiveTintColor: themeColor,
                     tabBarInactiveTintColor: 'gray',
                     // tabBarShowLabel: false,
                 })}

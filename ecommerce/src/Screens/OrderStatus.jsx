@@ -5,6 +5,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { TabBar, TabView, SceneMap } from 'react-native-tab-view';
 import ProcessingScreen from './OrderStatus/Processing';
 import ShippedScreeen from './OrderStatus/Shipped';
+import themeColor from '../themeColor/themeColor'
+
 
 import ip from '../ip'
 import axios from 'axios'
@@ -119,7 +121,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold"
   },
   indicator: {
-    backgroundColor: "#049f99",
+    backgroundColor: themeColor,
     height: "100%",
     borderRadius: 50,
     // width:"40%",
