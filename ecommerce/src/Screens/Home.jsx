@@ -9,6 +9,7 @@ import Slider from '../Components/Slider/Slider';
 import ip from '../ip';
 import ItemCard from '../Components/Card/Card';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useIsFocused } from "@react-navigation/native";
 
 
 
@@ -17,6 +18,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const Height = Dimensions.get("screen").height;
+
 const Home = ({ navigation }) => {
     let [products, setProducts] = useState([])
     let [categories, setCategories] = useState([])

@@ -115,7 +115,7 @@ const Profile = ({navigation}) => {
                 textColor='white'
                 buttonColor={themeColor}
                 style={styles.button}
-
+                onPress={e=>{navigation.navigate('orderstatus')}}
             >My Orders</Button>
 
         </View>

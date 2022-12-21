@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold"
   },
   indicator: {
-    // backgroundColor: themeColor,
+    backgroundColor: themeColor,
     height: "100%",
     borderRadius: 50,
     // width:"40%",
