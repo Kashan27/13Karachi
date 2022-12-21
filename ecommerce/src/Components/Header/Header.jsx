@@ -8,6 +8,8 @@ import OptionsMenu from "react-native-menu-platform";
 import { useState } from 'react';
 import { useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useIsFocused } from "@react-navigation/native";
+
 
 
 
@@ -22,6 +24,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const Header = ({ navigation, title, goback, search, showMore, width }) => {
+  const isFocused = useIsFocused();
+
 
   let [currentUser, setUser] = useState("")
   const home = () => {
@@ -48,15 +52,17 @@ const Header = ({ navigation, title, goback, search, showMore, width }) => {
         console.log(userData, "user data in local Storage")
         if (userData) {
           setUser(userData)
+          console.log("user exist in header component k")
         } else {
           setUser("")
+          console.log("user Data is not exist")
         }
       }catch(err){
         console.log(err)
       }
     }
     getUser()
-  }, [])
+  }, [isFocused])
 
 
 
