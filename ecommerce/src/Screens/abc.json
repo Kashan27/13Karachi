@@ -1,27 +1,108 @@
-[
-        {
-                "__v": 0,
-                "_id": "639601bb3d1c0a15d4cf5e67",
-                "cartItems": [
-                        [Object
-                        ],
-                        [Object
-                        ],
-                        [Object
+{
+        "config": {
+                "adapter": [Function xhrAdapter
+                ],
+                "data": "{\"userDetails\":{\"name\":\"Kashannnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\",\"email\":\"muhammdkashan267@gmail.com\",\"address\":\"Karachi\",\"contact\":3343543215}}",
+                "headers": {
+                        "Accept": "application/json, text/plain, */*",
+                        "Content-Type": "application/json"
+                },
+                "maxBodyLength": -1,
+                "maxContentLength": -1,
+                "method": "patch",
+                "timeout": 0,
+                "transformRequest": [
+                        [Function transformRequest
                         ]
                 ],
-                "deliveryChargesOne": 100,
-                "deliveryChargesTwo": 0,
-                "hotelDate": "12/11/2022, 9:13:47 PM",
-                "orderCity": "Karachi",
-                "orderContact": 3343543215,
-                "orderState": "Sindh",
-                "paymentstatus": "Pending",
-                "shippingOne": "ABC road karachi",
-                "shippingTwo": "null", "totalBillAmount": 4899, "totalNetAmount": 4999, "userEmail": "muhammadkashan267@gmail.com"}, {"__v": 0, "_id": "639cbf5970e84b48024f6ce4", "cartItems": [[Object], [Object]], "deliveryChargesOne": 100, "deliveryChargesTwo": 0, "hotelDate": "16/12/2022,
-                23: 56: 22", "orderCity": "Karachi", "orderContact": 3343543215, "orderState": "Sindh", "paymentstatus": "Pending", "shippingOne": "Garden", "shippingTwo": "Garden
-", "totalBillAmount": 2000, "totalNetAmount": 2100, "userEmail": "muhammadkashan267@gmail.com"}, {"__v": 0, "_id": "639cbf9c70e84b48024f6ce6", "cartItems": [[Object], [Object]], "deliveryChargesOne": 100, "deliveryChargesTwo": 0, "hotelDate": "16/12/2022,
-                23: 57: 31", "orderCity": "Karachi", "orderContact": 3343543215, "orderState": "Sindh", "paymentstatus": "Pending", "shippingOne": "Garden", "shippingTwo": "Garden
-", "totalBillAmount": 2000, "totalNetAmount": 2100, "userEmail": "muhammadkashan267@gmail.com"}, {"__v": 0, "_id": "639d39e370e84b48024f6d02", "cartItems": [[Object], [Object], [Object], [Object], [Object]], "deliveryChargesOne": 100, "deliveryChargesTwo": 0, "hotelDate": "17/12/2022,
-                08: 39: 13", "orderCity": "Karachi", "orderContact": 899446, "orderState": "Sindh", "paymentstatus": "Pending", "shippingOne": "Dbhsjs", "shippingTwo": "Sbshhs
-", "totalBillAmount": 4878, "totalNetAmount": 4978, "userEmail": "muhammadkashan267@gmail.com"}]
+                "transformResponse": [
+                        [Function transformResponse
+                        ]
+                ],
+                "transitional": {
+                        "clarifyTimeoutError": false,
+                        "forcedJSONParsing": true,
+                        "silentJSONParsing": true
+                },
+                "url": "https://13k.up.railway.app/api/updateuser/636bc7cc49422037a9a4b96c",
+                "validateStatus": [Function validateStatus
+                ],
+                "xsrfCookieName": "XSRF-TOKEN",
+                "xsrfHeaderName": "X-XSRF-TOKEN"
+        },
+        "data": null,
+        "headers": {
+                "access-control-allow-origin": "*",
+                "content-length": "4",
+                "content-type": "application/json; charset=utf-8",
+                "date": "Wed, 21 Dec 2022 16:04:18 GMT",
+                "etag": "W/\"4-K+iMpCQsduglOsYkdIUQZQMtaDM\"",
+                "server": "railway",
+                "x-envoy-upstream-service-time": "227",
+                "x-powered-by": "Express"
+        },
+        "request": {
+                "DONE": 4,
+                "HEADERS_RECEIVED": 2,
+                "LOADING": 3,
+                "OPENED": 1,
+                "UNSENT": 0,
+                "_aborted": false,
+                "_cachedResponse": undefined,
+                "_hasError": false,
+                "_headers": {
+                        "accept": "application/json, text/plain, */*",
+                        "content-type": "application/json"
+                },
+                "_incrementalEvents": false,
+                "_lowerCaseResponseHeaders": {
+                        "access-control-allow-origin": "*",
+                        "content-length": "4",
+                        "content-type": "application/json; charset=utf-8",
+                        "date": "Wed, 21 Dec 2022 16:04:18 GMT",
+                        "etag": "W/\"4-K+iMpCQsduglOsYkdIUQZQMtaDM\"",
+                        "server": "railway",
+                        "x-envoy-upstream-service-time": "227",
+                        "x-powered-by": "Express"
+                },
+                "_method": "PATCH",
+                "_perfKey": "network_XMLHttpRequest_https://13k.up.railway.app/api/updateuser/636bc7cc49422037a9a4b96c",
+                "_performanceLogger": {
+                        "_closed": false,
+                        "_extras": [Object
+                        ],
+                        "_pointExtras": [Object
+                        ],
+                        "_points": [Object
+                        ],
+                        "_timespans": [Object
+                        ]
+                },
+                "_requestId": null,
+                "_response": "null",
+                "_responseType": "",
+                "_sent": true,
+                "_subscriptions": [],
+                "_timedOut": false,
+                "_trackingName": "unknown",
+                "_url": "https://13k.up.railway.app/api/updateuser/636bc7cc49422037a9a4b96c",
+                "readyState": 4,
+                "responseHeaders": {
+                        "access-control-allow-origin": "*",
+                        "content-length": "4",
+                        "content-type": "application/json; charset=utf-8",
+                        "date": "Wed, 21 Dec 2022 16:04:18 GMT",
+                        "etag": "W/\"4-K+iMpCQsduglOsYkdIUQZQMtaDM\"",
+                        "server": "railway",
+                        "x-envoy-upstream-service-time": "227",
+                        "x-powered-by": "Express"
+                },
+                "responseURL": "https://13k.up.railway.app/api/updateuser/636bc7cc49422037a9a4b96c",
+                "status": 201,
+                "timeout": 0,
+                "upload": {},
+                "withCredentials": true
+        },
+        "status": 201,
+        "statusText": undefined
+}

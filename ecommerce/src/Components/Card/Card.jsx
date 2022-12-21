@@ -34,6 +34,7 @@ const styles = StyleSheet.create({
 
     container: {
         width: "27%",
+        display:"flex",
         // backgroundColor:"white",
         // marginLeft: 20,
         margin:10,
@@ -47,7 +48,7 @@ const styles = StyleSheet.create({
         elevation: 15
     },
     image: {
-        width: "100%",
+        // width: 100    ,
         height: 100,
     },
     prodName: {

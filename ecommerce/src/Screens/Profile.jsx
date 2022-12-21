@@ -7,8 +7,25 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import themeColor from '../themeColor/themeColor';
 import { List } from 'react-native-paper';
 import { Button } from 'react-native-paper';
+import Header from '../Components/Header/Header';
+import { useIsFocused } from "@react-navigation/native";
 
-const Profile = ({navigation}) => {
+
+
+
+
+
+
+// const MenuComp = ({ visible }) => {
+//   return (
+
+//   )
+// }
+
+
+
+const Profile = ({ navigation }) => {
+    const isFocused = useIsFocused();
     let [user, setUser] = useState({ email: "", phone: "", address: "" })
 
     let handleGetUserProfile = async () => {
@@ -36,10 +53,10 @@ const Profile = ({navigation}) => {
 
 
     let handleLogOut = async () => {
-        try{
-           await AsyncStorage.removeItem('user')
-           navigation.navigate('home')
-        }catch(err){
+        try {
+            await AsyncStorage.removeItem('user')
+            navigation.navigate('home')
+        } catch (err) {
             console.log(err.message)
         }
     }
@@ -48,11 +65,12 @@ const Profile = ({navigation}) => {
 
     useEffect(() => {
         handleGetUserProfile()
-    }, [])
+    }, [isFocused])
 
 
     return (
         <View>
+            <Header style={{ zIndex: 1 }} navigation={navigation} width={"80%"} showMore={true} title="App" />
             <View style={styles.header}>
                 <View style={styles.profileImage}>
                     <Image
@@ -62,7 +80,7 @@ const Profile = ({navigation}) => {
 
             </View>
             <Text style={styles.name}>
-                Muhammad Kashan
+                {user.name}
             </Text>
             <Text style={styles.personalHeading}>
                 Personal
@@ -87,35 +105,36 @@ const Profile = ({navigation}) => {
                 title="Role"
                 description="User"
                 left={props => <List.Icon {...props} icon="account" />}
-                />
+            />
 
-        <View style={{display:"flex" , justifyContent:"space-around" , flexDirection:"row" }}>
-            
-            <Button
-                icon={"pencil-outline"}
-                mode='filled'
-                textColor='white'
-                buttonColor={themeColor}
-                style={styles.button}
-                
+            <View style={{ display: "flex", justifyContent: "space-around", flexDirection: "row" }}>
+
+                <Button
+                    onPress={e=>{navigation.navigate('editprofile' , user)}}
+                    icon={"pencil-outline"}
+                    mode='filled'
+                    textColor='white'
+                    buttonColor={themeColor}
+                    style={styles.button}
+
                 >Edit Profile</Button>
-            <Button
-                icon={"account-arrow-left"}
-                mode='contained'
-                textColor={themeColor}
-                buttonColor="#c3f7f5"
-                style={styles.button}
-                onPress={e=>{handleLogOut()}}
-                
+                <Button
+                    icon={"account-arrow-left"}
+                    mode='contained'
+                    textColor={themeColor}
+                    buttonColor="#c3f7f5"
+                    style={styles.button}
+                    onPress={e => { handleLogOut() }}
+
                 >LogOut</Button>
-                </View>
-            <Button 
+            </View>
+            <Button
                 icon={"format-list-group"}
                 mode='filled'
                 textColor='white'
                 buttonColor={themeColor}
                 style={styles.button}
-                onPress={e=>{navigation.navigate('orderstatus')}}
+                onPress={e => { navigation.navigate('orderstatus') }}
             >My Orders</Button>
 
         </View>
@@ -152,6 +171,7 @@ const styles = StyleSheet.create({
     personalHeading: {
         fontSize: 20,
         padding: 40,
+        paddingBottom:10,
         fontWeight: "bold",
         color: "grey"
     },
@@ -160,10 +180,12 @@ const styles = StyleSheet.create({
         width: 130,
         borderRadius: 100,
     },
-    button:{
-        borderRadius:10,
-        width:"35%",
-        margin:25,
+    button: {
+        borderRadius: 10,
+        width: "35%",
+        margin: 25,
+        marginTop:10,
+        marginBottom:10
     }
 
 })

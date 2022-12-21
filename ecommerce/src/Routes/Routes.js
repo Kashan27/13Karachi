@@ -23,6 +23,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import SuccessOrder from "../Screens/SuccessOrder";
 import themeColor from "../themeColor/themeColor";
+import EditProfile from '../Screens/EditProfile';
 
 
 
@@ -94,6 +95,7 @@ const StackNav = () => {
                 {/* <Stack.Screen name="markets" component={Markets} /> */}
                 <Stack.Screen  name="test" component={TabNav} />
                 <Stack.Screen name="profile" component={Profile} />
+                <Stack.Screen name="editprofile" component={EditProfile} />
                 <Stack.Screen name="login" component={Login} />
                 <Stack.Screen name="forgotpass" component={ForgotPass} />
                 <Stack.Screen name="newpass" component={NewPass} />

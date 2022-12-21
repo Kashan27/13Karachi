@@ -67,7 +67,7 @@ const Header = ({ navigation, title, goback, search, showMore, width }) => {
 
 
   return (<>
-    <Appbar.Header mode="center-aligned">
+    <Appbar.Header style={{backgroundColor:"transparent"}} mode="center-aligned">
 
 
       {/* goback action */}

@@ -175,6 +175,7 @@ const Signup = ({ navigation }) => {
         {/* SignupButton */}
         <View style={styles.loginButton}>
           <Button
+          buttonColor={themeColor}
             onPress={e => { handleSignup() }}
             mode="contained"
             style={styles.button}
@@ -202,7 +203,7 @@ const Signup = ({ navigation }) => {
 const styles = StyleSheet.create({
   button: {
     width: "75%",
-    // backgroundColor: themeColor,
+    backgroundColor: themeColor,
     borderRadius: 5,
   },
   banner: {
