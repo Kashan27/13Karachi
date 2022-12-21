@@ -8,6 +8,8 @@ import { ApplicationProvider , IconRegistry } from '@ui-kitten/components';
 import * as eva from '@eva-design/eva';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
 import { NativeBaseProvider, Text, Box } from "native-base";
+import { useEffect } from 'react';
+import SplashScreen from 'react-native-splash-screen';
 
 
 
@@ -25,6 +27,11 @@ import { NativeBaseProvider, Text, Box } from "native-base";
 
 
 const App = () => {
+
+
+  useEffect(() => {
+    SplashScreen.hide()
+  }, []);
 
   const isDarkMode = useColorScheme() === 'dark';
 

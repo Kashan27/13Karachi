@@ -43,12 +43,16 @@ const Header = ({ navigation, title, goback, search, showMore, width }) => {
 
   useEffect(() => {
     let getUser = async () => {
-      let userData = await AsyncStorage.getItem("user")
-      console.log(userData, "effect")
-      if (userData) {
-        setUser(userData)
-      } else {
-        setUser("")
+      try{
+        let userData = await AsyncStorage.getItem("user")
+        console.log(userData, "user data in local Storage")
+        if (userData) {
+          setUser(userData)
+        } else {
+          setUser("")
+        }
+      }catch(err){
+        console.log(err)
       }
     }
     getUser()

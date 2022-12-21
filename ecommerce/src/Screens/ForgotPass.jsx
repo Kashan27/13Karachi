@@ -21,7 +21,7 @@ const ForgotPass = ({ navigation }) => {
     const [code , setCode] = useState();
     const [inputCode , setInputCode] = useState();
     const [email , setEmail] = useState('') 
-console.log(themeColor)
+// console.log(themeColor)
     const handleInput = (e) => {
         setEmail(e)
         console.log(email)

@@ -10,6 +10,7 @@ import { Button } from 'react-native-paper';
 import { Chip } from 'react-native-paper';
 import { TouchableWithoutFeedback } from 'react-native';
 import { Autocomplete, AutocompleteItem, Icon } from '@ui-kitten/components';
+import themeColor from '../themeColor/themeColor';
 // import { styles } from 'react-native-image-slider-banner/src/style';
 
 

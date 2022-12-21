@@ -7009,6 +7009,11 @@
     "prop-types" "^15.6.1"
     "react-addons-shallow-compare" "15.6.2"
 
+"react-native-splash-screen@^3.3.0":
+  "integrity" "sha512-rGjt6HkoSXxMqH4SQUJ1gnPQlPJV8+J47+4yhgTIan4bVvAwJhEeJH7wWt9hXSdH4+VfwTS0GTaflj1Tw83IhA=="
+  "resolved" "https://registry.npmjs.org/react-native-splash-screen/-/react-native-splash-screen-3.3.0.tgz"
+  "version" "3.3.0"
+
 "react-native-svg@^12.1.1":
   "integrity" "sha512-NIAJ8jCnXGCqGWXkkJ1GTzO4a3Md5at5sagYV8Vh4MXYnL4z5Rh428Wahjhh+LIjx40EE5xM5YtwyJBqOIba2Q=="
   "resolved" "https://registry.npmjs.org/react-native-svg/-/react-native-svg-12.1.1.tgz"
@@ -8331,6 +8336,11 @@
   "integrity" "sha512-VkQZJbO8zVImzYFteBXvBOZEl1qL175WH8VmZcxF2fZAoudNhNDvHi+doCaAEdU2l2vtcIwa2zn0QK5+I1HQ3Q=="
   "resolved" "https://registry.npmjs.org/warn-once/-/warn-once-0.1.1.tgz"
   "version" "0.1.1"
+
+"watchman@^1.0.0":
+  "integrity" "sha512-f7sP6DSVQzNUAXIBctvYyJyq6/j/FtWoEn6yh/Ot/E14a3am7JMH0tygWt6iE+T+DT+BNOUAT3hM/gZ7W9Ycmw=="
+  "resolved" "https://registry.npmjs.org/watchman/-/watchman-1.0.0.tgz"
+  "version" "1.0.0"
 
 "wcwidth@^1.0.1":
   "integrity" "sha512-XHPEwS0q6TaxcvG85+8EYkbiCux2XtWG2mkc47Ng2A77BQu9+DqIOJldST4HgPkuea7dvKSj5VgX3P1d4rW8Tg=="

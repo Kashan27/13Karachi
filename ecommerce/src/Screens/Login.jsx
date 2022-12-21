@@ -25,16 +25,16 @@ export const Login = ({ navigation }) => {
 
   let [loading, setLoading] = useState(false)
   let [userDetails, setUserDetails] = useState({
-    email: "",
-    password: ""
+    email: "muhammadkashan267@gmail.com",
+    password: "888888"
   })
 
 
 
   const handleLogin = async (event) => {
-    let user = await AsyncStorage.getItem("user")
+    // let user = await AsyncStorage.getItem("user")
     // user ? user = JSON.parse(user) : null
-    console.log(user, "user")
+    // console.log(user, "user")
     // console.log(axios)
     let { email, password } = userDetails
     if (email && password) {
@@ -43,6 +43,7 @@ export const Login = ({ navigation }) => {
         .then(async (response) => {
           try {
             await AsyncStorage.setItem("user", JSON.stringify(response.data))
+            console.log(response.data,"this is the response of login")
             navigation.navigate("home")
           } catch (err) {
             console.log(err)

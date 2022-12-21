@@ -8,6 +8,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { parse } from '@babel/core';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MultiProdImages from '../Components/MultiProductImages/MultiProdImages';
+import themeColor from '../themeColor/themeColor';
 import axios from 'axios';
 import ip from '../ip';
 
@@ -290,7 +291,7 @@ const SingleProductScreen = ({ route, navigation }) => {
                 {/*    Price and Cart Button          */}
                 <View style={{ display: "flex", flexDirection: "row", width: "100%", justifyContent: "space-between", paddingHorizontal: 18, marginTop: 15 }}>
                     <Text style={styles.price}>{productPrice} PKR</Text>
-                    <Button style={{ width: 130 }} icon="cart" mode="contained" onPress={() => { handleAddToCart() }}>
+                    <Button style={{ width: 130 }} buttonColor={themeColor} icon="cart" mode="contained" onPress={() => { handleAddToCart() }}>
                         Add To Cart
                     </Button>
                 </View>

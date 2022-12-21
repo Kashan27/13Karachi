@@ -202,7 +202,7 @@ const Signup = ({ navigation }) => {
 const styles = StyleSheet.create({
   button: {
     width: "75%",
-    backgroundColor: themeColor,
+    // backgroundColor: themeColor,
     borderRadius: 5,
   },
   banner: {
@@ -232,7 +232,7 @@ const styles = StyleSheet.create({
     padding: 10,
     marginLeft: 20,
     marginTop: 10,
-    color: themeColor
+    // color: themeColor
   },
   loginContainer: {
     height: 550,

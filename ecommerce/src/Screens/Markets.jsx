@@ -9,6 +9,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Header from '../Components/Header/Header';
+import themeColor from '../themeColor/themeColor';
 import ip from "../ip"
 
 
@@ -44,7 +45,7 @@ const Markets = ({ navigation }) => {
     getData()
   }, [])
 
-
+// console.log(markets,"markets")
 
 
   const getData = () => {
@@ -56,7 +57,7 @@ const Markets = ({ navigation }) => {
         for (let i = 0; i < res.data.length; i++) {
           let obj = { label: data[i].areaName, value: data[i].areaName }
           arr.push(obj)
-          console.log(obj)
+          // console.log(obj)
         }
         setdropDownData(arr)
       })
@@ -68,13 +69,13 @@ const Markets = ({ navigation }) => {
 
   const getMarket = (index) => {
     // console.log(index)
-    console.log(index)
+    // console.log(index)
     setLoading(true)
     setDisplayValue(index)
 
     axios.get(`https://${ip}/api/getareaname/${index}`)
       .then((res) => {
-        console.log(res.data, "markets");
+        // console.log(res.data, "markets");
         let arr = []
         for (let i = 0; i < res.data.length; i++) {
           let obj = { title: res.data[i].marketName }
@@ -99,10 +100,13 @@ const Markets = ({ navigation }) => {
       })
   }
 
+// console.log(dropDownData,"drop")
 
-
-  const renderListItem = ({ item, index }) => (
-    <ListItem title={`${item.title} ${index + 1}`} />
+// console.log(markets , "marketsssssssssssssssssssssssss")
+  const renderListItem = ({ item, index }) => 
+    // console.log(item)
+    (
+    <ListItem onPress={e=>{navigation.navigate('shops' , {markets , marketName: item.title , area:displayValue}  )}}  title={`${item.title} ${index + 1}`} />
   );
 
 
@@ -122,6 +126,7 @@ const Markets = ({ navigation }) => {
           onSelect={e => { getMarket(dropDownData[e.row].value) }}>
           {
             dropDownData.map((item, index) => {
+              // console.log(item,"item")
               return (
                 <SelectItem title={item.label} />
               )

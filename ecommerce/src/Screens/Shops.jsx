@@ -8,6 +8,7 @@ import ShopsSlider from '../Components/ShopSlider/ShopsSlider';
 import ip from "../ip"
 import { Button } from 'react-native-paper';
 import { Card, Layout, Text } from '@ui-kitten/components';
+import themeColor from '../themeColor/themeColor';
 
 
 
@@ -18,13 +19,13 @@ import { Card, Layout, Text } from '@ui-kitten/components';
 
 const Shops = ({ route, navigation }) => {
 
-
     const {area , marketName, markets } = route.params;
     const [shops , setShops] = useState([])
     const [allProd, setAllProd] = useState()
     const [currentMarket, setCurrentMarket] = useState(marketName)
     const [currentArea, setCurrentArea] = useState(area)
     let [shopsList, setShopsList] = useState(shops)
+    // console.log(route.params , "ppaarraammss")
 
 
 
@@ -48,7 +49,6 @@ const Shops = ({ route, navigation }) => {
     }, [])
 
     const getProducts = () => {
-        console.log(marketName)
         axios.get(`https://${ip}/api/getmarket/${marketName}`)
             .then(res => {
                 let data = res.data
@@ -65,14 +65,6 @@ const Shops = ({ route, navigation }) => {
 
     const renderItem = ({item}) => {
         return (
-            // <ItemCard navigation={navigation} onPress={e => { console.log("itemcard") }} item={item} />
-            // <TouchableOpacity onPress={e=>{navigation.navigate("products" , {shop:item.hotelname , marketName})}} style={styles.shops}>
-            //     <Text style={styles.shopName}>
-            //         {item.hotelname}
-            //     </Text>
-            // </TouchableOpacity>
-            // <TouchableOpacity style={styles.shops}>
-
             <Card
              onPress={e=>{navigation.navigate("products" , {shop:item.hotelname , marketName})}}
               style={styles.card} status='primary'
@@ -85,9 +77,7 @@ const Shops = ({ route, navigation }) => {
         )
     }
     const renderMarkets = (item) => {
-        return (
-            <ShopsSlider name={item.item.marketName} updMarket={handleUpdateMarket} markets={item} />
-        )
+        return (<ShopsSlider name={item.item.title} updMarket={handleUpdateMarket} markets={item} />)
     }
 
 

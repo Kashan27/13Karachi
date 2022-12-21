@@ -1,3 +1,4 @@
+import * as React from 'react';
 import Login from "../Screens/Login";
 import Signup from "../Screens/Signup";
 import Markets from "../Screens/Markets";

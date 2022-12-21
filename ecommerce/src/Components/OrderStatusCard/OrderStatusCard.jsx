@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import React from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
+import themeColor from '../../themeColor/themeColor';
 
 const OrderStatusCard = ({ item , status}) => {
   const [msg, setMsg] = useState()
@@ -199,6 +200,6 @@ const styles = StyleSheet.create({
   textStatus:{
     fontSize:17,
     fontWeight: "bold",  
-    color:themeColor
+    // color:themeColor
   }
 })
