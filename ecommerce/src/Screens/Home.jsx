@@ -25,7 +25,6 @@ const Home = ({ navigation }) => {
     let [carousel , setCarousel] = useState([])
 
     useEffect(() => {
-        // console.log(Height, "Height")
         axios.get(`https://${ip}/api/allpostdata`)
             .then(res => {
                 let data = res.data
@@ -37,9 +36,7 @@ const Home = ({ navigation }) => {
             })
         axios.get(`https://${ip}/api/allgetcategory`)
             .then(res => {
-                // console.log(res.data[0].categoryName,"categoories")
                 setCategories(res.data)
-                // console.log(res.data)
             })
             .catch(err => {
                 console.log(err)
@@ -80,7 +77,10 @@ const Home = ({ navigation }) => {
             <View>
                 <FlatList
                     data={categories}
-                    renderItem={item => <Text style={styles.categoryName}>{item.item.categoryName}</Text>}
+                    renderItem={item => <Text
+                         onPress={e=>{navigation.navigate('categorywiseproducts' , {item , allCategories:categories})}}
+                          style={styles.categoryName}>{item.item.categoryName}
+                          </Text>}
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}
                 />

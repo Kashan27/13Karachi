@@ -16,7 +16,6 @@ const NewPass = ({ navigation, route }) => {
     const onDismissSnackBar = () => setVisible(false);
     const { email } = route.params
     const [disable, setDisable] = useState(false)
-    // console.log(route.params)
     const [msg, setMsg] = useState()
     const [visible, setVisible] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -37,11 +36,9 @@ const NewPass = ({ navigation, route }) => {
         if (password === confirmPassword) {
 
             if (password.length > 6) {
-                console.log(email)
                 // setLoading(true)
                 axios.post(`http://${ip}/api/updatepassword`, { email, password })
                     .then(res => {
-                        console.log(res.data)
                         setLoading(false)
                         setDisable(true)
                         setMsg(res.data.message)
@@ -51,7 +48,6 @@ const NewPass = ({ navigation, route }) => {
                         setMsg(error.message)
                         setVisible(true)
                         setLoading(false)
-                        console.log(error)
                     })
 
 
@@ -65,7 +61,6 @@ const NewPass = ({ navigation, route }) => {
     }
 
     const handleCheckCode = () => {
-        // console.log(typeof(inputCode) , typeof(code))
         if (parseInt(inputCode) === code) {
             alert("matched")
 

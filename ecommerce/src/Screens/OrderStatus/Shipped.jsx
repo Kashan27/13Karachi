@@ -4,7 +4,6 @@ import OrderStatusCard from '../../Components/OrderStatusCard/OrderStatusCard'
 import React from 'react'
 
 const Shipped = ({data}) => {
-    // console.log(data,"processing")
 
 let [ShippedOrder, setShippedOrder]= useState([])
 

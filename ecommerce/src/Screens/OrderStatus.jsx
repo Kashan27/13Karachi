@@ -44,7 +44,6 @@ let handleGetData = async () => {
   // axios.patch(`https://${ip}/api/ordersupdate/6365861747d99219e9be2dd1`)
   let email = await AsyncStorage.getItem('user')
   email = JSON.parse(email).data.email
-  console.log(email,"email")
   axios.get(`https://${ip}/api/allbookbyemail/${email}`)
     .then((res) => {
       setOrders(res.data)

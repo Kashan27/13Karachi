@@ -11,33 +11,53 @@ import { Chip } from 'react-native-paper';
 import { TouchableWithoutFeedback } from 'react-native';
 import { Autocomplete, AutocompleteItem, Icon } from '@ui-kitten/components';
 import themeColor from '../themeColor/themeColor';
+import { useIsFocused } from "@react-navigation/native";
+
+
+
+
+
+
+
+// const MenuComp = ({ visible }) => {
+//   return (
+
+//   )
+// }
+
+
+
 // import { styles } from 'react-native-image-slider-banner/src/style';
 
 
-const Products = ({ route, navigation }) => {
-    
-    
+
+const CategoryWiseProducts = ({ route, navigation }) => {
+    const isFocused = useIsFocused();
+
+
 
     const filter = (item, query) => item.categoryName.toLowerCase().includes(query.toLowerCase());
 
     const StarIcon = (props) => (
         <Icon {...props} name='copy-outline' />
-        );
-        
-        
+    );
+
+
     const [data, setData] = useState([]);
     const [categories, setCategories] = useState([])
-    const [value, setValue] = useState(null);
-    const {shop, marketName } = route.params;
+    const { shop, marketName , item , allCategories } = route.params;
+    const [value, setValue] = useState(item.item.categoryName);
     const [allProd, setAllProd] = useState()
     const [currentShop, setCurrentShop] = useState(shop)
     const [shopList, setShopList] = useState([])
     let [p, setP] = useState([])
-    
-    
-    
+
+
+
+
     const handleUpdateShop = (cShop) => {
         let filterData = allProd.filter(val => val.hotelname === cShop)
+
         setP(filterData)
         setCurrentShop(cShop)
         setValue('');
@@ -47,23 +67,23 @@ const Products = ({ route, navigation }) => {
 
     const handleSetCategories = () => {
         axios.get(`https://${ip}/api/allgetcategory`)
-        .then(res => {
-            setCategories(res.data)
-            setData(res.data)
-        })
-        .catch(err => {
-            console.log(err)
-        })
-
+            .then(res => {
+                
+                setCategories(res.data)
+                setData(res.data)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+            
     }
 
-    const handleFilterByCategory = () => {
-            let filterData = allProd ? allProd.filter(val => 
-                (value ? val.category === value : true )
-                && 
-                val.hotelname === currentShop) : []
-            setP(filterData)
-            
+    const handleFilterByCategory = (categoryValue) => {
+        let filterData = allProd ? allProd.filter(val => (val.category === categoryValue)) : []
+        
+        setP(filterData)
+
+
     }
 
 
@@ -72,26 +92,26 @@ const Products = ({ route, navigation }) => {
     const onSelect = (index) => {
         setValue(data[index].categoryName);
     };
-
+    
     const onChangeText = (query) => {
         setValue(query);
         setData(data.filter(item => filter(item, query)));
     };
 
-    const clearInput = () => {
-        setValue('');
-        setData(categories);
-        // handleUpdateShop()
-    };
-
-    const renderOption = (item, index) => (
-        <AutocompleteItem
-            key={index}
-            title={item.categoryName}
-            accessoryLeft={StarIcon}
-        />
-        // <Text>{item.title}</Text>
-    );
+    // const clearInput = () => {
+        //     setValue('');
+    //     setData(categories);
+    //     // handleUpdateShop()
+    // };
+    
+    // const renderOption = (item, index) => (
+        //     <AutocompleteItem
+        //         key={index}
+        //         title={item.categoryName}
+        //         accessoryLeft={StarIcon}
+    //     />
+    //     // <Text>{item.title}</Text>
+    // );
 
 
 
@@ -104,7 +124,7 @@ const Products = ({ route, navigation }) => {
             <Text>Clear Filter</Text>
         </TouchableWithoutFeedback>
     );
-
+    
     useEffect(() => {
         getProducts()
         getShops()
@@ -115,31 +135,33 @@ const Products = ({ route, navigation }) => {
 
     
     useEffect(() => {
-        handleFilterByCategory()
-    }, [value]);
+        // handleFilterByCategory(item.item.categoryName)
+
+    }, [ ]);
 
     const getShops = (shop) => {
 
         axios.get(`https://${ip}/api/allsignup`)
-            .then(res => {
+        .then(res => {
                 let data = res.data
                 let filterShops = data.filter(val => val.marketname === marketName)
                 setShopList(filterShops)
-
+                
             })
             .catch(err => {
                 console.error(err)
             })
-
-    }
-
+            
+        }
+    
     const getProducts = () => {
         axios.get(`http://${ip}/api/allpostdata`)
-            .then(res => {
+        .then(res => {
                 let data = res.data
                 let filterData = data.filter(val => val.hotelname === currentShop)
-                setP(filterData)
+                // setP(filterData)
                 setAllProd(res.data)
+                handleFilterByCategory(item.item.categoryName)
             })
             .catch(err => {
                 console.error(err)
@@ -155,9 +177,9 @@ const Products = ({ route, navigation }) => {
             <ItemCard navigation={navigation}  item={item} />
         )
     }
-    const renderShopList = (item) => {
+    const renderCategoryList = (item) => {
         return (
-            <ShopsSlider name={item.item.hotelname} updMarket={handleUpdateShop} markets={item} />
+            <Button onPress={e=>{handleFilterByCategory(item.item.categoryName)}} mode='filled' style={styles.categories}>{item.item.categoryName}</Button>
         )
     }
 
@@ -167,26 +189,15 @@ const Products = ({ route, navigation }) => {
             <Header navigation={navigation} width={"60%"} showMore={true} search={true} goback={e => { navigation.goBack() }} title="App" />
             <View style={{ width: "100%" }}>
                 <View style={styles.shopsList}>
-                    <Text style={styles.shopsHeader}>Shops</Text>
+                    <Text style={styles.shopsHeader}>  Categories</Text>
                     <FlatList
-                        data={shopList}
-                        renderItem={renderShopList}
+                        
+                        data={allCategories}
+                        renderItem={renderCategoryList}
                         showsVerticalScrollIndicator={false}
                         horizontal={true}
                     />
 
-                </View>
-
-                <Autocomplete
-                    placeholder='Filter Category'
-                    value={value}
-                    accessoryRight={renderCloseIcon}
-                    onChangeText={onChangeText}
-                    onSelect={onSelect}>
-                    {data.map(renderOption)}
-                </Autocomplete>
-                <View style={{ display: "flex", width: "100%", alignItems: "center" }}>
-                    <Button onClick={e => { navigation.navigate('shops') }} style={{ margin: 10 }} labelStyle={{ fontSize: 18 }} mode='contained' >{currentShop}</Button>
                 </View>
 
 
@@ -203,31 +214,36 @@ const Products = ({ route, navigation }) => {
                         <Text style={{ fontSize: 30, textAlign: "center", marginTop: "50%" }}>No Products Found</Text>
 
                     }
-                </View>
+                </View> 
             </View>
         </>
     )
 }
 
-export default Products
+export default CategoryWiseProducts
 
 // style={{ display: "flex", alignItems: "center", width: "100%", height: 50, marginVertical: 10 
 const styles = StyleSheet.create({
     shopsList: {
-        display:"flex",
-        width:"100%",
-        height:60,
-        flexDirection:"row",
+        display: "flex",
+        width: "100%",
+        height: 60,
+        flexDirection: "row",
         // backgroundColor:"red",
-        alignItems:"center",
-    
-        
+        alignItems: "center",
+
+
     },
-    shopsHeader:{
-        fontSize:20,
-        borderRightColor:"grey",
-        borderRightWidth:1,
-        borderStyle:"solid",
-        paddingRight:7
+    shopsHeader: {
+        fontSize: 20,
+        borderRightColor: "grey",
+        borderRightWidth: 1,
+        borderStyle: "solid",
+        paddingRight: 7
+    },
+    categories:{
+        // width:"100%",
+        
+        
     }
 })

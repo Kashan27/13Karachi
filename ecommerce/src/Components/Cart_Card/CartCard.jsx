@@ -10,7 +10,6 @@ const CartCard = ({ item, handleSnack, index, removeItem, handleOrderQty }) => {
   let availableQty = item.availableQty
   let [itemQty, setItemQty] = useState(item.qty)
 
-  // console.log(item.availableQty)
   const { imageURL, productName, itemSize, itemColor, productPrice, qty } = item
   const [visible, setVisible] = useState(false);
   const onToggleSnackBar = () => setVisible(!visible);
@@ -21,12 +20,9 @@ const CartCard = ({ item, handleSnack, index, removeItem, handleOrderQty }) => {
 
 
   const handleCounter = (value) => {
-    // console.log(itemQty)
 
     switch (value) {
       case "add":
-        console.log("add")
-        // console.log(availableQty)
         if (itemQty < availableQty) {
           setItemQty(itemQty + 1)
           handleOrderQty(itemQty + 1, index)
@@ -38,7 +34,6 @@ const CartCard = ({ item, handleSnack, index, removeItem, handleOrderQty }) => {
         }
         break;
       case "less":
-        console.log("less")
         if (itemQty > 1) {
           setItemQty(itemQty - 1)
           handleOrderQty(itemQty - 1, index)
@@ -50,13 +45,11 @@ const CartCard = ({ item, handleSnack, index, removeItem, handleOrderQty }) => {
 
 
   const handlecheck = async () => {
-    console.log("check")
     try {
       const cartItems = await AsyncStorage.getItem("cart")
       let json = JSON.parse(cartItems)
       json[0].hotelname = "kashan"
       await AsyncStorage.setItem("cart", JSON.stringify(json))
-      console.log(json)
     } catch (err) {
       console.log(err)
     }

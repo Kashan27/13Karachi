@@ -1,7 +1,7 @@
 
 
 import React from 'react';
-import { StyleSheet, useColorScheme } from 'react-native';
+import { StyleSheet, StatusBar , useColorScheme } from 'react-native';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import Routes from './Routes/Routes';
 import { ApplicationProvider , IconRegistry } from '@ui-kitten/components';
@@ -10,6 +10,7 @@ import { EvaIconsPack } from '@ui-kitten/eva-icons';
 import { NativeBaseProvider, Text, Box } from "native-base";
 import { useEffect } from 'react';
 import SplashScreen from 'react-native-splash-screen';
+import themeColor from './themeColor/themeColor';
 
 
 
@@ -47,7 +48,12 @@ const App = () => {
 
 
   return (
-    <>
+    <><StatusBar
+    animated={true}
+    backgroundColor={themeColor}
+    // barStyle={statusBarStyle}
+    // showHideTransition={statusBarTransition}
+    hidden={false} />
     <NativeBaseProvider>
 
       <IconRegistry icons={EvaIconsPack} />

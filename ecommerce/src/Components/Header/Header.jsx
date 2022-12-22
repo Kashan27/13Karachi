@@ -31,7 +31,6 @@ const Header = ({ navigation, title, goback, search, showMore, width }) => {
   const home = () => {
     navigation.navigate("home")
   }
-  const _handleSearch = () => console.log('Searching');
 
   const login = () => { navigation.navigate("login") }
   const signup = () => { navigation.navigate("signup") }
@@ -49,13 +48,10 @@ const Header = ({ navigation, title, goback, search, showMore, width }) => {
     let getUser = async () => {
       try{
         let userData = await AsyncStorage.getItem("user")
-        console.log(userData, "user data in local Storage")
         if (userData) {
           setUser(userData)
-          console.log("user exist in header component k")
         } else {
           setUser("")
-          console.log("user Data is not exist")
         }
       }catch(err){
         console.log(err)
@@ -86,11 +82,11 @@ const Header = ({ navigation, title, goback, search, showMore, width }) => {
         null}
 
       {/* search */}
-      {false
+      {/* {false
         ?
-        <Appbar.Action icon="magnify" onPress={_handleSearch} />
+        <Appbar.Action icon="magnify"  />
         :
-        null}
+        null} */}
 
      
 

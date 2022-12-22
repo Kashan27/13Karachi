@@ -57,7 +57,6 @@ const Cart = ({ navigation }) => {
   //     renderItem
 
   const renderItem = ({ item, index }) => {
-    console.log(index)
     return (
       <CartCard
         handleOrderQty={handleOrderQty}
@@ -77,13 +76,11 @@ const Cart = ({ navigation }) => {
 
       // Calculation the sum using forEach
       parse.forEach(x => {
-        // console.log(x.qty,"x")
         let total = x.qty * x.productPrice
         sum += total;
       });
       setSubTotal(sum);
       setCart(parse)
-      // console.log(parse)
     } catch (err) {
       console.log(err.message)
     }
@@ -92,7 +89,6 @@ const Cart = ({ navigation }) => {
 
 
   const handleOrderQty = async (itemQty, index) => {
-    console.log(itemQty)
     cart[index].qty = itemQty
     setCart(cart)
     await AsyncStorage.setItem("cart", JSON.stringify(cart))
@@ -113,7 +109,6 @@ const Cart = ({ navigation }) => {
   }
 
 
-  // console.log(Math.round(height))
 
   return (
     <>

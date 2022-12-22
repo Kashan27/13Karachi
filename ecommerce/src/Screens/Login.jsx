@@ -32,10 +32,7 @@ export const Login = ({ navigation }) => {
 
 
   const handleLogin = async (event) => {
-    // let user = await AsyncStorage.getItem("user")
-    // user ? user = JSON.parse(user) : null
-    // console.log(user, "user")
-    // console.log(axios)
+   
     let { email, password } = userDetails
     if (email && password) {
       setLoading(true)
@@ -43,12 +40,10 @@ export const Login = ({ navigation }) => {
         .then(async (response) => {
           try {
             await AsyncStorage.setItem("user", JSON.stringify(response.data))
-            console.log(response.data,"this is the response of login")
             navigation.navigate("home")
           } catch (err) {
             console.log(err)
           }
-          // console.log(response.data);
           setLoading(false)
         })
         .catch(err => {
@@ -56,7 +51,6 @@ export const Login = ({ navigation }) => {
           console.log(err.message)
         })
     } else {
-      console.log(email, password)
       alert("Please fill all details")
     }
 
@@ -65,14 +59,12 @@ export const Login = ({ navigation }) => {
 
   const handleInput = (property, value) => {
     setUserDetails({ ...userDetails, [property]: value })
-    console.log(userDetails)
   }
 
 
   useEffect(() => {
     let getUser = async () => {
       let user = await AsyncStorage.getItem("user")
-      console.log(user, "effect")
       if (user) {
         navigation.navigate("home")
       }

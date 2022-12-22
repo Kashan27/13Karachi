@@ -14,7 +14,6 @@ import ip from '../ip';
 const EditProfile = ({ navigation, route }) => {
     let [loading , setLoading] = useState(false)
     let { name, email, address, contact, _id } = route.params
-    console.log(contact , "route")
     let [userDetails, setUserDetails] = useState({
         name: name,
         email: email,
@@ -22,19 +21,16 @@ const EditProfile = ({ navigation, route }) => {
         contact: contact.toString(),
 
     })
-    // console.log(route.params, "This console is in EditProfile")
 
     const handleUpdateInput = (value, property) => {
         setUserDetails({ ...userDetails, [property]: value })
-        console.log(userDetails, property)
     }
 
     const handleEditUser = () => {
         if(name || email || address || contact){
             setLoading(true)
-            axios.patch(`http://192.168.1.106:9000/api/profileupdate/${_id}` , {...userDetails})
+            axios.patch(`https://${ip}/api/profileupdate/${_id}` , {...userDetails})
             .then((res)=>{
-                console.log(res.data , "This is handleEditUser Console")
                 try{
                     let obj = {_id , email:userDetails.email}
                         AsyncStorage.setItem("user" , JSON.stringify({data:{...obj}}))

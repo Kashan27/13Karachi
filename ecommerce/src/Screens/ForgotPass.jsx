@@ -21,10 +21,8 @@ const ForgotPass = ({ navigation }) => {
     const [code , setCode] = useState();
     const [inputCode , setInputCode] = useState();
     const [email , setEmail] = useState('') 
-// console.log(themeColor)
     const handleInput = (e) => {
         setEmail(e)
-        console.log(email)
     }
     const handleCodeInput = (e) => {
         setInputCode(e)
@@ -36,7 +34,6 @@ const ForgotPass = ({ navigation }) => {
             setLoading(true)
             axios.post(`http://${ip}/api/resetpassword` , {email})
             .then(res =>{
-                console.log(res.data.code)
                 setLoading(false)
                 setCode(res.data.code)
                 setMsg(res.data.message)
@@ -55,9 +52,7 @@ const ForgotPass = ({ navigation }) => {
     }
 
     const handleCheckCode = () => {
-        // console.log(typeof(inputCode) , typeof(code))
         if(parseInt(inputCode) === code){
-            // alert("matched")
             navigation.navigate('newpass',{email})
         }else{
             alert("not matched")

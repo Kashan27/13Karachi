@@ -25,16 +25,12 @@ const Shops = ({ route, navigation }) => {
     const [currentMarket, setCurrentMarket] = useState(marketName)
     const [currentArea, setCurrentArea] = useState(area)
     let [shopsList, setShopsList] = useState(shops)
-    // console.log(route.params , "ppaarraammss")
 
 
 
     const handleUpdateMarket = (cMarket) => {
         setCurrentMarket(cMarket)
-        console.log(cMarket)
-        console.log(shops)
         let filterData = shops.filter(val => val.marketname === cMarket)
-        console.log(filterData)
         setShopsList(filterData)
 
 
@@ -52,7 +48,6 @@ const Shops = ({ route, navigation }) => {
         axios.get(`https://${ip}/api/getmarket/${marketName}`)
             .then(res => {
                 let data = res.data
-                // console.log(data , "shops")
                 setShops(data)
                 setShopsList(data)
             })
@@ -86,16 +81,15 @@ const Shops = ({ route, navigation }) => {
             <Header navigation={navigation} width={"60%"} showMore={true} search={true} goback={e => { navigation.goBack() }} title="App" />
             <View style={{ width: "100%" }}>
 
-                <View style={{ display: "flex", alignItems: "center", width: "100%", height: 50, marginVertical: 10 }}>
-
+                <View style={styles.marketList}>
+                <Text style={styles.marketsHeader}>Markets</Text>
                     <FlatList
-                        // onPress={e => { console.log(e.target) }}
-                        
-                        // ListHeaderComponent={<Text style={{ fontSize: 20 }}>Markets</Text>}
+
                         data={markets}
                         renderItem={renderMarkets}
                         // numColumns={2}
                         showsVerticalScrollIndicator={false}
+                        showsHorizontalScrollIndicator={false}
                         horizontal={true}
                     />
                 </View>
@@ -139,6 +133,19 @@ const styles = StyleSheet.create({
         alignItems:"center",
         // backgroundColor:"pink",
         
+    },marketsHeader:{
+        fontSize:20,
+        borderRightColor:"grey",
+        borderRightWidth:1,
+        borderStyle:"solid",
+        paddingRight:7
+    },marketList: {
+        display:"flex",
+        width:"100%",
+        height:60,
+        flexDirection:"row",
+        // backgroundColor:"red",
+        alignItems:"center",
     },
     shops:{
         backgroundColor:"white",

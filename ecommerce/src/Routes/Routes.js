@@ -5,8 +5,6 @@ import Markets from "../Screens/Markets";
 import Products from "../Screens/Products";
 import Home from "../Screens/Home";
 import Cart from "../Screens/Cart";
-import { Text } from "react-native";
-import { StyleSheet } from "react-native";
 import Header from "../Components/Header/Header";
 import SingleProductScreen from "../Screens/SingleProductScreen";
 import CheckOut from "../Screens/CheckOut";
@@ -15,15 +13,17 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import ForgotPass from "../Screens/ForgotPass";
 import NewPass from "../Screens/NewPass";
 import Profile from "../Screens/Profile";
-import OrderStatus from "../Screens/OrderStatus";
-
-
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NavigationContainer } from '@react-navigation/native';
+import CategoryWiseProducts from '../Screens/CategoryWiseProducuts';
+import OrderStatus from "../Screens/OrderStatus"
 import SuccessOrder from "../Screens/SuccessOrder";
 import themeColor from "../themeColor/themeColor";
 import EditProfile from '../Screens/EditProfile';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { NavigationContainer } from '@react-navigation/native';
+import { Text } from "react-native";
+import { StyleSheet } from "react-native";
+
 
 
 
@@ -102,6 +102,7 @@ const StackNav = () => {
                 <Stack.Screen name="signup" component={Signup} />
                 <Stack.Screen name="shops" component={Shops} />
                 <Stack.Screen name="products" component={Products} />
+                <Stack.Screen name="categorywiseproducts" component={CategoryWiseProducts} />
                 <Stack.Screen  name="header" component={Header} />
                 <Stack.Screen  name="item" component={SingleProductScreen} />
                 <Stack.Screen  name="checkout" component={CheckOut} />

@@ -45,19 +45,16 @@ const Markets = ({ navigation }) => {
     getData()
   }, [])
 
-// console.log(markets,"markets")
 
 
   const getData = () => {
     axios.get(`https://${ip}/api/allgetarea`)
       .then((res) => {
-        // console.log(res.data,"res");
         let data = res.data
         let arr = [{ label: "select area", value: "select area" }]
         for (let i = 0; i < res.data.length; i++) {
           let obj = { label: data[i].areaName, value: data[i].areaName }
           arr.push(obj)
-          // console.log(obj)
         }
         setdropDownData(arr)
       })
@@ -68,14 +65,12 @@ const Markets = ({ navigation }) => {
   }
 
   const getMarket = (index) => {
-    // console.log(index)
-    // console.log(index)
+
     setLoading(true)
     setDisplayValue(index)
 
     axios.get(`https://${ip}/api/getareaname/${index}`)
       .then((res) => {
-        // console.log(res.data, "markets");
         let arr = []
         for (let i = 0; i < res.data.length; i++) {
           let obj = { title: res.data[i].marketName }
@@ -100,11 +95,8 @@ const Markets = ({ navigation }) => {
       })
   }
 
-// console.log(dropDownData,"drop")
 
-// console.log(markets , "marketsssssssssssssssssssssssss")
   const renderListItem = ({ item, index }) => 
-    // console.log(item)
     (
     <ListItem onPress={e=>{navigation.navigate('shops' , {markets , marketName: item.title , area:displayValue}  )}}  title={`${item.title} ${index + 1}`} />
   );
@@ -126,7 +118,6 @@ const Markets = ({ navigation }) => {
           onSelect={e => { getMarket(dropDownData[e.row].value) }}>
           {
             dropDownData.map((item, index) => {
-              // console.log(item,"item")
               return (
                 <SelectItem title={item.label} />
               )

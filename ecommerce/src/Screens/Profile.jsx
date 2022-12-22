@@ -32,17 +32,14 @@ const Profile = ({ navigation }) => {
         try {
             let lsUserData = await AsyncStorage.getItem('user')
             let email = lsUserData ? JSON.parse(lsUserData).data.email : null
-            console.log(email, "email")
 
             axios.get(`https://${ip}/api/postbyemailsignup/${email}`)
                 .then((res) => {
-                    console.log(res)
                     setUser(res.data[0])
                 })
                 .catch((err) => {
                     console.log(err.message)
                 })
-            console.log(user, "user")
         } catch (err) {
             console.log(err.message)
         }
@@ -61,7 +58,6 @@ const Profile = ({ navigation }) => {
         }
     }
 
-    console.log(user)
 
     useEffect(() => {
         handleGetUserProfile()
@@ -87,6 +83,7 @@ const Profile = ({ navigation }) => {
             </Text>
 
             <List.Item
+                disabled={true}
                 title="Email"
                 description={user.email}
                 left={props => <List.Icon {...props} icon="email" />}

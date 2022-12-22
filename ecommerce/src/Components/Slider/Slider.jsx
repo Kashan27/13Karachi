@@ -12,22 +12,14 @@ const Slider = ({ images }) => {
 
   let [carousel , setCarousel] = useState([])
 
-
-
-
-
-console.log(carousel,"ccaarlakjdflajdfl;ajsdlfjlsdfjla;sdjf;lasfj;lkasjdflas;jdl;")
-
   useEffect(() => {
 
 
     axios.get(`https://${ip}/api/allgetcarousel`)
       .then(res => {
-        console.log(res.data, "carousel")
         let carousels = []
         res.data.forEach(item => {
           let obj = {img:item.imageURL[0]}
-          console.log(obj,"objects")
           carousels.push(obj)
 
         })
@@ -43,7 +35,6 @@ console.log(carousel,"ccaarlakjdflajdfl;ajsdlfjlsdfjla;sdjf;lasfj;lkasjdflas;jdl
     <ImageSlider
       data={carousel}
       autoPlay={true}
-      // onItemChanged={(item) => console.log("item", item)}
       closeIconColor="black"
     />
   )

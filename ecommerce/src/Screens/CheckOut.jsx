@@ -9,7 +9,6 @@ import themeColor from '../themeColor/themeColor';
 import ip from '../ip';
 
 const CheckOut = ({ navigation, route }) => {
-    // console.log(subTotal)
     const { subTotal } = route.params
     const [loading , setLoading] = useState(false)
     const [selectedIndex, setSelectedIndex] = React.useState(0);
@@ -34,7 +33,6 @@ const CheckOut = ({ navigation, route }) => {
 
 
     const handleInputs = (property, value) => {
-        console.log(orderDetails)
         setOrderDetails({ ...orderDetails, [property]: value })
     }
 
@@ -44,7 +42,6 @@ const CheckOut = ({ navigation, route }) => {
         try {
             let cartItems = await AsyncStorage.getItem("cart")
             let parseCart = JSON.parse(cartItems)
-            // console.log(parseCart)
             const getdate = new Date().toLocaleString()
             let obj = {
                 userEmail: email,
@@ -84,18 +81,14 @@ const CheckOut = ({ navigation, route }) => {
 
             }
 
-            console.log(selectedIndex, "active checked")
             if (true) {
             // if (email || orderContact || shippingOne || shippingTwo) {
                 if (selectedIndex) {
-                    console.log(basicCheckboxState, "basicCheckboxState")
                     if (basicCheckboxState.checked) {
                         setLoading(true)
-                        console.log(obj)
                         // axios.post(`http://192.168.1.106:9000/api/bookingpostdata`,{...obj})
                         axios.post(`https://${ip}/api/bookingpostdata`,{...obj})
                         .then((res)=>{
-                            console.log(res.data,"rreess")
                             if(res.data.success){
                                 setLoading(false)
                                 navigation.navigate("successorder")
@@ -116,7 +109,6 @@ const CheckOut = ({ navigation, route }) => {
             } else {
                 alert("please fill all the details")
             }
-            // console.log(obj)
 
         } catch (err) {
             console.log(err)

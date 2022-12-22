@@ -32,7 +32,6 @@ const SingleProductScreen = ({ route, navigation }) => {
     const [itemSize, setItemSize] = useState()
     const [itemColor, setItemColor] = useState()
 
-    // console.log(multiProd[0].productSize,"singleProductScreen")
     const handleAddToCart = async () => {
         axios.get(`https://${ip}/api/getMultipleFiles`)
             .then(response => {
@@ -46,7 +45,6 @@ const SingleProductScreen = ({ route, navigation }) => {
             try {
                 const cart = await AsyncStorage.getItem("cart");
                 let parseCart = cart ? JSON.parse(cart) : []
-                console.log(parseCart, "parse cart")
                 if (parseCart[0]) {
                     try {
                         // await AsyncStorage.setItem("cart", JSON.stringify(itemObj));
@@ -54,15 +52,14 @@ const SingleProductScreen = ({ route, navigation }) => {
                             return val._id === _id && val.itemSize === itemSize && val.itemColor === itemColor
                         })
                         if (!findProduct) {
-                            // console.log("new")
-                            // console.log(itemObj, "itemObj", "41")
+                           
                             parseCart.push(itemObj)
-                            // console.log( parseCart , "push")
+                        
                             AsyncStorage.setItem("cart", JSON.stringify(parseCart));
                             setMsg("item added to cart")
                             setVisible(true)
                         } else {
-                            // console.log("already")
+                        
                             setMsg("you already add this item to cart")
                             setVisible(true)
 
@@ -74,7 +71,6 @@ const SingleProductScreen = ({ route, navigation }) => {
                         console.log(error, "error");
                     }
                 } else {
-                    console.log("else", parseCart)
                     let obj = [{ ...itemObj }]
                     await AsyncStorage.setItem("cart", JSON.stringify(obj));
 
@@ -91,22 +87,18 @@ const SingleProductScreen = ({ route, navigation }) => {
     }
 
     const handleCounter = (value) => {
-        // console.log(itemQty)
 
         switch (value) {
             case "add":
-                console.log("add")
-                // console.log(availableQty)
+
                 if (itemQty < availableQty) {
                     setItemQty(itemQty + 1)
                 } else {
                     setMsg(` ${availableQty ? availableQty : "No"} items in stock`)
                     setVisible(true)
-                    // alert(`only ${availableQty} items are available`)
                 }
                 break;
             case "less":
-                console.log("less")
                 if (itemQty > 0) {
                     setItemQty(itemQty - 1)
                 }
@@ -120,7 +112,6 @@ const SingleProductScreen = ({ route, navigation }) => {
             &&
             item.productColor === itemColor)
         let qty = filter[0] ? filter[0].otherQty : 0
-        // console.log(qty + " " + "qtyyFunction")
         setAvailableQty(qty)
     }
 
@@ -152,7 +143,6 @@ const SingleProductScreen = ({ route, navigation }) => {
         handleAvailableQty()
         let uniqueArr = [... new Set(multiProd.map(data => data.productSize))]
         setSizeList(["size" , ...uniqueArr])
-        console.log(uniqueArr,"uniqueArr")
 
     }, [itemSize, itemColor])
 
@@ -161,7 +151,6 @@ const SingleProductScreen = ({ route, navigation }) => {
     /////////////////////////////////    listImage ( Rnder ) //////////////////////////////////
 
     let renderItem = ({item}) => {
-        // console.log(item)
         return (
             <TouchableOpacity
             onPress={e=>{setImage(item)}}
@@ -247,7 +236,6 @@ const SingleProductScreen = ({ route, navigation }) => {
                             }>
                             {colorList.map((item, index) => {
                                 let color = item.productColor
-                                console.log(color,colorList,"coloritem255")
                                 return (
                                     <Picker.Item  label={color} value={color} />
                                 )

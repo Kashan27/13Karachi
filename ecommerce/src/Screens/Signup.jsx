@@ -29,7 +29,6 @@ const Signup = ({ navigation }) => {
 
     setInput({ ...input, [property]: val })
 
-    console.log(input,"input")
 
   }
 
@@ -50,7 +49,6 @@ const Signup = ({ navigation }) => {
             setLoading(true)
             axios.post("https://192.168.1.106:9000/api/signup", { ...userData })
               .then(async(response) => {
-                console.log(response.data);
                 setLoading(false)
                 try{
                   let user = await AsyncStorage.getItem("user")

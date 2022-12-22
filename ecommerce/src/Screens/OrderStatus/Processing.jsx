@@ -4,7 +4,6 @@ import OrderStatusCard from '../../Components/OrderStatusCard/OrderStatusCard'
 import React from 'react'
 
 const Processing = ({data, status}) => {
-    // console.log(data,"processing")
 
 let [pendingOrder, setPendingOrder]= useState([])
 
@@ -14,11 +13,10 @@ let [pendingOrder, setPendingOrder]= useState([])
         setPendingOrder(processing)
     }
 
-    console.log(pendingOrder)
+    
     useEffect(() => {
         handleGetData()
     }, []);
-    // console.log(pendingOrder,"pendingOrder")
     return (
     <View>
       {/* <OrderStatusCard item={data} /> */}

@@ -12,7 +12,6 @@ const OrderStatusCard = ({ item , status}) => {
   // let availableQty = item.availableQty
   // let [itemQty, setItemQty] = useState(item.qty)
 
-  // console.log(item.availableQty)
   // const { imageURL, productName, itemSize, itemColor, productPrice, qty } = item
 
   const [names, setNames] = useState([])
@@ -27,21 +26,14 @@ const OrderStatusCard = ({ item , status}) => {
     let namesArray = []
     arr.forEach((value) => {
       namesArray.push(value.productName)
-      // console.log(value.productName,"forEach")
     })
-    // console.log(namesArray.join())
-    // namesArray.join()
     setNames(namesArray)
     let date = item.item.hotelDate
     const findDate = date.substring(0, date.indexOf(','));
     setDate(findDate)
-    // console.log(item.item.cartItems)
 
-    // console.log("item",arr,"item")
-    //  setNames(arr)
   }
 
-  // console.log(item.item.cartItems,"itemssssssssssssssssssssssssssssssssssssssssss")
 
   useEffect(() => {
     handleGetNames()
