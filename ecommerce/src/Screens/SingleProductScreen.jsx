@@ -35,7 +35,7 @@ const SingleProductScreen = ({ route, navigation }) => {
     const handleAddToCart = async () => {
         axios.get(`https://${ip}/api/getMultipleFiles`)
             .then(response => {
-                console.log(response.data, "files")
+                // console.log(response.data, "files")
             })
             .catch(error => console.log(error.message))
         const date = Date.now()

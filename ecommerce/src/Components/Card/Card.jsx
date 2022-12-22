@@ -1,11 +1,12 @@
 import React from 'react'
-import { View, TouchableOpacity, Text, Image, StyleSheet, } from 'react-native'
+import { memo } from 'react'
+import { View, Touchable, Text, Image, StyleSheet, Pressable, } from 'react-native'
 
 function ItemCard({ item , navigation }) {
 
     let product = item.item
     return (
-        <TouchableOpacity onPress={e=>{navigation.navigate("item" , {item})}} style={styles.container}>
+        <Pressable onPress={e=>{navigation.navigate("item" , {item})}} style={styles.container}>
             <Image
                 resizeMode={"contain"}
                 // source={{uri:"://n3.sdlcdn.com/imgs/a/2/6/New-Fancy-Purse-House-Black-SDL825681176-2-1b9a6.jpg"}}
@@ -25,7 +26,7 @@ function ItemCard({ item , navigation }) {
                         style={{ fontSize: 17 }}
                     > {product.productPrice}</Text></Text>
             </View>
-        </TouchableOpacity>
+        </Pressable>
     )
 }
 
@@ -34,8 +35,6 @@ const styles = StyleSheet.create({
     container: {
         width: "27%",
         display:"flex",
-        // backgroundColor:"white",
-        // marginLeft: 20,
         margin:10,
         backgroundColor: "white",
         padding: 6,
@@ -60,4 +59,4 @@ const styles = StyleSheet.create({
 })
 
 
-export default ItemCard
+export default memo(ItemCard)

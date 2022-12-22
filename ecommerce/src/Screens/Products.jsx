@@ -164,7 +164,7 @@ const Products = ({ route, navigation }) => {
 
     return (
         <>
-            <Header navigation={navigation} width={"60%"} showMore={true} search={true} goback={e => { navigation.goBack() }} title="App" />
+            <Header navigation={navigation} width={"72%"} showMore={true} search={true} goback={e => { navigation.goBack() }} title="App" />
             <View style={{ width: "100%" }}>
                 <View style={styles.shopsList}>
                     <Text style={styles.shopsHeader}>Shops</Text>
@@ -186,7 +186,7 @@ const Products = ({ route, navigation }) => {
                     {data.map(renderOption)}
                 </Autocomplete>
                 <View style={{ display: "flex", width: "100%", alignItems: "center" }}>
-                    <Button onClick={e => { navigation.navigate('shops') }} style={{ margin: 10 }} labelStyle={{ fontSize: 18 }} mode='contained' >{currentShop}</Button>
+                    <Button buttonColor={themeColor} onClick={e => { navigation.navigate('shops') }} style={{ margin: 10 }} labelStyle={{ fontSize: 18 }} mode='contained' >{currentShop}</Button>
                 </View>
 
 

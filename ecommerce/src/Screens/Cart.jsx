@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, FlatList, Dimensions , ScrollView } from 'react-native'
+import { StyleSheet, Text, View, FlatList,  } from 'react-native'
 import React from 'react'
 import Header from '../Components/Header/Header';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import CartCard from '../Components/Cart_Card/CartCard';
 import { useWindowDimensions } from 'react-native';
 import themeColor from '../themeColor/themeColor';
-import { Button, Paragraph, Dialog, Portal, Provider, Snackbar } from 'react-native-paper';
+import { Button, Snackbar } from 'react-native-paper';
 
 
 
@@ -113,7 +113,7 @@ const Cart = ({ navigation }) => {
   return (
     <>
       <View style={{ height: 803 }}>
-        <Header width={"60%"} navigation={navigation} showMore={true} search={true} goback={e => { navigation.goBack() }} title="App" />
+        <Header width={"70%"} navigation={navigation} showMore={true} search={true} goback={e => { navigation.goBack() }} title="App" />
 
         <View>
           {/* Cart Items */}

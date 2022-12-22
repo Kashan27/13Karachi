@@ -3,13 +3,14 @@ import { View, Text, ScrollView, FlatList, TouchableOpacity, StyleSheet, ImageBa
 import { IndexPath, Layout, Select, SelectItem } from '@ui-kitten/components';
 import { List, ListItem } from '@ui-kitten/components';
 import { Button } from 'react-native-paper';
-import { Spinner, HStack } from 'native-base';
+import { Spinner } from 'native-base';
 // import { List } from 'react-native-paper';
-import DropDownPicker from 'react-native-dropdown-picker';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Header from '../Components/Header/Header';
 import themeColor from '../themeColor/themeColor';
+import { Picker } from '@react-native-picker/picker';
+
 import ip from "../ip"
 
 
@@ -41,34 +42,33 @@ const Markets = ({ navigation }) => {
   const [displayValue, setDisplayValue] = useState("Select Area");
   const handlePress = () => setExpanded(!expanded);
 
-  useEffect(() => {
-    getData()
-  }, [])
 
 
 
   const getData = () => {
     axios.get(`https://${ip}/api/allgetarea`)
       .then((res) => {
-        let data = res.data
-        let arr = [{ label: "select area", value: "select area" }]
-        for (let i = 0; i < res.data.length; i++) {
-          let obj = { label: data[i].areaName, value: data[i].areaName }
+
+        let arr = [{ value: "select area" }]
+        res.data.forEach((e) => {
+          let obj = { value: e.areaName }
           arr.push(obj)
-        }
+        })
         setdropDownData(arr)
       })
       .catch(err => {
         console.log(err.message, "err")
       })
 
+
+
+
+
   }
 
   const getMarket = (index) => {
-
     setLoading(true)
     setDisplayValue(index)
-
     axios.get(`https://${ip}/api/getareaname/${index}`)
       .then((res) => {
         let arr = []
@@ -86,8 +86,6 @@ const Markets = ({ navigation }) => {
         }
         setLoading(false)
         setMarkets(arr)
-
-
       })
       .catch(err => {
         setLoading(false)
@@ -95,10 +93,18 @@ const Markets = ({ navigation }) => {
       })
   }
 
+  // UseEffect
 
-  const renderListItem = ({ item, index }) => 
-    (
-    <ListItem onPress={e=>{navigation.navigate('shops' , {markets , marketName: item.title , area:displayValue}  )}}  title={`${item.title} ${index + 1}`} />
+  useEffect(() => {
+    getData()
+    console.log('effect')
+  }, [])
+
+
+
+  const renderListItem = ({ item, index }) =>
+  (
+    <ListItem onPress={e => { navigation.navigate('shops', { markets, marketName: item.title, area: displayValue }) }} title={`${item.title} ${index + 1}`} />
   );
 
 
@@ -110,7 +116,7 @@ const Markets = ({ navigation }) => {
 
 
 
-      <Layout style={styles.dropDownContainer} level='1'>
+      {/* <Layout style={styles.dropDownContainer} level='1'>
         <Select
 
           value={displayValue}
@@ -119,13 +125,39 @@ const Markets = ({ navigation }) => {
           {
             dropDownData.map((item, index) => {
               return (
-                <SelectItem title={item.label} />
+                <SelectItem key={index} title={item.value} />
               )
             })
           }
 
         </Select>
-      </Layout>
+      </Layout> */}
+
+
+
+{/* Areas List */}
+
+      <Picker
+        // style={{ width: "40%" }}
+        mode={"dropdown"}
+        selectedValue={displayValue}
+        onValueChange={(itemValue, itemIndex) => {
+          // handleUpdateDetails(itemValue)
+          console.log(dropDownData[itemIndex].value)
+          getMarket(dropDownData[itemIndex].value)
+        }
+        }>
+        {dropDownData.map((item, index) => {
+
+          return (
+            <Picker.Item label={item.value} value={item.value} />
+          )
+        })
+        }
+      </Picker>
+
+
+{/* Current Area Message */}
       <Button
         textColor='#049f99'
         buttonColor='#e6fffe'
@@ -138,7 +170,8 @@ const Markets = ({ navigation }) => {
 
 
 
-{/* Markets List */}
+
+      {/* Markets List */}
 
       <List
         data={markets}
@@ -175,7 +208,7 @@ const styles = StyleSheet.create({
     // backgroundColor:"#E1EDBD"
   },
   dropDownContainer: {
-    // minHeight: 128,
+    maxHeight: 128,
   },
 
   marketsContainer: {

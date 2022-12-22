@@ -12,35 +12,23 @@ import { TouchableWithoutFeedback } from 'react-native';
 import { Autocomplete, AutocompleteItem, Icon } from '@ui-kitten/components';
 import themeColor from '../themeColor/themeColor';
 import { useIsFocused } from "@react-navigation/native";
+import { HStack, Spinner } from 'native-base';
 
 
 
-
-
-
-
-// const MenuComp = ({ visible }) => {
-//   return (
-
-//   )
-// }
-
-
-
-// import { styles } from 'react-native-image-slider-banner/src/style';
 
 
 
 const CategoryWiseProducts = ({ route, navigation }) => {
     const isFocused = useIsFocused();
+    const  [loading , setLoading] = useState(false)
 
 
+    // const filter = (item, query) => item.categoryName.toLowerCase().includes(query.toLowerCase());
 
-    const filter = (item, query) => item.categoryName.toLowerCase().includes(query.toLowerCase());
-
-    const StarIcon = (props) => (
-        <Icon {...props} name='copy-outline' />
-    );
+    // const StarIcon = (props) => (
+    //     <Icon {...props} name='copy-outline' />
+    // );
 
 
     const [data, setData] = useState([]);
@@ -55,15 +43,15 @@ const CategoryWiseProducts = ({ route, navigation }) => {
 
 
 
-    const handleUpdateShop = (cShop) => {
-        let filterData = allProd.filter(val => val.hotelname === cShop)
+    // const handleUpdateShop = (cShop) => {
+    //     let filterData = allProd.filter(val => val.hotelname === cShop)
 
-        setP(filterData)
-        setCurrentShop(cShop)
-        setValue('');
+    //     setP(filterData)
+    //     setCurrentShop(cShop)
+    //     setValue('');
 
 
-    }
+    // }
 
     const handleSetCategories = () => {
         axios.get(`https://${ip}/api/allgetcategory`)
@@ -80,7 +68,7 @@ const CategoryWiseProducts = ({ route, navigation }) => {
 
     const handleFilterByCategory = (categoryValue) => {
         let filterData = allProd ? allProd.filter(val => (val.category === categoryValue)) : []
-        
+        console.log(filterData , "handleFilterByCategory")
         setP(filterData)
 
 
@@ -89,14 +77,14 @@ const CategoryWiseProducts = ({ route, navigation }) => {
 
 
 
-    const onSelect = (index) => {
-        setValue(data[index].categoryName);
-    };
+    // const onSelect = (index) => {
+    //     setValue(data[index].categoryName);
+    // };
     
-    const onChangeText = (query) => {
-        setValue(query);
-        setData(data.filter(item => filter(item, query)));
-    };
+    // const onChangeText = (query) => {
+    //     setValue(query);
+    //     setData(data.filter(item => filter(item, query)));
+    // };
 
     // const clearInput = () => {
         //     setValue('');
@@ -118,15 +106,16 @@ const CategoryWiseProducts = ({ route, navigation }) => {
 
 
 
-    const renderCloseIcon = (props) => (
-        <TouchableWithoutFeedback onPress={clearInput}>
-            {/* <Icon {...props} name='close' /> */}
-            <Text>Clear Filter</Text>
-        </TouchableWithoutFeedback>
-    );
+    // const renderCloseIcon = (props) => (
+    //     <TouchableWithoutFeedback onPress={clearInput}>
+    //         {/* <Icon {...props} name='close' /> */}
+    //         <Text>Clear Filter</Text>
+    //     </TouchableWithoutFeedback>
+    // );
     
     useEffect(() => {
-        getProducts()
+        setLoading(true)
+        getProducts(item.item.categoryName)
         getShops()
         handleSetCategories()
 
@@ -134,10 +123,11 @@ const CategoryWiseProducts = ({ route, navigation }) => {
     }, [])
 
     
-    useEffect(() => {
-        // handleFilterByCategory(item.item.categoryName)
+    // useEffect(() => {
+    //     handleFilterByCategory()
+    //     console.log(item.item.categoryName)
 
-    }, [ ]);
+    // }, [ ]);
 
     const getShops = (shop) => {
 
@@ -154,14 +144,19 @@ const CategoryWiseProducts = ({ route, navigation }) => {
             
         }
     
-    const getProducts = () => {
+    const getProducts = (categoryValue) => {
         axios.get(`http://${ip}/api/allpostdata`)
         .then(res => {
+                
                 let data = res.data
-                let filterData = data.filter(val => val.hotelname === currentShop)
+                // let filterData = data.filter(val => val.hotelname === currentShop)
+                 let filterData = data.filter(val => (val.category === categoryValue))
+        console.log(filterData)
+        setP(filterData)
+        setLoading(false)
                 // setP(filterData)
                 setAllProd(res.data)
-                handleFilterByCategory(item.item.categoryName)
+                // handleFilterByCategory(item.item.categoryName)
             })
             .catch(err => {
                 console.error(err)
@@ -202,8 +197,14 @@ const CategoryWiseProducts = ({ route, navigation }) => {
 
 
                 <View style={{ display: "flex", width: "100%" }}>
-                    {p[0] ?
-
+                    {loading ?
+                    <HStack style={styles.loadingContainer}>
+                        <Spinner color={themeColor} />
+                        <Text style={{fontSize:20 , color:{themeColor}}}> Loading ...</Text>
+                    </HStack>
+                        :
+                        (p[0] ?
+                            
                         <FlatList
                             data={p}
                             renderItem={renderItem}
@@ -213,7 +214,8 @@ const CategoryWiseProducts = ({ route, navigation }) => {
                         :
                         <Text style={{ fontSize: 30, textAlign: "center", marginTop: "50%" }}>No Products Found</Text>
 
-                    }
+                        )
+                }
                 </View> 
             </View>
         </>
@@ -231,18 +233,22 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         // backgroundColor:"red",
         alignItems: "center",
-
-
+    },
+    categories:{
+      color:themeColor
     },
     shopsHeader: {
-        fontSize: 20,
+        fontSize: 40,
         borderRightColor: "grey",
         borderRightWidth: 1,
         borderStyle: "solid",
         paddingRight: 7
     },
-    categories:{
-        // width:"100%",
+    loadingContainer:{
+        display:"flex",
+        justifyContent:"center",
+        alignItems: "center",
+        height:"85%"
         
         
     }

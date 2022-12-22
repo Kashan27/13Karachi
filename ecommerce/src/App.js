@@ -8,9 +8,14 @@ import { ApplicationProvider , IconRegistry } from '@ui-kitten/components';
 import * as eva from '@eva-design/eva';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
 import { NativeBaseProvider, Text, Box } from "native-base";
-import { useEffect } from 'react';
+import { useEffect , useState} from 'react';
 import SplashScreen from 'react-native-splash-screen';
 import themeColor from './themeColor/themeColor';
+import NetInfo from "@react-native-community/netinfo";
+import NetworkStatus from './Components/NetworkStatus/NetworkStatus';
+
+
+
 
 
 
@@ -28,36 +33,56 @@ import themeColor from './themeColor/themeColor';
 
 
 const App = () => {
-
-
+  
+  const [isOffline, setOfflineStatus] = useState(false);
+  
+  NetInfo.addEventListener(networkState => {
+    console.log("Connection type - ", networkState.type);
+    console.log("Is connected? - ", networkState.isConnected);
+  })
   useEffect(() => {
     SplashScreen.hide()
+    // const removeNetInfoSubscription = NetInfo.addEventListener((state) => {
+    //   const offline = !(state.isConnected && state.isInternetReachable);
+    //   setOfflineStatus(offline);
+    // });
+  
+    // fetchUsers();
+  
+    // return () => removeNetInfoSubscription();
   }, []);
+  useEffect(() => {
+    // setOfflineStatus(net)
+    console.log(NetInfo.getNetwork , "info")
 
+  },[NetInfo])
+  
   const isDarkMode = useColorScheme() === 'dark';
-
+  
   // useEffect(() => {
   //   let fontName = 'arial'
   //   GlobalFont.applyGlobal(fontName)
   // }, []);
-
+  
   // const backgroundStyle = {
-  //   backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+    //   backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
 
-  // };
+    // };
 
 
-  return (
-    <><StatusBar
+    return (
+      <><StatusBar
     animated={true}
     backgroundColor={themeColor}
     // barStyle={statusBarStyle}
     // showHideTransition={statusBarTransition}
     hidden={false} />
+
     <NativeBaseProvider>
 
       <IconRegistry icons={EvaIconsPack} />
       <ApplicationProvider {...eva} theme={eva.light}>
+      <NetworkStatus status={isOffline} />
         <Routes />
       </ApplicationProvider>
     </NativeBaseProvider>

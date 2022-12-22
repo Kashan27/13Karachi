@@ -18,6 +18,8 @@ import OrderStatus from "../Screens/OrderStatus"
 import SuccessOrder from "../Screens/SuccessOrder";
 import themeColor from "../themeColor/themeColor";
 import EditProfile from '../Screens/EditProfile';
+import Processing from '../Screens/OrderStatus/Processing';
+import Shipped from '../Screens/OrderStatus/Shipped';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
@@ -107,6 +109,8 @@ const StackNav = () => {
                 <Stack.Screen  name="item" component={SingleProductScreen} />
                 <Stack.Screen  name="checkout" component={CheckOut} />
                 <Stack.Screen  name="successorder" component={SuccessOrder} />
+                <Stack.Screen  name="processing" component={Processing} />
+                <Stack.Screen  name="shipped" component={Shipped} />
             </Stack.Navigator>
         </NavigationContainer>
 

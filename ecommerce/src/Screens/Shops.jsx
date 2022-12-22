@@ -96,7 +96,7 @@ const Shops = ({ route, navigation }) => {
 
 
                 <View style={{ display: "flex", width: "100%", alignItems: "center" }}>
-                    <Button style={{ margin: 10 }} labelStyle={{ fontSize: 18 }} mode='contained' >{currentMarket}</Button>
+                    <Button buttonColor={themeColor} style={{ margin: 10 }} labelStyle={{ fontSize: 18 }} mode='contained' >{currentMarket}</Button>
                 </View>
 
 

@@ -6,7 +6,7 @@ import { TabBar, TabView, SceneMap } from 'react-native-tab-view';
 import ProcessingScreen from './OrderStatus/Processing';
 import ShippedScreeen from './OrderStatus/Shipped';
 import themeColor from '../themeColor/themeColor'
-
+import Header from '../Components/Header/Header';
 
 import ip from '../ip'
 import axios from 'axios'
@@ -15,15 +15,15 @@ import axios from 'axios'
 
 
 
-const OrderStatus = () => {
+const OrderStatus = ({navigation}) => {
   
   
   
   const [statusDetails, setStatusDetails] = useState()
   const [orders , setOrders] = useState()
   const layout = useWindowDimensions();
-  const Processing = () => <ProcessingScreen data={orders} />
-  const Shipped = () => <ShippedScreeen data={orders} />
+  const Processing = () => <ProcessingScreen navigation={navigation} data={orders} />
+  const Shipped = () => <ShippedScreeen navigation={navigation} data={orders} />
   
   
   
@@ -62,7 +62,10 @@ let handleGetData = async () => {
 
   let renderTabBar = (props) => {
     return (
+      <>
+                    {/* <Header style={{ zIndex: 1 }} navigation={navigation}  width={"80%"} showMore={true} title="App" /> */}
       <View style={styles.tabBarContainer}>
+
         <TabBar
         gap={5}
           style={styles.tabBar}
@@ -89,7 +92,8 @@ let handleGetData = async () => {
           indicatorStyle={styles.indicator}
           {...props}
           pressColor={"White"}
-        /></View>
+          /></View>
+          </>
     )
   }
 
@@ -99,6 +103,8 @@ let handleGetData = async () => {
 
   return (
     <>
+
+                <Header style={{ zIndex: 1 }} navigation={navigation}width={"80%"} showMore={true} title="App" />
       <Text style={styles.heading}>My Orders</Text>
       <TabView
         renderTabBar={renderTabBar}

@@ -1,15 +1,11 @@
-import { StyleSheet, Text, View, FlatList, ScrollView, Dimensions } from 'react-native'
+import { StyleSheet, Text, View, FlatList, Dimensions } from 'react-native'
 import React from 'react'
-import { useRef } from 'react';
 import Header from '../Components/Header/Header'
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Button, Menu, Divider, Provider } from 'react-native-paper';
 import Slider from '../Components/Slider/Slider';
 import ip from '../ip';
 import ItemCard from '../Components/Card/Card';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useIsFocused } from "@react-navigation/native";
 
 
 
@@ -62,27 +58,22 @@ const Home = ({ navigation }) => {
             <Header style={{ zIndex: 1 }} navigation={navigation} login={login} width={"80%"} close={closeMenu} showMore={true} title="App" />
 
           
-
-            <Slider style={{ zIndex: -1 }}
-            // customSlide={({ index, item, style, width }) => (
-            //     // It's important to put style here because it's got offset inside
-            //     <View key={index} style={[style, styles.customSlide]}>
-            //         <Image source={{ uri: item.img }} style={styles.customImage} />
-            //     </View>
-            // )}
+            {/* <Slider style={{ zIndex: -1 }}
 
 
-            />
+
+            /> */}
             {/*Categories  */}
             <View>
                 <FlatList
                     data={categories}
                     renderItem={item => <Text
-                         onPress={e=>{navigation.navigate('categorywiseproducts' , {item , allCategories:categories})}}
-                          style={styles.categoryName}>{item.item.categoryName}
+                        onPress={e=>{navigation.navigate('categorywiseproducts' , {item , allCategories:categories})}}
+                        style={styles.categoryName}>{item.item.categoryName}
                           </Text>}
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}
+                    keyExtractor={item => item._id}
                 />
             </View>
 

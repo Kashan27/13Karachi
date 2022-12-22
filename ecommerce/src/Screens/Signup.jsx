@@ -14,6 +14,7 @@ import banner from '../images/login/banner.jpeg';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import themeColor from '../themeColor/themeColor'
+import ip from '../ip';
 
 
 
@@ -47,7 +48,7 @@ const Signup = ({ navigation }) => {
             alert("passwords are not same")
           } else {
             setLoading(true)
-            axios.post("https://192.168.1.106:9000/api/signup", { ...userData })
+            axios.post(`https://${ip}/api/signup`, { ...userData })
               .then(async(response) => {
                 setLoading(false)
                 try{
