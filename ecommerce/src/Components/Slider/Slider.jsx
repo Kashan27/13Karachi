@@ -34,7 +34,7 @@ const Slider = ({ images }) => {
   return (
     <ImageSlider
       data={carousel}
-      autoPlay={true}
+      // autoPlay={true}
       closeIconColor="black"
     />
   )

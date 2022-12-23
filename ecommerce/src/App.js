@@ -36,38 +36,30 @@ const App = () => {
   
   const [isOffline, setOfflineStatus] = useState(false);
   
-  NetInfo.addEventListener(networkState => {
-    console.log("Connection type - ", networkState.type);
-    console.log("Is connected? - ", networkState.isConnected);
-  })
+  // NetInfo.addEventListener(networkState => {
+  //   console.log("Connection type - ", networkState.type);
+  //   console.log("Is connected? - ", networkState.isConnected);
+  // })
+
   useEffect(() => {
     SplashScreen.hide()
-    // const removeNetInfoSubscription = NetInfo.addEventListener((state) => {
-    //   const offline = !(state.isConnected && state.isInternetReachable);
-    //   setOfflineStatus(offline);
-    // });
+    const removeNetInfoSubscription = NetInfo.addEventListener((state) => {
+      const offline = !(state.isConnected && state.isInternetReachable);
+      // console.log(offline)
+      setOfflineStatus(offline);
+    });
   
-    // fetchUsers();
-  
-    // return () => removeNetInfoSubscription();
+    // console.log(removeNetInfoSubscription)
   }, []);
-  useEffect(() => {
-    // setOfflineStatus(net)
-    console.log(NetInfo.getNetwork , "info")
 
-  },[NetInfo])
+  // useEffect(() => {
+  //   // setOfflineStatus(net)
+  //   console.log(NetInfo.getNetwork , "info")
+
+  // },[NetInfo])
   
   const isDarkMode = useColorScheme() === 'dark';
-  
-  // useEffect(() => {
-  //   let fontName = 'arial'
-  //   GlobalFont.applyGlobal(fontName)
-  // }, []);
-  
-  // const backgroundStyle = {
-    //   backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
 
-    // };
 
 
     return (
@@ -79,7 +71,6 @@ const App = () => {
     hidden={false} />
 
     <NativeBaseProvider>
-
       <IconRegistry icons={EvaIconsPack} />
       <ApplicationProvider {...eva} theme={eva.light}>
       <NetworkStatus status={isOffline} />
@@ -97,25 +88,3 @@ const styles = StyleSheet.create({
 export default App;
 
 
-
-
-
-
-// navigation.navigate('Details', {
-//   itemId: 86,
-//   otherParam: 'anything you want here',
-// });
-
-
-//update params
-// navigation.setParams({
-//   query: 'someText',
-// });
-
-
-
-//passing params to nested navigatior
-// navigation.navigate('Account', {
-//   screen: 'Settings',
-//   params: { user: 'jane' },
-// });

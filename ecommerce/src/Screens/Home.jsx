@@ -14,6 +14,7 @@ import ItemCard from '../Components/Card/Card';
 
 
 const Height = Dimensions.get("screen").height;
+console.log(Height)
 
 const Home = ({ navigation }) => {
     let [products, setProducts] = useState([])
@@ -58,11 +59,11 @@ const Home = ({ navigation }) => {
             <Header style={{ zIndex: 1 }} navigation={navigation} login={login} width={"80%"} close={closeMenu} showMore={true} title="App" />
 
           
-            {/* <Slider style={{ zIndex: -1 }}
+            <Slider style={{ zIndex: -1 }}
 
 
 
-            /> */}
+            />
             {/*Categories  */}
             <View>
                 <FlatList
