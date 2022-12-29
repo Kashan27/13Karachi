@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
-import { useState } from 'react';
-import { View, Text, Image } from 'react-native';
+import { useState  } from 'react';
+import { View, Text, Image, Pressable } from 'react-native';
 import { StyleSheet, } from 'react-native';
 import { TextInput, Button, Snackbar } from 'react-native-paper';
 import axios from 'axios';
@@ -37,7 +37,7 @@ const NewPass = ({ navigation, route }) => {
 
             if (password.length > 6) {
                 // setLoading(true)
-                axios.post(`http://${ip}/api/updatepassword`, { email, password })
+                axios.post(`http://192.168.1.102:9000/api/updatepassword`, { email, password })
                     .then(res => {
                         setLoading(false)
                         setDisable(true)
@@ -125,11 +125,11 @@ const NewPass = ({ navigation, route }) => {
                         loading={loading}
                     >Set Password</Button>
                 </View>
-                <View onPress={e=>{navigation.navigate("login")}} style={styles.resend}>
+                <Pressable onPress={e=>{navigation.navigate("login")}} style={styles.resend}>
                     <Text style={styles.text}>
                         Login to account
                     </Text>
-                </View>
+                </Pressable>
 
             </View>
 

@@ -1,20 +1,22 @@
 import React from 'react'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, View, Text } from 'react-native'
 import { useState } from 'react';
-import { Input, Text, Autocomplete, AutocompleteItem, CheckBox, Radio, RadioGroup } from '@ui-kitten/components';
-import { Button } from 'react-native-paper';
+// import { Input, Text, Autocomplete, AutocompleteItem, CheckBox, Radio, RadioGroup } from '@ui-kitten/components';
+import { Button, Checkbox, RadioButton, TextInput } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import themeColor from '../themeColor/themeColor';
 import ip from '../ip';
 
 const CheckOut = ({ navigation, route }) => {
+    const [checked, setChecked] = useState(false);
+    const [ts, setTS] = useState(false);
     const { subTotal } = route.params
-    const [loading , setLoading] = useState(false)
+    const [loading, setLoading] = useState(false)
     const [selectedIndex, setSelectedIndex] = React.useState(0);
     const [activeChecked, setActiveChecked] = useState(false);
     const useCheckboxState = (initialCheck = false) => {
-        const [checked, setChecked] = React.useState(initialCheck);
+        // const [checked, setChecked] = React.useState(initialCheck);
         return { checked, onChange: setChecked };
     };
     const basicCheckboxState = useCheckboxState();
@@ -82,24 +84,24 @@ const CheckOut = ({ navigation, route }) => {
             }
 
             if (true) {
-            // if (email || orderContact || shippingOne || shippingTwo) {
+                // if (email || orderContact || shippingOne || shippingTwo) {
                 if (selectedIndex) {
                     if (basicCheckboxState.checked) {
                         setLoading(true)
                         // axios.post(`http://192.168.1.106:9000/api/bookingpostdata`,{...obj})
-                        axios.post(`https://${ip}/api/bookingpostdata`,{...obj})
-                        .then((res)=>{
-                            if(res.data.success){
+                        axios.post(`https://${ip}/api/bookingpostdata`, { ...obj })
+                            .then((res) => {
+                                if (res.data.success) {
+                                    setLoading(false)
+                                    navigation.navigate("successorder")
+                                }
+                            })
+                            .catch((err) => {
                                 setLoading(false)
-                                navigation.navigate("successorder")
-                            }
-                        })
-                        .catch((err)=>{
-                            setLoading(false)
-                            console.log(err.message)
-                            alert("Please try again in few seconds")
-                            // alert(err.message)
-                        })
+                                console.log(err.message)
+                                alert("Please try again in few seconds")
+                                // alert(err.message)
+                            })
                     } else {
                         alert("Accept Terms and conditions")
                     }
@@ -125,15 +127,6 @@ const CheckOut = ({ navigation, route }) => {
 
 
 
-
-
-
-
-
-
-
-
-
     // ----------------------------------------------RNDER----------------------------------- ---------
     return (
         <View>
@@ -144,75 +137,92 @@ const CheckOut = ({ navigation, route }) => {
             {/* Details */}
             <View style={styles.detailsContainer}>
                 <View style={styles.subDetailContainer}>
-                    <Text category="h5">Email</Text>
-                    <Input
+                    {/* <Text category="h5">Email</Text> */}
+                    <TextInput
+                        activeUnderlineColor={themeColor}
+                        underLineColor="grey"
+                        left={<TextInput.Icon icon="email" />}
+                        label="Email"
+                        // value={text}
+                        icon='email'
+                        style={styles.input}
                         onChangeText={e => { handleInputs("email", e) }}
-                        style={styles.input}
-                        size='medium'
-                        placeholder='Email'
                     />
-                </View>
-                <View style={styles.subDetailContainer}>
-                    <Text category="h5">Contact</Text>
-                    <Input
-                        onChangeText={e => { handleInputs("orderContact", e) }}
 
-                        style={styles.input}
-                        size='medium'
-                        placeholder='contact'
-                        keyboardType="numeric"
-                    />
                 </View>
                 <View style={styles.subDetailContainer}>
-                    <Text category="h5">Address 1</Text>
-                    <Input
-                        onChangeText={e => { handleInputs("shippingOne", e) }}
+                    {/* <Text category="h5">Contact</Text> */}
+                    <TextInput
+                        activeUnderlineColor={themeColor}
+                        underLineColor="grey"
+                        left={<TextInput.Icon icon="phone" />}
+                        label="Contact"
+                        style={styles.input}
+                        onChangeText={e => { handleInputs("contact", e) }}
+                    />
 
-                        multiline={true}
-                        style={styles.input}
-                        size='medium'
-                        placeholder='Address 1'
-                    />
                 </View>
                 <View style={styles.subDetailContainer}>
-                    <Text category="h5">Address 2</Text>
-                    <Input
+                    <TextInput
+                        activeUnderlineColor={themeColor}
+                        underLineColor="grey"
+                        left={<TextInput.Icon icon="map-marker" />}
+                        label="Address 1"
+                        style={styles.input}
                         onChangeText={e => { handleInputs("shippingTwo", e) }}
-
-                        multiline={true}
-                        style={styles.input}
-                        size='medium'
-                        placeholder='Address 2'
                     />
+
                 </View>
-                <View style={{ width: "80%", marginTop: 10 }}>
-                    <RadioGroup
-                        selectedIndex={selectedIndex}
-                        onChange={index => setSelectedIndex(index)}>
+                <View style={styles.subDetailContainer}>
+                    {/* <Text category="h5">Address 2</Text> */}
+                    <TextInput
+                        activeUnderlineColor={themeColor}
+                        underLineColor="grey"
+                        left={<TextInput.Icon icon="map-marker" />}
+                        label="Address 2"
+                        style={styles.input}
+                        onChangeText={e => { handleInputs("shippingOne", e) }}
+                    />
 
+                </View>
+                <View style={{ width: "80%", marginTop: 25 }}>
+                    <View style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", width: "50%" }}>
 
-                        <Text category="h5">Payment Method</Text>
-                        <Radio
-                            
+                        <Text style={{ marginTop: 8 }}>Cash On Delivery</Text>
+                        <RadioButton
+                            value="first"
+                            status={checked === 'cod' ? 'checked' : 'unchecked'}
+                            onPress={() => setChecked('cod')}
+                            color={themeColor}
+                        />
+                    </View>
+                    <View style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", width: "50%" }}>
+                        <Text style={{ marginTop: 8 }}>Bank Card</Text>
+                        <RadioButton
+                            disabled={true}
                             style={styles.radio}
-                            checked={activeChecked}
-                            onChange={nextChecked => setActiveChecked(nextChecked)}>
-                            Cash On Delivery
-                        </Radio>
-                        <Radio
-                            style={styles.radio}
-                            disabled={true}>
-                            Card
-                        </Radio>
-                    </RadioGroup>
+                            value="second"
+                            status={checked === 'card' ? 'checked' : 'unchecked'}
+                            onPress={() => setChecked('card')}
+                            color={themeColor}
+                        />
+                    </View>
+
                 </View>
                 <View style={{ width: "80%", marginTop: 30 }}>
-                    <CheckBox
-                        style={styles.checkbox}
-                        status='basic'
-                        {...basicCheckboxState}>
-                        Terms and Conditions
-                    </CheckBox>
+
+                    <View style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", width: "50%" }}>
+
+                        <Checkbox
+                            color={themeColor}
+                            style={styles.checkbox}
+                            status={ts ? 'checked' : 'unchecked'}
+                            onPress={() => {
+                                setTS(!ts);
+                            }}
+                        />
+                        <Text style={{ marginTop: 8 }}>Terms and Conditions</Text>
+                    </View>
 
                     <Button
                         loading={loading}
@@ -222,6 +232,7 @@ const CheckOut = ({ navigation, route }) => {
                         mode="contained"
                         onPress={() => { handleConfirmOrder() }}
                     >
+
                         Confirm Order
                     </Button>
                 </View>
@@ -240,8 +251,8 @@ const styles = StyleSheet.create({
         marginTop: 20
     },
     detailsContainer: {
-        alignItems: "center",
         display: "flex",
+        alignItems: "center",
     },
     heading: {
         fontSize: 35,
@@ -254,13 +265,17 @@ const styles = StyleSheet.create({
         // flex: 1,
         width: "85%",
         fontSize: 18,
+        backgroundColor: "transparent"
     },
     subDetailContainer: {
+        display: "flex",
+        alignItems: "center",
         marginTop: 20,
-        // width:"100%"
+        width: "100%"
     },
     radio: {
         margin: 4,
+        // width:"5%",
     }
 
 })

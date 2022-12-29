@@ -1,6 +1,7 @@
 import React from 'react'
-import { memo } from 'react'
 import { View, Touchable, Text, Image, StyleSheet, Pressable, } from 'react-native'
+import { memo } from 'react';
+
 
 function ItemCard({ item , navigation }) {
 

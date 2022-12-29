@@ -1,10 +1,11 @@
 package com.ecommerce;
 
 import android.os.Bundle;
+import com.zoontek.rnbootsplash.RNBootSplash;
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
 import com.facebook.react.ReactRootView;
-import org.devio.rn.splashscreen.SplashScreen;
+
 
 
 public class MainActivity extends ReactActivity {
@@ -13,11 +14,12 @@ public class MainActivity extends ReactActivity {
   //       super.onCreate(savedInstanceState);
   //   }
 
-  @Override
-protected void onCreate(Bundle savedInstanceState) {
-        SplashScreen.show(this);  // here
-        super.onCreate(null);
-}
+ @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    // SplashScreen.show(this);
+    RNBootSplash.init(this); // <- initialize the splash screen
+    super.onCreate(savedInstanceState);
+  }
 
   /**
    * Returns the name of the main component registered from JavaScript. This is used to schedule

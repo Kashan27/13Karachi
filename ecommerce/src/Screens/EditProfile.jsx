@@ -78,6 +78,7 @@ const EditProfile = ({ navigation, route }) => {
                     <View style={{ display: "flex", justifyContent: "space-around", flexDirection: "row" }}>
                         <Ionicons name='mail-outline' size={25} style={{ marginTop: 18 }} />
                         <TextInput
+                            disabled={true}
                             value={userDetails.email}
                             onChangeText={e => { handleUpdateInput(e, "email") }}
                             style={styles.input}

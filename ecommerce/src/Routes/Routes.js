@@ -1,14 +1,14 @@
 import * as React from 'react';
 import Login from "../Screens/Login";
 import Signup from "../Screens/Signup";
-import Markets from "../Screens/Markets";
-import Products from "../Screens/Products";
 import Home from "../Screens/Home";
 import Cart from "../Screens/Cart";
 import Header from "../Components/Header/Header";
 import SingleProductScreen from "../Screens/SingleProductScreen";
-import CheckOut from "../Screens/CheckOut";
+import Markets from "../Screens/Markets";
+import Products from "../Screens/Products";
 import Shops from "../Screens/Shops";
+import CheckOut from "../Screens/CheckOut";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import ForgotPass from "../Screens/ForgotPass";
 import NewPass from "../Screens/NewPass";
@@ -75,7 +75,8 @@ const TabNav = () => {
             <Tab.Screen name="home" component={Home} />
             <Tab.Screen name="Area" component={Markets} />
             <Tab.Screen name="cart" component={Cart} />
-            <Tab.Screen name="orderstatus" component={OrderStatus} />
+            {/* <Tab.Screen name="products" component={Products} /> */}
+            {/* <Tab.Screen name="orderstatus" component={OrderStatus} /> */}
             
         </Tab.Navigator >
     )
@@ -88,14 +89,11 @@ const StackNav = () => {
             <Stack.Navigator
                 screenOptions={{
                     headerShown:false,
-                    headerStyle: {
-                        backgroundColor: '#f4511e'
-                    }, headerTintColor: '#fff',
-                    
                 }}
             >
-                {/* <Stack.Screen name="markets" component={Markets} /> */}
                 <Stack.Screen  name="test" component={TabNav} />
+                <Stack.Screen name="products" component={Products} />
+                <Stack.Screen name="markets" component={Markets} />
                 <Stack.Screen name="profile" component={Profile} />
                 <Stack.Screen name="editprofile" component={EditProfile} />
                 <Stack.Screen name="login" component={Login} />
@@ -103,7 +101,6 @@ const StackNav = () => {
                 <Stack.Screen name="newpass" component={NewPass} />
                 <Stack.Screen name="signup" component={Signup} />
                 <Stack.Screen name="shops" component={Shops} />
-                <Stack.Screen name="products" component={Products} />
                 <Stack.Screen name="categorywiseproducts" component={CategoryWiseProducts} />
                 <Stack.Screen  name="header" component={Header} />
                 <Stack.Screen  name="item" component={SingleProductScreen} />

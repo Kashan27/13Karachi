@@ -1,8 +1,8 @@
 import React from 'react'
 import { View, Text, ScrollView, FlatList, TouchableOpacity, StyleSheet, ImageBackground } from 'react-native'
 import { IndexPath, Layout, Select, SelectItem } from '@ui-kitten/components';
-import { List, ListItem } from '@ui-kitten/components';
-import { Button } from 'react-native-paper';
+// import { List, ListItem } from '@ui-kitten/components';
+import { Button , List} from 'react-native-paper';
 import { Spinner } from 'native-base';
 // import { List } from 'react-native-paper';
 import { useState, useEffect } from 'react';
@@ -10,13 +10,11 @@ import axios from 'axios';
 import Header from '../Components/Header/Header';
 import themeColor from '../themeColor/themeColor';
 import { Picker } from '@react-native-picker/picker';
+import fetchingAreas from '../fetchs/fetchAreas';
 
 import ip from "../ip"
-
-
-
-
-
+import { useQuery } from 'react-query';
+import { memo } from 'react';
 
 
 
@@ -33,42 +31,47 @@ const Item = ({ item, onPress, backgroundColor, textColor }) => (
 
 
 const Markets = ({ navigation }) => {
+  let areas = useQuery('ares', fetchingAreas);
+
+  // console.log(areas.data, "Areas")
   const [loading, setLoading] = useState(false)
-  let [dropDownData, setdropDownData] = useState(["adf", "adfds", "dfasdfsd", "adsfdsf"])
-  const [selectedIndex, setSelectedIndex] = React.useState(new IndexPath(0));
+  // let [dropDownData, setdropDownData] = useState(["adf", "adfds", "dfasdfsd", "adsfdsf"])
+  // const [selectedIndex, setSelectedIndex] = React.useState(new IndexPath(0));
+  // const [expanded, setExpanded] = React.useState(true);
   const [message, setMessage] = useState("Select an Area")
   const [markets, setMarkets] = useState()
-  const [expanded, setExpanded] = React.useState(true);
   const [displayValue, setDisplayValue] = useState("Select Area");
-  const handlePress = () => setExpanded(!expanded);
+
+
+  // const handlePress = () => setExpanded(!expanded);
 
 
 
 
-  const getData = () => {
-    axios.get(`https://${ip}/api/allgetarea`)
-      .then((res) => {
-
-        let arr = [{ value: "select area" }]
-        res.data.forEach((e) => {
-          let obj = { value: e.areaName }
-          arr.push(obj)
-        })
-        setdropDownData(arr)
-      })
-      .catch(err => {
-        console.log(err.message, "err")
-      })
-
+  // const getData = () => {
+  //   axios.get(`https://${ip}/api/allgetarea`)
+  //     .then((res) => {
+  //       let arr = [{ value: "select area" }]
+  //       res.data.forEach((e) => {
+  //         let obj = { value: e.areaName }
+  //         arr.push(obj)
+  //       })
+  //       setdropDownData(arr)
+  //     })
+  //     .catch(err => {
+  //       console.log(err.message, "err")
+  //     })
 
 
 
 
-  }
+
+  // }
 
   const getMarket = (index) => {
     setLoading(true)
     setDisplayValue(index)
+    // console.log(index)
     axios.get(`https://${ip}/api/getareaname/${index}`)
       .then((res) => {
         let arr = []
@@ -95,16 +98,20 @@ const Markets = ({ navigation }) => {
 
   // UseEffect
 
-  useEffect(() => {
-    getData()
-    console.log('effect')
-  }, [])
-
+  // useEffect(() => {
+  //   // getData()
+  //   console.log('effect')
+  // }, [])
 
 
   const renderListItem = ({ item, index }) =>
   (
-    <ListItem onPress={e => { navigation.navigate('shops', { markets, marketName: item.title, area: displayValue }) }} title={`${item.title} ${index + 1}`} />
+    <List.Item
+    onPress={e => { navigation.navigate('shops', { markets, marketName: item.title, area: displayValue }) }}
+    title={item.title}
+    left={()=><List.Icon icon="store" />} />
+
+    // <ListItem onPress={e => { navigation.navigate('shops', { markets, marketName: item.title, area: displayValue }) }} title={`${item.title} ${index + 1}`} />
   );
 
 
@@ -116,48 +123,30 @@ const Markets = ({ navigation }) => {
 
 
 
-      {/* <Layout style={styles.dropDownContainer} level='1'>
-        <Select
+      {/* Areas List */}
 
-          value={displayValue}
-          selectedIndex={selectedIndex}
-          onSelect={e => { getMarket(dropDownData[e.row].value) }}>
-          {
-            dropDownData.map((item, index) => {
-              return (
-                <SelectItem key={index} title={item.value} />
-              )
-            })
+      
+        <Picker
+          // style={{ width: "40%" }}
+          mode={"dropdown"}
+          selectedValue={displayValue}
+          onValueChange={(itemValue, itemIndex) => {
+
+            // setDisplayValue(areas.data[itemIndex].areaName)
+            getMarket(areas.data[itemIndex].areaName)
           }
-
-        </Select>
-      </Layout> */}
-
-
-
-{/* Areas List */}
-
-      <Picker
-        // style={{ width: "40%" }}
-        mode={"dropdown"}
-        selectedValue={displayValue}
-        onValueChange={(itemValue, itemIndex) => {
-          // handleUpdateDetails(itemValue)
-          console.log(dropDownData[itemIndex].value)
-          getMarket(dropDownData[itemIndex].value)
-        }
-        }>
-        {dropDownData.map((item, index) => {
-
-          return (
-            <Picker.Item label={item.value} value={item.value} />
-          )
-        })
-        }
-      </Picker>
+          }>
+          {areas.data && areas.data.map((item, index) => {
+            return (
+              <Picker.Item key={item._id} label={item.areaName} value={item.areaName} />
+            )
+          })
+          }
+        </Picker>
+      
 
 
-{/* Current Area Message */}
+      {/* Current Area Message */}
       <Button
         textColor='#049f99'
         buttonColor='#e6fffe'
@@ -173,10 +162,12 @@ const Markets = ({ navigation }) => {
 
       {/* Markets List */}
 
-      <List
-        data={markets}
+      <FlatList
         renderItem={renderListItem}
+        data={markets}
+        keyExtractor={e=>e._id}
       />
+      
       {loading ?
         <Spinner size='lg' accessibilityLabel="Loading posts" />
         :
@@ -272,4 +263,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default Markets
+export default memo(Markets)

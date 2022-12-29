@@ -9,33 +9,37 @@ import ip from "../ip"
 import { Button } from 'react-native-paper';
 import { Chip } from 'react-native-paper';
 import { TouchableWithoutFeedback } from 'react-native';
-import { Autocomplete, AutocompleteItem, Icon } from '@ui-kitten/components';
+// import { Autocomplete, AutocompleteItem, Icon } from '@ui-kitten/components';
 import themeColor from '../themeColor/themeColor';
-// import { styles } from 'react-native-image-slider-banner/src/style';
+// import AutocompleteInput from 'react-native-autocomplete-input';
+// import { AutocompleteDropdown } from 'react-native-autocomplete-dropdown';
+import { SelectList } from 'react-native-dropdown-select-list'
+
+
 
 
 const Products = ({ route, navigation }) => {
-    
-    
+
+
 
     const filter = (item, query) => item.categoryName.toLowerCase().includes(query.toLowerCase());
 
     const StarIcon = (props) => (
         <Icon {...props} name='copy-outline' />
-        );
-        
-        
+    );
+
+
     const [data, setData] = useState([]);
     const [categories, setCategories] = useState([])
     const [value, setValue] = useState(null);
-    const {shop, marketName } = route.params;
+    // const { shop, marketName } = route.params;
     const [allProd, setAllProd] = useState()
-    const [currentShop, setCurrentShop] = useState(shop)
+    const [currentShop, setCurrentShop] = useState("shop")
     const [shopList, setShopList] = useState([])
     let [p, setP] = useState([])
-    
-    
-    
+
+
+
     const handleUpdateShop = (cShop) => {
         let filterData = allProd.filter(val => val.hotelname === cShop)
         setP(filterData)
@@ -47,23 +51,35 @@ const Products = ({ route, navigation }) => {
 
     const handleSetCategories = () => {
         axios.get(`https://${ip}/api/allgetcategory`)
-        .then(res => {
-            setCategories(res.data)
-            setData(res.data)
-        })
-        .catch(err => {
-            console.log(err)
-        })
+            .then(res => {
+                let array = []
+                res.data.forEach(e => {
+                    let obj = { key: e._id, value: e.categoryName }
+                    array.push(obj)
+                })
+                setCategories(array)
+                setData(res.data)
+            })
+            .catch(err => {
+                console.log(err)
+            })
 
     }
 
+    console.log(categories)
+
     const handleFilterByCategory = () => {
-            let filterData = allProd ? allProd.filter(val => 
-                (value ? val.category === value : true )
-                && 
-                val.hotelname === currentShop) : []
-            setP(filterData)
-            
+        let filterData = allProd ? allProd.filter(val =>
+            (value ? val.category === value : true)
+            &&
+            val.hotelname === currentShop) : []
+        setP(filterData)
+
+        // setDropDownData
+
+
+
+
     }
 
 
@@ -81,17 +97,18 @@ const Products = ({ route, navigation }) => {
     const clearInput = () => {
         setValue('');
         setData(categories);
+
         // handleUpdateShop()
     };
 
-    const renderOption = (item, index) => (
-        <AutocompleteItem
-            key={index}
-            title={item.categoryName}
-            accessoryLeft={StarIcon}
-        />
-        // <Text>{item.title}</Text>
-    );
+    // const renderOption = (item, index) => (
+    //     <AutocompleteItem
+    //         key={index}
+    //         title={item.categoryName}
+    //         accessoryLeft={StarIcon}
+    //     />
+    //     // <Text>{item.title}</Text>
+    // );
 
 
 
@@ -113,7 +130,7 @@ const Products = ({ route, navigation }) => {
         // setCurrentMarket(marketName)
     }, [])
 
-    
+
     useEffect(() => {
         handleFilterByCategory()
     }, [value]);
@@ -152,7 +169,7 @@ const Products = ({ route, navigation }) => {
 
     const renderItem = (item) => {
         return (
-            <ItemCard navigation={navigation}  item={item} />
+            <ItemCard navigation={navigation} item={item} />
         )
     }
     const renderShopList = (item) => {
@@ -161,7 +178,7 @@ const Products = ({ route, navigation }) => {
         )
     }
 
-
+    // console.log(data[0].categoryName)
     return (
         <>
             <Header navigation={navigation} width={"72%"} showMore={true} search={true} goback={e => { navigation.goBack() }} title="App" />
@@ -177,20 +194,21 @@ const Products = ({ route, navigation }) => {
 
                 </View>
 
-                <Autocomplete
-                    placeholder='Filter Category'
-                    value={value}
-                    accessoryRight={renderCloseIcon}
-                    onChangeText={onChangeText}
-                    onSelect={onSelect}>
-                    {data.map(renderOption)}
-                </Autocomplete>
-                <View style={{ display: "flex", width: "100%", alignItems: "center" }}>
+                <View style={{zIndex:1, display: "flex", width: "100%", alignItems: "center" }}>
                     <Button buttonColor={themeColor} onClick={e => { navigation.navigate('shops') }} style={{ margin: 10 }} labelStyle={{ fontSize: 18 }} mode='contained' >{currentShop}</Button>
                 </View>
 
+                <SelectList
+                    style={{zIndex:10000}}
+                    setSelected={(val) => setValue(val)}
+                    data={categories}
+                    save="value"
+                />
 
-                <View style={{ display: "flex", width: "100%" }}>
+
+
+
+                <View  style={{zIndex:1, display: "flex", width: "100%" }}>
                     {p[0] ?
 
                         <FlatList
@@ -214,20 +232,24 @@ export default Products
 // style={{ display: "flex", alignItems: "center", width: "100%", height: 50, marginVertical: 10 
 const styles = StyleSheet.create({
     shopsList: {
-        display:"flex",
-        width:"100%",
-        height:60,
-        flexDirection:"row",
+        display: "flex",
+        width: "100%",
+        height: 60,
+        flexDirection: "row",
         // backgroundColor:"red",
-        alignItems:"center",
-    
-        
+        alignItems: "center",
+
+
     },
-    shopsHeader:{
-        fontSize:20,
-        borderRightColor:"grey",
-        borderRightWidth:1,
-        borderStyle:"solid",
-        paddingRight:7
-    }
+    shopsHeader: {
+        fontSize: 20,
+        borderRightColor: "grey",
+        borderRightWidth: 1,
+        borderStyle: "solid",
+        paddingRight: 7
+    },
+    autocompleteContainer: {
+        backgroundColor: '#ffffff',
+        borderWidth: 0,
+    },
 })

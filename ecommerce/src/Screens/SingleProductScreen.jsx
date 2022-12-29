@@ -9,11 +9,14 @@ import { parse } from '@babel/core';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MultiProdImages from '../Components/MultiProductImages/MultiProdImages';
 import themeColor from '../themeColor/themeColor';
+import { LogBox } from 'react-native';
 import axios from 'axios';
 import ip from '../ip';
 
 const SingleProductScreen = ({ route, navigation }) => {
 
+
+    LogBox.ignoreLogs(['Non-serializable values were found in the navigation state'])
     const { item } = route.params
     let { productName, imageURL, productPrice, _id, multiProd } = item.item
     let [imageList , setImageList] = useState([imageURL,

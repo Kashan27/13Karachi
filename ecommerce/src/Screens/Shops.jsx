@@ -1,14 +1,15 @@
 import axios from 'axios';
 import React from 'react'
 import { useEffect, useState } from 'react';
-import { View, TouchableOpacity,  Image, StyleSheet, FlatList, } from 'react-native'
+import { View, TouchableOpacity, Image, StyleSheet, FlatList, Text} from 'react-native'
 import ItemCard from '../Components/Card/Card';
 import Header from '../Components/Header/Header';
 import ShopsSlider from '../Components/ShopSlider/ShopsSlider';
 import ip from "../ip"
-import { Button } from 'react-native-paper';
-import { Card, Layout, Text } from '@ui-kitten/components';
+import { Button, List } from 'react-native-paper';
+import { Card, Layout,  } from '@ui-kitten/components';
 import themeColor from '../themeColor/themeColor';
+
 
 
 
@@ -19,8 +20,8 @@ import themeColor from '../themeColor/themeColor';
 
 const Shops = ({ route, navigation }) => {
 
-    const {area , marketName, markets } = route.params;
-    const [shops , setShops] = useState([])
+    const { area, marketName, markets } = route.params;
+    const [shops, setShops] = useState([])
     const [allProd, setAllProd] = useState()
     const [currentMarket, setCurrentMarket] = useState(marketName)
     const [currentArea, setCurrentArea] = useState(area)
@@ -58,19 +59,35 @@ const Shops = ({ route, navigation }) => {
 
 
 
-    const renderItem = ({item}) => {
-        return (
-            <Card
-             onPress={e=>{navigation.navigate("products" , {shop:item.hotelname , marketName})}}
-              style={styles.card} status='primary'
-              appearance="filled"
-              
-              >
-            <Text style={styles.shopName}>{item.hotelname}</Text>
-          </Card>
-                // </TouchableOpacity>
-        )
-    }
+
+    const renderItem = ({ item, index }) =>{
+        console.log(item.hotelname)
+       return (
+            <List.Item
+            //   onPress={e => { navigation.navigate('shops', { markets, marketName: item.title, area: displayValue }) }}
+            onPress={e => { navigation.navigate("products", { shop: item.hotelname, marketName }) }}
+            title={item.hotelname}
+            left={()=><List.Icon icon="store" />} 
+            />
+            
+            // <ListItem onPress={e => { navigation.navigate('shops', { markets, marketName: item.title, area: displayValue }) }} title={`${item.title} ${index + 1}`} />
+            );
+        }
+
+
+    // const renderItem = ({ item }) => {
+    //     return (
+    //         <Card
+    //             onPress={e => { navigation.navigate("products", { shop: item.hotelname, marketName }) }}
+    //             style={styles.card} status='primary'
+    //             appearance="filled"
+
+    //         >
+    //             <Text style={styles.shopName}>{item.hotelname}</Text>
+    //         </Card>
+    //         // </TouchableOpacity>
+    //     )
+    // }
     const renderMarkets = (item) => {
         return (<ShopsSlider name={item.item.title} updMarket={handleUpdateMarket} markets={item} />)
     }
@@ -82,7 +99,7 @@ const Shops = ({ route, navigation }) => {
             <View style={{ width: "100%" }}>
 
                 <View style={styles.marketList}>
-                <Text style={styles.marketsHeader}>Markets</Text>
+                    <Text style={styles.marketsHeader}>Markets</Text>
                     <FlatList
 
                         data={markets}
@@ -100,21 +117,30 @@ const Shops = ({ route, navigation }) => {
                 </View>
 
 
-                <View style={styles.mainShopContainer} >
-                    {true
-                        ?
-                        <FlatList
-                            data={shopsList}
-                            renderItem={renderItem}
-                            numColumns={2}
-                            showsVerticalScrollIndicator={false}
+                {/* <View style={styles.mainShopContainer} > */}
+                    <List.Section>
+
+                    <FlatList
+                        renderItem={renderItem}
+                        data={shopsList}
+                        keyExtractor={e => e._id}
                         />
+                        </List.Section>
+                    {false
+                        ?
+                        // <FlatList
+                        //     data={shopsList}
+                        //     renderItem={renderItem}
+                        //     numColumns={2}
+                        //     showsVerticalScrollIndicator={false}
+                        // />
+                        <View></View>
                         :
                         <Text style={{ fontSize: 30, textAlign: "center", marginTop: "50%" }}>No Products Found</Text>
 
                     }
                 </View>
-            </View>
+            {/* </View> */}
         </>
     )
 }
@@ -123,48 +149,48 @@ const Shops = ({ route, navigation }) => {
 
 
 const styles = StyleSheet.create({
-    card:{
-        color:"red",
-        margin:15,
+    card: {
+        color: "red",
+        margin: 15,
     },
-    mainShopContainer:{
+    mainShopContainer: {
         width: "100%",
         display: "flex",
-        alignItems:"center",
+        alignItems: "center",
         // backgroundColor:"pink",
-        
-    },marketsHeader:{
-        fontSize:20,
-        borderRightColor:"grey",
-        borderRightWidth:1,
-        borderStyle:"solid",
-        paddingRight:7
-    },marketList: {
-        display:"flex",
-        width:"100%",
-        height:60,
-        flexDirection:"row",
+
+    }, marketsHeader: {
+        fontSize: 20,
+        borderRightColor: "grey",
+        borderRightWidth: 1,
+        borderStyle: "solid",
+        paddingRight: 7
+    }, marketList: {
+        display: "flex",
+        width: "100%",
+        height: 60,
+        flexDirection: "row",
         // backgroundColor:"red",
-        alignItems:"center",
+        alignItems: "center",
     },
-    shops:{
-        backgroundColor:"white",
-        elevation:0.8,
-        margin:15,
+    shops: {
+        backgroundColor: "white",
+        elevation: 0.8,
+        margin: 15,
         // borderColor:"none",
         // borderWidth:1,
-        borderRadius:5,
+        borderRadius: 5,
         // width:"45%",
         // height:50,
-        textAlign:"center",
-        display:"flex",
-        alignItems:"center",
-        justifyContent:"center",
+        textAlign: "center",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
     },
-    shopName:{
-        fontSize:20,
+    shopName: {
+        fontSize: 20,
     }
-    
+
 })
 
 

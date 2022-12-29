@@ -9,6 +9,7 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useIsFocused } from "@react-navigation/native";
+import themeColor from '../../themeColor/themeColor';
 
 
 
@@ -94,7 +95,7 @@ const Header = ({ navigation, title, goback, search, showMore, width }) => {
 
      {/* MENU */}
 
-      <Menu shadow={2} w="190" trigger={triggerProps => {
+     <Menu shadow={2} w="190" trigger={triggerProps => {
         return <Pressable accessibilityLabel="More options menu" {...triggerProps}>
           {/* <HamburgerIcon /> */}
           <Ionicons size={30} name="menu-outline" />
@@ -105,14 +106,13 @@ const Header = ({ navigation, title, goback, search, showMore, width }) => {
           <>
             <Menu.Item onPress={e => { logout() }}>Logout</Menu.Item>
             <Menu.Item onPress={e => { navigation.navigate('profile') }}>Profile</Menu.Item>
-            <Menu.Item onPress={e => { navigation.navigate('orderstatus') }}>Profile</Menu.Item>
+            <Menu.Item onPress={e => { navigation.navigate('orderstatus') }}>My Orders</Menu.Item>
           </>
           :
           <Menu.Item onPress={e => { login() }}>Login</Menu.Item>
         }
         <Menu.Item onPress={e => { signup() }}>Signup</Menu.Item>
       </Menu>
-
 
     </Appbar.Header>
 

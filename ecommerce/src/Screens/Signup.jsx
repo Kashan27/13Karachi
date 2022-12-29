@@ -1,6 +1,6 @@
 
 import React from 'react'
-import { View, Text, Image ,ScrollView} from 'react-native';
+import { View, Text, Image, ScrollView, TouchableOpacity } from 'react-native';
 import {
   StyleSheet,
   ImageBackground,
@@ -14,19 +14,22 @@ import banner from '../images/login/banner.jpeg';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import themeColor from '../themeColor/themeColor'
+import DocumentPicker from 'react-native-document-picker';
+// import * as ImagePicker from 'expo-image-picker';
 import ip from '../ip';
 
 
 
 
 const Signup = ({ navigation }) => {
-
+  let [singleFile, setSingleFile] = useState('')
   let [loading, setLoading] = useState(false)
-  let [input, setInput] = useState({ name: "", email: "", address: "", contact: "+92", password: "", confirmPassword: "" })
+  let [input, setInput] = useState({img:"" ,  name: "", email: "", address: "", contact: "+92", password: "", confirmPassword: "" })
+  let [imgName, setImgName] = useState('')
 
 
 
-  const updateInput = (property , val) => {
+  const updateInput = (property, val) => {
 
     setInput({ ...input, [property]: val })
 
@@ -34,9 +37,9 @@ const Signup = ({ navigation }) => {
   }
 
   const handleSignup = async (event) => {
-   
-    let { name, email, address, contact, password, confirmPassword } = input
-    let userData = { name, email, address, contact, password, role: "User" }
+
+    let {img , name, email, address, contact, password, confirmPassword } = input
+    let userData = {img , name, email, address, contact, password, role: "User" }
     if (name, email, address, contact, password, confirmPassword) {
       if (!input.email.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)) {
         alert("Email is not in correct format")
@@ -48,19 +51,20 @@ const Signup = ({ navigation }) => {
             alert("passwords are not same")
           } else {
             setLoading(true)
-            axios.post(`https://${ip}/api/signup`, { ...userData })
-              .then(async(response) => {
+            // console.log(userData)
+            axios.post(`http://192.168.1.102:9000/api/signup`, { ...userData })
+              .then(async (response) => {
                 setLoading(false)
-                try{
+                try {
                   let user = await AsyncStorage.getItem("user")
-                  if(response.data.success){
-                    if(user){
+                  if (response.data.success) {
+                    if (user) {
                       navigation.navigate("home")
-                    }else{
+                    } else {
                       navigation.navigate("login")
                     }
                   }
-                }catch(err){
+                } catch (err) {
                   console.log(err.message)
                 }
               })
@@ -79,6 +83,63 @@ const Signup = ({ navigation }) => {
 
 
 
+
+
+  const selectOneFile = async () => {
+    //Opening Document Picker for selection of one file
+    try {
+      const res = await DocumentPicker.pick({
+        type: [DocumentPicker.types.images],
+        //There can me more options as well
+        // DocumentPicker.types.allFiles
+        // DocumentPicker.types.images
+        // DocumentPicker.types.plainText
+        // DocumentPicker.types.audio
+        // DocumentPicker.types.pdf
+      });
+      // console.log(res[0],"res")
+      const data = new FormData();
+      // data.append('name', 'avatar');
+      setImgName(res[0].name)
+      data.append('file', {
+        uri: res[0].uri,
+        type: res[0].type,
+        name: res[0].name
+      });
+      data.append('upload_preset', '13karachi')
+      data.append('cloud_name', 'dhcxv86kr')
+
+            console.log(data, "data")
+      fetch('https://api.cloudinary.com/v1_1/dhcxv86kr/image/upload', {
+        method: 'POST',
+        body: data
+      }).then(res => res.json())
+      .then(data=>{
+        setSingleFile(data)
+        console.log(data.url)
+        setInput({...input , img:data.url})
+      })
+
+
+    } catch (err) {
+      //Handling any exception (If any)
+      if (DocumentPicker.isCancel(err)) {
+        //If user canceled the document selection
+        console.log('Canceled from single doc picker');
+      } else {
+        //For Unknown Error
+        console.log('Unknown Error: ' + JSON.stringify(err));
+        throw err;
+      }
+    }
+
+
+
+  };
+
+
+
+
   return (
     <View
       style={{ backgroundColor: "white" }}>
@@ -91,90 +152,97 @@ const Signup = ({ navigation }) => {
 
 
 
+
       <Text style={styles.heading}>Signup</Text>
       <View style={styles.loginContainer} >
         <View style={styles.inputContainer}>
 
-        <ScrollView >
+          <ScrollView >
 
 
-          {/* Inputs           ------------------------------------------------------- */}
+            {/* Inputs           ------------------------------------------------------- */}
 
-          <View style={{ display: "flex", justifyContent: "space-between", flexDirection: "row" }}>
-            <Ionicons name='person-outline' size={28} style={{ marginTop: 10 }} />
-            <TextInput
-              // icon="account-outline"
-              onChangeText={e => { updateInput("name", e) }}
-              style={styles.input}
-              mode="Flat"
-              placeholder='User Name'
-            // textColor='white'
-            ></TextInput>
-          </View>
-
-          <View style={{ display: "flex", justifyContent: "space-between", flexDirection: "row" }}>
-            <Ionicons name='mail-outline' size={28} style={{ marginTop: 10 }} />
-            <TextInput
-              // icon="account-outline"
-              onChangeText={e => { updateInput("email", e) }}
-              style={styles.input}
-              mode="Flat"
-              placeholder='Email'
-            // textColor='white'
-            ></TextInput>
-          </View>
-
-          <View style={{ display: "flex", justifyContent: "space-between", flexDirection: "row" }}>
-            <Ionicons name='location-outline' size={28} style={{ marginTop: 10 }} />
-            <TextInput
-              onChangeText={e => { updateInput("address", e) }}
-              style={styles.input}
-              mode="Flat"
-              placeholder='Address'
-            ></TextInput>
-          </View>
-
-          <View style={{ display: "flex", justifyContent: "space-between", flexDirection: "row" }}>
-            <Ionicons name='call-outline' size={28} style={{ marginTop: 10 }} />
-            <TextInput
-              onChangeText={e => { updateInput("contact", e) }}
-              style={styles.input}
-              mode="Flat"
-              keyboardType='numeric'
-              placeholder='Phone'
-            ></TextInput>
-          </View>
-
-          <View style={{ display: "flex", justifyContent: "space-between", flexDirection: "row" }}>
-            <Ionicons name='key-outline' size={28} style={{ marginTop: 10 }} />
-            <TextInput
-              onChangeText={e => { updateInput("password", e) }}
-              style={styles.input}
-              mode="Flat"
-              secureTextEntry={true}
-              placeholder='Password'
-            ></TextInput>
-          </View>
-
-          <View style={{ display: "flex", justifyContent: "space-between", flexDirection: "row" }}>
-            <Ionicons name='key-outline' size={28} style={{ marginTop: 10 }} />
-            <TextInput
-              onChangeText={e => { updateInput("confirmPassword", e) }}
-              style={styles.input}
-              mode="Flat"
-              secureTextEntry={true}
-              placeholder='Password'
+            <View style={{ display: "flex", justifyContent: "space-between", flexDirection: "row" }}>
+              <TextInput
+                left={<TextInput.Icon icon="account-outline" />}
+                onChangeText={e => { updateInput("name", e) }}
+                style={styles.input}
+                mode="Flat"
+                placeholder='User Name'
+                activeUnderlineColor={themeColor}
+                ></TextInput>
+            </View>
+            <View style={{ display: "flex", justifyContent: "space-between", flexDirection: "row" }}>
+              <TextInput
+                activeUnderlineColor={themeColor}
+                left={<TextInput.Icon icon="email-outline" />}
+                onChangeText={e => { updateInput("email", e) }}
+                style={styles.input}
+                mode="Flat"
+                placeholder='Email'
               ></TextInput>
-          </View>
+            </View>
 
-        </ScrollView>
-              </View>
+            <View style={{ display: "flex", justifyContent: "space-between", flexDirection: "row" }}>
+              <TextInput
+            activeUnderlineColor={themeColor}
+            left={<TextInput.Icon icon="map-marker" />}
+            onChangeText={e => { updateInput("address", e) }}
+                style={styles.input}
+                mode="Flat"
+                placeholder='Address'
+              ></TextInput>
+            </View>
+
+            <View style={{ display: "flex", justifyContent: "space-between", flexDirection: "row" }}>
+              <TextInput
+                activeUnderlineColor={themeColor}
+                left={<TextInput.Icon icon="phone-outline" />}
+                onChangeText={e => { updateInput("contact", e) }}
+                style={styles.input}
+                mode="Flat"
+                keyboardType='numeric'
+                placeholder='Phone'
+              ></TextInput>
+            </View>
+
+            <View style={{ display: "flex", justifyContent: "space-between", flexDirection: "row" }}>
+              <TextInput
+                activeUnderlineColor={themeColor}
+                left={<TextInput.Icon icon="key-variant" />}
+                onChangeText={e => { updateInput("password", e) }}
+              style={styles.input}
+                mode="Flat"
+                secureTextEntry={true}
+                placeholder='Password'
+              ></TextInput>
+            </View>
+
+            <View style={{ display: "flex", justifyContent: "space-between", flexDirection: "row" }}>
+              <TextInput
+                activeUnderlineColor={themeColor}
+              left={<TextInput.Icon icon="key-variant" />}
+                onChangeText={e => { updateInput("confirmPassword", e) }}
+                style={styles.input}
+                mode="Flat"
+                secureTextEntry={true}
+                placeholder='con-Pass'
+              ></TextInput>
+            </View>
+            <View style={{ marginTop: 5, display: "flex", justifyContent: "space-around", flexDirection: "row" }}>
+              <Button textColor={themeColor} onPress={selectOneFile} mode="outlined">Image</Button>
+              <Button textColor={themeColor}>{imgName}</Button>
+            </View>
+
+
+          </ScrollView>
+        </View>
 
 
         {/* SignupButton */}
         <View style={styles.loginButton}>
           <Button
-          buttonColor={themeColor}
+            buttonColor={themeColor}
             onPress={e => { handleSignup() }}
             mode="contained"
             style={styles.button}
@@ -252,15 +320,15 @@ const styles = StyleSheet.create({
 
   },
   heading: {
-    fontSize: 40,
+    fontSize: 30,
     // color: "white",
     // textAlign: "center",
     paddingHorizontal: 20
   },
   input: {
     backgroundColor: "white",
-    width: "80%",
-    fontSize: 20,
+    width: "90%",
+    fontSize: 17,
 
   },
   inputContainer: {

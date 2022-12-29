@@ -36,11 +36,17 @@ export const Login = ({ navigation }) => {
     let { email, password } = userDetails
     if (email && password) {
       setLoading(true)
-      axios.post(`https://${ip}/api/signin`, { email, password })
+      axios.post(`http://192.168.1.102:9000/api/signin`, { email, password })
         .then(async (response) => {
           try {
-            await AsyncStorage.setItem("user", JSON.stringify(response.data))
-            navigation.navigate("home")
+            let role  = response.data.data.role
+            if(role === "User") {
+              await AsyncStorage.setItem("user", JSON.stringify(response.data))
+              navigation.navigate("home")
+            }else{
+              alert("This is a seller account.please go to website to signedIn as Seller ")
+            }
+            
           } catch (err) {
             console.log(err)
           }

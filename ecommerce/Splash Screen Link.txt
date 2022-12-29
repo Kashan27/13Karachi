@@ -1,0 +1,1 @@
+https://github.com/zoontek/react-native-bootsplash

@@ -32,7 +32,7 @@ const ForgotPass = ({ navigation }) => {
 
         if(email){
             setLoading(true)
-            axios.post(`http://${ip}/api/resetpassword` , {email})
+            axios.post(`http://192.168.1.102:9000/api/resetpassword` , {email})
             .then(res =>{
                 setLoading(false)
                 setCode(res.data.code)

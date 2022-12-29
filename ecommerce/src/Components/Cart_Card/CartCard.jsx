@@ -141,21 +141,21 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     backgroundColor: "white",
     borderRadius: 100,
-    width: "20%",
+    width: "25%",
     textAlign: "center",
   },
   detailContainer: {
     padding: 10
   },
   imageContainer: {
-    width: "40%",
+    width: "28%",
     borderTopLeftRadius: 20
     // backgroundColor:"blue",
   },
   image: {
     resizeMode: "stretch",
-    height: 140,
-    width: "105%",
+    height: 110,
+    width: "100%",
     borderRadius: 20
   },
   productName: {

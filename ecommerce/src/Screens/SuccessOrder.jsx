@@ -3,6 +3,7 @@ import React from 'react'
 import { useState } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import Header from '../Components/Header/Header';
 
 
 
@@ -10,9 +11,13 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 {/* <ion-icon name="checkmark-circle-outline"></ion-icon> */}
 
 
-const SuccessOrder = () => {
+const SuccessOrder = ({navigation}) => {
   return (
+    <>
+                <Header style={{ zIndex: 1 }} navigation={navigation}  width={"80%"}  showMore={true} title="App" />
+
     <View style={styles.container}>
+      
 
       <View
         style={styles.successContainer}>
@@ -29,6 +34,7 @@ const SuccessOrder = () => {
            <Text style={{color:"grey"}}> For Your Order</Text>
            </Text>
     </View>
+    </>
   )
 }
 
