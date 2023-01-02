@@ -20,12 +20,15 @@ import themeColor from "../themeColor/themeColor";
 import EditProfile from '../Screens/EditProfile';
 import Processing from '../Screens/OrderStatus/Processing';
 import Shipped from '../Screens/OrderStatus/Shipped';
+import Card from '../Components/Card/Card';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { Text } from "react-native";
 import { StyleSheet } from "react-native";
-import Card from '../Components/Card/Card';
+import {useState , useEffect} from 'react'
+import { useIsFocused } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 
@@ -45,6 +48,23 @@ const Tab = createBottomTabNavigator();
 
 
 const TabNav = () => {
+    // let isFocused = useIsFocused();
+
+    //     let [badgeCounter , setBadgeCounter] = useState(0)
+
+    // let getCartCount = async () => {
+    //     try{
+    //       let cart = await  AsyncStorage.getItem('cart')
+    //        cart = cart ? JSON.parse(cart) : cart
+    //        setBadgeCounter(cart.length)
+    //         console.log(cart)
+    //     }catch(err){
+    //         console.log(err);
+    //     }
+    // }
+    // useEffect(() => {
+    //     getCartCount()
+    // },[isFocused])
     return (
         <Tab.Navigator
             barStyle={styles.bottomTabStyle}
@@ -75,7 +95,7 @@ const TabNav = () => {
         >
             <Tab.Screen name="home" component={Home} />
             <Tab.Screen name="Area" component={Markets} />
-            <Tab.Screen name="cart" component={Cart} />
+            <Tab.Screen name="cart"  component={Cart} />
             {/* <Tab.Screen name="products" component={Products} /> */}
             {/* <Tab.Screen name="orderstatus" component={OrderStatus} /> */}
             

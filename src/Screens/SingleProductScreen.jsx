@@ -34,11 +34,13 @@ const SingleProductScreen = ({ route, navigation }) => {
     const [colorList , setColorList] = useState(["color"])
     const [itemSize, setItemSize] = useState()
     const [itemColor, setItemColor] = useState()
+    const [img , setImg] = useState()
 
     const handleAddToCart = async () => {
         axios.get(`${ip}/api/getMultipleFiles`)
             .then(response => {
-                // console.log(response.data, "files")
+                console.log(response.data[0].files[0].filePath, "files")
+                setImg(response.data[0].files[0].filePath)
             })
             .catch(error => console.log(error.message))
         const date = Date.now()

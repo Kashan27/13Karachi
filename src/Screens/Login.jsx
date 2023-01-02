@@ -42,16 +42,17 @@ export const Login = ({ navigation }) => {
     let { email, password } = userDetails.current
     if (email && password) {
       setLoading(true)
-      axios.post(`${ip}:9000/api/signin`, { email, password })
+      axios.post(`${ip}/api/signin`, { email, password })
         .then(async (response) => {
           try {
             let role  = response.data.data.role
-            if(role === "User") {
+            // if(role === "User") {
               await AsyncStorage.setItem("user", JSON.stringify(response.data))
               navigation.navigate("home")
-            }else{
-              alert("This is a seller account.please go to website to signedIn as Seller ")
-            }
+            // }else{
+            //   console.log(response.data.data,"role")
+            //   alert("This is a seller account.please go to website to signedIn as Seller ")
+            // }
             
           } catch (err) {
             console.log(err)

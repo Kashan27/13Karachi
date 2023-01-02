@@ -44,10 +44,10 @@ const Signup = ({ navigation }) => {
     let {img , name, email, address, contact, password, confirmPassword } = input.current
     let userData = {img , name, email, address, contact, password, role: "User" }
     if (name, email, address, contact, password, confirmPassword) {
-      if (!input.email.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)) {
+      if (!email.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)) {
         alert("Email is not in correct format")
       } else {
-        if (input.contact.length !== 11) {
+        if (input.current.contact.length !== 11) {
           alert("contact number must be 11 digits")
         } else {
           if (password !== confirmPassword) {

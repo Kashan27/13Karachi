@@ -82,6 +82,7 @@ const Products = ({ route, navigation }) => {
 
     const clearFilter = () => {
         let filterData = allProd.filter(item => item.hotelname === currentShop)
+        console.log(currentShop,"cShop")
         console.log(filterData , "fData")
         setP(filterData)
         setValue('Select Category');
@@ -102,9 +103,9 @@ const Products = ({ route, navigation }) => {
     }, [])
 
 
-    useEffect(() => {
-        handleFilter()
-    }, [value]);
+    // useEffect(() => {
+    //     handleFilter()
+    // }, [value]);
 
     const getShops = (shop) => {
 
@@ -175,7 +176,10 @@ console.log('products')
                     setSelected={(val) => setValue(val)}
                     onSelect={handleFilter}
                     data={categories}
+                    // placeholder="Search Category"
+                    notFoundText="Category Not Found"
                     save="value"
+                    abc={value}
                 />
 
 

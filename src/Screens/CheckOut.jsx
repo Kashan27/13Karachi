@@ -92,12 +92,10 @@ const CheckOut = ({ navigation, route }) => {
 
             }
 
-            if (true) {
-                // if (email || orderContact || shippingOne || shippingTwo) {
+                if (email || orderContact || shippingOne || shippingTwo) {
                 if (checked) {
                     if (ts) {
                         setLoading(true)
-                        // axios.post(`http://192.168.1.106:9000/api/bookingpostdata`,{...obj})
                         axios.post(`${ip}/api/bookingpostdata`, { ...obj })
                             .then((res) => {
                                 if (res.data.success) {
