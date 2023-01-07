@@ -21,7 +21,6 @@ const Slider = ({ images }) => {
         res.data.forEach(item => {
           let obj = {img:item.imageURL[0]}
           carousels.push(obj)
-
         })
         setCarousel(carousels)
       })
@@ -36,6 +35,7 @@ const Slider = ({ images }) => {
       data={carousel}
       autoPlay={true}
       closeIconColor="black"
+      timer={2000}
     />
   )
 }

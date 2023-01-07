@@ -172,7 +172,7 @@ const Profile = ({ navigation }) => {
             />
             <List.Item
                 title="Phone"
-                description={data && data.contact}
+                description={data && `0${data.contact}`}
                 left={props => <List.Icon {...props} icon="phone" />}
             />
             <List.Item

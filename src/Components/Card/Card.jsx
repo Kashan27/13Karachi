@@ -1,6 +1,7 @@
 import React from 'react'
 import { View, Touchable, Text, Image, StyleSheet, Pressable, } from 'react-native'
 import { memo } from 'react';
+import themeColor from '../../themeColor/themeColor';
 
 
 function ItemCard({ item , navigation }) {
@@ -22,10 +23,10 @@ function ItemCard({ item , navigation }) {
             </View>
             <View>
                 <Text
-                    style={{ color: "#426D54", fontWeight: "bold", fontSize: 17 }}
+                    style={styles.prodPrice}
                 >Rs
                     <Text
-                        style={{ fontSize: 17 }}
+                        style={styles.prodPrice}
                     > {product.productPrice}</Text></Text>
             </View>
         </Pressable>
@@ -35,28 +36,38 @@ function ItemCard({ item , navigation }) {
 const styles = StyleSheet.create({
 
     container: {
-        width: "27%",
+        width: "47%",
         display:"flex",
         margin:10,
         backgroundColor: "white",
-        padding: 6,
-        borderRadius: 10,
+        // padding: 6,
+        borderRadius: 15,
         shadowColor: "grey",
         shadowOffset: { width: 10, height: 10 },
         shadowOpacity: 0.3,
         shadowRadius: 5,
-        elevation: 15
+        elevation: 15,
+        height:140
     },
     image: {
-        // width: 100    ,
-        height: 100,
+        // width: "100%" 
+        borderTopRightRadius:15,
+        borderTopLeftRadius:15,
+        borderBottomRightRadius:10,
+        borderBottomLeftRadius:10,
+        height: "55%",
     },
     prodName: {
         fontFamily: "arial",
         fontSize: 18,
+        padding:5
     },
     prodPrice: {
-
+        padding:5,
+        paddingTop: 0,
+        color:themeColor,
+        fontWeight:"bold",
+        fontSize:17
     }
 })
 

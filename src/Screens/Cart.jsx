@@ -8,6 +8,7 @@ import { useWindowDimensions } from 'react-native';
 import themeColor from '../themeColor/themeColor';
 import { Button, Snackbar } from 'react-native-paper';
 import { useIsFocused } from '@react-navigation/native';
+import { ScrollView } from 'native-base';
 
 
 
@@ -154,13 +155,14 @@ const Cart = ({ navigation }) => {
 
           {/* Procedd to checkOut */}
 
+
           <View style={{ display: 'flex', alignItems: "center" }}>
             <View style={styles.checkOutContainer} >
               <Button
                 onPress={e => { handleCheckOut() }}
                 mode="contained"
                 buttonColor={themeColor}
-              // width="45%"
+                // width="45%"
               >Proceed to Checkout</Button>
               <Text style={styles.totalAmount}>PKR {subTotal + 100}</Text>
             </View>

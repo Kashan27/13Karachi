@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text, Image, StyleSheet, View, TouchableOpacity } from 'react-native';
+import { Text, Image, StyleSheet, View, TouchableOpacity, ImageBackground } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Menu, Pressable } from 'native-base';
 import { Appbar } from 'react-native-paper';
@@ -25,8 +25,9 @@ import themeColor from '../../themeColor/themeColor';
 
 
 const Header = ({ navigation, title, goback, width }) => {
-  const isFocused = useIsFocused();
-
+  const isFocused = useIsFocused(); 
+  const bg = require("../../../bg/bg.png")
+  const menu = require("../../../icon/menu.png")
   let [currentUser, setUser] = useState("")
   const home = () => {
     navigation.navigate("home")
@@ -71,7 +72,7 @@ const Header = ({ navigation, title, goback, width }) => {
 
 
 
-  return (<>
+  return (<ImageBackground  style={styles.background} >
     <Appbar.Header style={{backgroundColor:"transparent"}} mode="center-aligned">
 
 
@@ -103,7 +104,8 @@ const Header = ({ navigation, title, goback, width }) => {
      <Menu shadow={2} w="190" trigger={triggerProps => {
         return <Pressable accessibilityLabel="More options menu" {...triggerProps}>
           {/* <HamburgerIcon /> */}
-          <Ionicons size={30} name="menu-outline" />
+          {/* <Ionicons size={30} name="menu-outline" /> */}
+          <Image source={menu} style={styles.menuIcon} />
         </Pressable>;
       }}>
         <Menu.Item onPress={e => { navigation.navigate('cart') }}>Cart</Menu.Item>
@@ -122,14 +124,22 @@ const Header = ({ navigation, title, goback, width }) => {
     </Appbar.Header>
 
 
-  </>
+  </ImageBackground>
   );
 };
 
 
 const styles = StyleSheet.create({
 
+  background:{
+    resizeMode:"contain",
+    // height:105
+  },
 
+  menuIcon:{
+      height:35,
+      width:35
+  },
   logo: {
     height: 160,
     width: 160,

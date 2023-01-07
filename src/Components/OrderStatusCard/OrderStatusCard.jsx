@@ -9,6 +9,7 @@ import themeColor from '../../themeColor/themeColor';
 const OrderStatusCard = ({ item , status}) => {
   const [msg, setMsg] = useState()
   const [date, setDate] = useState()
+  let image = item.item.cartItems[0].imageURL
   // let availableQty = item.availableQty
   // let [itemQty, setItemQty] = useState(item.qty)
 
@@ -22,7 +23,6 @@ const OrderStatusCard = ({ item , status}) => {
 
   let handleGetNames = () => {
     let arr = item.item.cartItems
-
     let namesArray = []
     arr.forEach((value) => {
       namesArray.push(value.productName)
@@ -46,14 +46,14 @@ const OrderStatusCard = ({ item , status}) => {
 
 
 
-
+  // console.log(item.item.cartItems[0].imageURL,"item")
 
   return (
     <View style={styles.mainContainer}>
 
       <View style={styles.container}>
         <Pressable onPress={e => { }} style={styles.imageContainer} >
-          <Image style={styles.image} source={{ uri: "https://media.naheed.pk/catalog/product/cache/49dcd5d85f0fa4d590e132d0368d8132/1/0/1036762-1.jpg" }} />
+          <Image style={styles.image} source={{ uri: image }} />
         </Pressable>
 
 
@@ -192,6 +192,6 @@ const styles = StyleSheet.create({
   textStatus:{
     fontSize:17,
     fontWeight: "bold",  
-    // color:themeColor
+    color:themeColor
   }
 })

@@ -1,14 +1,17 @@
 import React from 'react'
 import { StyleSheet, View, Text } from 'react-native'
-import { useState , useRef} from 'react';
+import { useState , useEffect , useCallback , useRef} from 'react';
 // import { Input, Text, Autocomplete, AutocompleteItem, CheckBox, Radio, RadioGroup } from '@ui-kitten/components';
-import { Button, Checkbox, RadioButton, TextInput } from 'react-native-paper';
+import { Button, Checkbox, RadioButton, TextInput ,  } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import themeColor from '../themeColor/themeColor';
+import Header from "../Components/Header/Header";
 import ip from '../ip';
 
 const CheckOut = ({ navigation, route }) => {
+
+    let [email , setEmail] = useState()
     const [checked, setChecked] = useState(false);
     const [ts, setTS] = useState(false);
     const { subTotal } = route.params
@@ -19,18 +22,18 @@ const CheckOut = ({ navigation, route }) => {
         // const [checked, setChecked] = React.useState(initialCheck);
         return { checked, onChange: setChecked };
     };
+
     const basicCheckboxState = useCheckboxState();
     // end of checkboxes
 
 
-    // --------------------------states---------------------------------- //
-    // let [orderDetails, setOrderDetails] = useState({
-    //     email: "",
-    //     orderContact: "",
-    //     shippingOne: "",
-    //     shippingTwo: "",
+    // refs for focus
+    let contactRef = useRef()
+    let shippingOneRef = useRef()
+    let shippingTwoRef = useRef()
 
-    // })
+
+
     let orderDetails = useRef({
         email: "",
         orderContact: "",
@@ -39,6 +42,16 @@ const CheckOut = ({ navigation, route }) => {
 
     })
 
+    const getEmail = async () => {
+        try{
+            let user = await AsyncStorage.getItem("user")
+            user = JSON.parse(user)
+            console.log(user.data.email)
+            setEmail(user.data.email)
+        }catch(err){
+            console.log(err)
+        }
+    }
 
 
 
@@ -49,11 +62,12 @@ const CheckOut = ({ navigation, route }) => {
 
 
     const handleConfirmOrder = async () => {
-        let { email, orderContact, shippingOne, shippingTwo } = orderDetails.current
+        let { orderContact, shippingOne, shippingTwo } = orderDetails.current
         try {
             let cartItems = await AsyncStorage.getItem("cart")
             let parseCart = JSON.parse(cartItems)
             const getdate = new Date().toLocaleString()
+            
             let obj = {
                 userEmail: email,
                 orderContact: orderContact,
@@ -106,7 +120,8 @@ const CheckOut = ({ navigation, route }) => {
                                     catch(err){
                                         console.log(err.message)
                                     }
-                                    navigation.navigate("successorder")
+                                    console.log(res.data.Order , "success")
+                                    // navigation.navigate("successorder")
                                 }
                             })
                             .catch((err) => {
@@ -133,17 +148,21 @@ const CheckOut = ({ navigation, route }) => {
 
 
 
+    useEffect(() => {
+        getEmail()
+    }, []);
 
-console.log('proceedtocehckout')
 
-
-
-
+    let handleGoBack = useCallback(()=>{
+        navigation.goBack()
+      } ,[navigation]) 
 
 
     // ----------------------------------------------RNDER----------------------------------- ---------
     return (
         <View>
+                  <Header navigation={navigation} width={"75%"}  goback={handleGoBack} title="App" />
+
             {/* Heading */}
             <Text style={styles.heading}>Checkout</Text>
 
@@ -157,10 +176,12 @@ console.log('proceedtocehckout')
                         underLineColor="grey"
                         left={<TextInput.Icon icon="email" />}
                         label="Email"
-                        // value={text}
+                        value={email}
                         icon='email'
                         style={styles.input}
                         onChangeText={e => { handleInputs("email", e) }}
+                        disabled={true}
+                        // style={{fontSize:10}}
                     />
 
                 </View>
@@ -173,7 +194,13 @@ console.log('proceedtocehckout')
                         label="Contact"
                         style={styles.input}
                         onChangeText={e => { handleInputs("contact", e) }}
-                    />
+                        onSubmitEditing={()=>{
+                            shippingOneRef.current.focus()
+                        }}
+                        blurOnSubmit={false}
+                        returnKeyType="next"
+                        
+                        />
 
                 </View>
                 <View style={styles.subDetailContainer}>
@@ -184,6 +211,12 @@ console.log('proceedtocehckout')
                         label="Address 1"
                         style={styles.input}
                         onChangeText={e => { handleInputs("shippingTwo", e) }}
+                        ref={shippingOneRef}
+                        onSubmitEditing={()=>{
+                            shippingTwoRef.current.focus()
+                        }}
+                        blurOnSubmit={false}
+                        returnKeyType="next"
                     />
 
                 </View>
@@ -196,6 +229,7 @@ console.log('proceedtocehckout')
                         label="Address 2"
                         style={styles.input}
                         onChangeText={e => { handleInputs("shippingOne", e) }}
+                        ref={shippingTwoRef}
                     />
 
                 </View>
@@ -278,7 +312,7 @@ const styles = StyleSheet.create({
     input: {
         // flex: 1,
         width: "85%",
-        fontSize: 18,
+        fontSize: 16,
         backgroundColor: "transparent"
     },
     subDetailContainer: {

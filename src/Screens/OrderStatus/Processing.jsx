@@ -9,7 +9,6 @@ const Processing = ({ data, status , navigation}) => {
   let [pendingOrder, setPendingOrder] = useState([])
 
   const handleGetData = async () => {
-    console.log(data)
 
     let processing = data ? data.filter((value) => value.paymentstatus === 'Pending') : []
     console.log(processing)

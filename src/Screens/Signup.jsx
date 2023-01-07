@@ -1,6 +1,6 @@
 
 import React from 'react'
-import { View, Text, Image, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, Image, ScrollView, TouchableOpacity , Keyboard} from 'react-native';
 import {
   StyleSheet,
   ImageBackground,
@@ -23,13 +23,41 @@ import ip from '../ip';
 
 const Signup = ({ navigation }) => {
   let [singleFile, setSingleFile] = useState('')
+  let logo = require('../icons/logo.png')
+  let nameRef = useRef()
+  let addressRef = useRef()
+  let emailRef = useRef()
+  let contactRef = useRef()
+  let passwordRef = useRef()
+  let confirmPassRef = useRef()
   let [loading, setLoading] = useState(false)
+  let [isShowKeyBoard , setIsShowKeyBoard] = useState()
   // let [input, setInput] = useState({img:"" ,  name: "", email: "", address: "", contact: "+92", password: "", confirmPassword: "" })
   let input = useRef({img:"" ,  name: "", email: "", address: "", contact: "+92", password: "", confirmPassword: "" })
   let [imgName, setImgName] = useState('')
 
 
 
+  // Keyboard Listener
+  const keyboardShowListener = Keyboard.addListener(
+    'keyboardDidShow',
+    () => {
+      // console.log('Keyboard is open')
+      setIsShowKeyBoard(true)
+      
+    }
+  );
+  const keyboardHideListener = Keyboard.addListener(
+    'keyboardDidHide',
+    () => {
+      // console.log('Keyboard is closed')
+      setIsShowKeyBoard(false)
+    }
+  );
+
+
+
+  // handleUpdate Input values
   const updateInput = (property, val) => {
 
     // setInput({ ...input, [property]: val })
@@ -151,11 +179,22 @@ const Signup = ({ navigation }) => {
     <View
       style={{ backgroundColor: "white" }}>
       <Header width="71%" navigation={navigation} goback={handleGoBack} title="App" />
+
+     {isShowKeyBoard ?
+
       <Image
-        resizeMode='stretch'
-        style={styles.banner}
-        source={banner}
+      resizeMode="cover"
+      style={styles.logo}
+      source={logo}
       />
+      :
+      <Image
+      resizeMode="cover"
+      style={styles.banner}
+      source={banner}
+      />
+      
+    }
 
 
 
@@ -165,44 +204,64 @@ const Signup = ({ navigation }) => {
         <View style={styles.inputContainer}>
 
           <ScrollView >
-
-
             {/* Inputs           ------------------------------------------------------- */}
 
             <View style={{ display: "flex", justifyContent: "space-between", flexDirection: "row" }}>
               <TextInput
+                returnKeyType='next'
+                onSubmitEditing={()=>{
+                  emailRef.current.focus()
+                }}
                 left={<TextInput.Icon icon="account-outline" />}
                 onChangeText={e => { updateInput("name", e) }}
                 style={styles.input}
                 mode="Flat"
                 placeholder='User Name'
                 activeUnderlineColor={themeColor}
+                blurOnSubmit={false}
                 ></TextInput>
             </View>
             <View style={{ display: "flex", justifyContent: "space-between", flexDirection: "row" }}>
               <TextInput
+              returnKeyType='next'
+              onSubmitEditing={()=>{
+                addressRef.current.focus()
+              }}
+              ref={emailRef}
                 activeUnderlineColor={themeColor}
                 left={<TextInput.Icon icon="email-outline" />}
                 onChangeText={e => { updateInput("email", e) }}
                 style={styles.input}
                 mode="Flat"
                 placeholder='Email'
-              ></TextInput>
+                blurOnSubmit={false}
+                ></TextInput>
             </View>
 
             <View style={{ display: "flex", justifyContent: "space-between", flexDirection: "row" }}>
               <TextInput
+              returnKeyType='next'
+              onSubmitEditing={()=>{
+                contactRef.current.focus()
+              }}
+              ref={addressRef}
             activeUnderlineColor={themeColor}
             left={<TextInput.Icon icon="map-marker" />}
             onChangeText={e => { updateInput("address", e) }}
-                style={styles.input}
-                mode="Flat"
-                placeholder='Address'
-              ></TextInput>
+            style={styles.input}
+            mode="Flat"
+            placeholder='Address'
+            blurOnSubmit={false}
+            ></TextInput>
             </View>
 
             <View style={{ display: "flex", justifyContent: "space-between", flexDirection: "row" }}>
               <TextInput
+               returnKeyType='next'
+               onSubmitEditing={()=>{
+                passwordRef.current.focus()
+               }}
+               ref={contactRef}
                 activeUnderlineColor={themeColor}
                 left={<TextInput.Icon icon="phone-outline" />}
                 onChangeText={e => { updateInput("contact", e) }}
@@ -210,23 +269,31 @@ const Signup = ({ navigation }) => {
                 mode="Flat"
                 keyboardType='numeric'
                 placeholder='Phone'
-              ></TextInput>
+            blurOnSubmit={false}
+            ></TextInput>
             </View>
 
             <View style={{ display: "flex", justifyContent: "space-between", flexDirection: "row" }}>
               <TextInput
+               returnKeyType='next'
+               onSubmitEditing={()=>{
+                 confirmPassRef.current.focus()
+               }}
+               ref={passwordRef}
                 activeUnderlineColor={themeColor}
                 left={<TextInput.Icon icon="key-variant" />}
                 onChangeText={e => { updateInput("password", e) }}
-              style={styles.input}
+                style={styles.input}
                 mode="Flat"
                 secureTextEntry={true}
+                blurOnSubmit={false}
                 placeholder='Password'
               ></TextInput>
             </View>
 
             <View style={{ display: "flex", justifyContent: "space-between", flexDirection: "row" }}>
               <TextInput
+              ref={confirmPassRef}
                 activeUnderlineColor={themeColor}
               left={<TextInput.Icon icon="key-variant" />}
                 onChangeText={e => { updateInput("confirmPassword", e) }}
@@ -283,7 +350,10 @@ const styles = StyleSheet.create({
   banner: {
     width: "100%",
     height: 250,
-
+  },
+  logo: {
+    width: "100%",
+    height: 100,
   },
   container: {
     backgroundColor: "#ffffff",
@@ -352,7 +422,8 @@ const styles = StyleSheet.create({
     textDecorationColor: "white",
     textDecorationStyle: "solid",
     textDecorationLine: "underline"
-  }
+  },
+  
 
 
 });

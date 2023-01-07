@@ -71,7 +71,7 @@ const Home = ({ navigation }) => {
             <View>
                 <Text style={styles.text}>Recently Added</Text>
             </View>
-            <View style={{ marginLeft: 10, display: "flex", alignItems: "center", height: (Height * 32 / 100), width: "100%" }}>
+            <View style={{ marginLeft: 10, display: "flex", alignItems: "center", height: (Height * 35 / 100), width: "100%" }}>
                 {data1 ?
 
                     <FlatList

@@ -1,7 +1,8 @@
 
-import React, { useCallback, useEffect , useRef} from 'react'
+import React, { useCallback, useEffect, useRef } from 'react'
+import KeyboardListener from 'react-native-keyboard-listener'
 import { useState } from 'react';
-import { View, Text, Image } from 'react-native';
+import { View, Text, Image , Keyboard} from 'react-native';
 import {
   StyleSheet,
   ImageBackground,
@@ -24,36 +25,57 @@ import themeColor from '../themeColor/themeColor'
 export const Login = ({ navigation }) => {
   console.log('logiin')
   let [loading, setLoading] = useState(false)
+  let [isShowKeyBoard , setIsShowKeyBoard] = useState()
+  let logo = require('../icons/logo.png')
   // let [userDetails, setUserDetails] = useState({
   //   email: "muhammadkashan267@gmail.com",
   //   password: "888888"
   // })
 
 
-  let userDetails = useRef({email:"" , password:"" })
+  let emailRef = useRef()
+  let passRef = useRef()
+  let userDetails = useRef({ email: "", password: "" })
 
+
+
+  const keyboardShowListener = Keyboard.addListener(
+    'keyboardDidShow',
+    () => {
+      // console.log('Keyboard is open')
+      setIsShowKeyBoard(true)
+      
+    }
+  );
+  const keyboardHideListener = Keyboard.addListener(
+    'keyboardDidHide',
+    () => {
+      // console.log('Keyboard is closed')
+      setIsShowKeyBoard(false)
+    }
+  );
 
 
 
 
 
   const handleLogin = async (event) => {
-   
+
     let { email, password } = userDetails.current
     if (email && password) {
       setLoading(true)
       axios.post(`${ip}/api/signin`, { email, password })
         .then(async (response) => {
           try {
-            let role  = response.data.data.role
+            let role = response.data.data.role
             // if(role === "User") {
-              await AsyncStorage.setItem("user", JSON.stringify(response.data))
-              navigation.navigate("home")
+            await AsyncStorage.setItem("user", JSON.stringify(response.data))
+            navigation.navigate("home")
             // }else{
             //   console.log(response.data.data,"role")
             //   alert("This is a seller account.please go to website to signedIn as Seller ")
             // }
-            
+
           } catch (err) {
             console.log(err)
           }
@@ -72,7 +94,7 @@ export const Login = ({ navigation }) => {
 
   const handleInput = (property, value) => {
     // setUserDetails({ ...userDetails, [property]: value })
-    userDetails.current = {...userDetails.current , [property]: value}
+    userDetails.current = { ...userDetails.current, [property]: value }
     // console.log(userDetails.current)
   }
 
@@ -88,9 +110,9 @@ export const Login = ({ navigation }) => {
   }, [])
 
 
-  let handleGoBack = useCallback(()=>{
+  let handleGoBack = useCallback(() => {
     navigation.goBack()
-  } ,[navigation]) 
+  }, [navigation])
 
 
 
@@ -101,14 +123,29 @@ export const Login = ({ navigation }) => {
   return (
     <View
       style={{ backgroundColor: "white" }}>
-      <Header navigation={navigation} width={"75%"}  goback={handleGoBack} title="App" />
+
+      <Header navigation={navigation} width={"75%"} goback={handleGoBack} title="App" />
+
+
+      {/* Banner */}
+{isShowKeyBoard ?
+
       <Image
-        resizeMode='stretch'
-        style={styles.banner}
-        source={banner}
+      resizeMode="cover"
+      style={styles.logo}
+      source={logo}
       />
+      :
+      <Image
+      resizeMode="cover"
+      style={styles.banner}
+      source={banner}
+      />
+      
+    }
 
 
+      {/* Login Details */}
 
       <Text style={styles.heading}>Login</Text>
       <View style={styles.loginContainer} >
@@ -117,16 +154,22 @@ export const Login = ({ navigation }) => {
             <Ionicons name='mail-outline' size={28} style={{ marginTop: 10 }} />
             <TextInput
               // icon="account-outline"
+              returnKeyType="next"
+              onSubmitEditing={() => {
+                passRef.current.focus()
+              }}
               onChangeText={e => { handleInput("email", e) }}
               style={styles.input}
               mode="Flat"
               placeholder='Email / username'
+              blurOnSubmit={false}
             // textColor='white'
             ></TextInput>
           </View>
           <View style={{ display: "flex", justifyContent: "space-between", flexDirection: "row" }}>
             <Ionicons name='key-outline' size={28} style={{ marginTop: 10 }} />
             <TextInput
+              ref={passRef}
               onChangeText={e => { handleInput("password", e) }}
               style={styles.input}
               mode="Flat"
@@ -135,7 +178,7 @@ export const Login = ({ navigation }) => {
             ></TextInput>
           </View>
         </View>
-        <Text onPress={e=>{navigation.navigate("forgotpass")}} style={styles.forgotPassword}>
+        <Text onPress={e => { navigation.navigate("forgotpass") }} style={styles.forgotPassword}>
           Forgot Password?
         </Text>
         <View style={styles.loginButton}>
@@ -154,28 +197,7 @@ export const Login = ({ navigation }) => {
         </Text>
       </View>
 
-      {/* <ImageBackground style={styles.container} >
-      <View style={styles.loginContainer} >
-        <View style={styles.inputContainer}>
 
-          <TextInput
-            style={styles.input}
-            mode="Flat"
-            placeholder='Email / username'
-          // textColor='white'
-          ></TextInput>
-          <TextInput
-            style={styles.input}
-            mode="Flat"
-            secureTextEntry={true}
-            placeholder='Password'
-          ></TextInput>
-          <Button onPress={e => { handleLogin() }} mode="contained" style={styles.button}>Login</Button>
-        </View>
-        <Text onPress={e => { navigation.navigate("markets") }} style={styles.text}>Not have an Account?</Text>
-      </View>
-
-    </ImageBackground> */}
     </View>
   )
 }
@@ -189,8 +211,11 @@ const styles = StyleSheet.create({
   },
   banner: {
     width: "100%",
-    height: 280,
-
+    height: "30%",
+  },
+  logo: {
+    width: "100%",
+    height: 100,
   },
   container: {
     backgroundColor: "#ffffff",
@@ -219,12 +244,7 @@ const styles = StyleSheet.create({
   loginContainer: {
     height: 550,
     width: "100%",
-    // displ
     backgroundColor: "white",
-    // opacity:0.3,
-    // borderRadius: 20,
-    // backgroundColor: "rgba(0, 0, 0, 0.3)",
-    // marginTop: -100,
   },
   loginButton: {
     width: "100%",

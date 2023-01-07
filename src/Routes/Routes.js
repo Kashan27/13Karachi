@@ -25,6 +25,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { Text } from "react-native";
+import { useWindowDimensions } from 'react-native';
 import { StyleSheet } from "react-native";
 import {useState , useEffect} from 'react'
 import { useIsFocused } from '@react-navigation/native';
@@ -70,9 +71,11 @@ const TabNav = () => {
             barStyle={styles.bottomTabStyle}
             screenOptions={
                 ({ route }) => ({
-                    tabBarLabel: ({ focused }) => {
-                        return <Text style={{ fontSize: 14, fontWeight: '600', color: "grey" }}>{route.name}</Text>
-                    },
+                    tabBarShowLabel:false,
+                    // tabBarLabel: ({ focused }) => {
+                    //     return <Text style={{ fontSize: 14, fontWeight: '600', color: "grey" }}>{route.name}</Text>
+                    // },
+                    tabBarStyle:styles.tabBar,
                     tabBarIcon: ({ focused, color, size }) => {
                         let iconName;
 
@@ -165,10 +168,15 @@ const Routes = () => {                                     /////////////////////
 
 const styles = StyleSheet.create({
     tabBar: {
-        backgroundColor: 'white',
-        borderTopLeftRadius: 20,
-        borderTopRightRadius: 20,
-    },
+        // backgroundColor: 'red',
+        // borderTopLeftRadius: 20,
+        // borderTopRightRadius: 20,
+        
+        borderRadius:50,
+        marginBottom:20,
+        marginLeft:"5%",
+        width:"90%"
+    }
 });
 
 

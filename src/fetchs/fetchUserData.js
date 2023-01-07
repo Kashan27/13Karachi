@@ -11,10 +11,10 @@ const fetchUserData = async () => {
     try {
         let lsUserData = await AsyncStorage.getItem('user')
         let email = lsUserData ? JSON.parse(lsUserData).data.email : null
-        // console.log(email,"email")
+        console.log(email,"email")
         
         let {data} = await axios.get(`${ip}/api/postbyemailsignup/${email}`)
-            // console.log(data)
+            console.log(data)
             return data[0]
     } catch (err) {
         console.log(err.message)

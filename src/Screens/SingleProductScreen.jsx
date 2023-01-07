@@ -34,13 +34,18 @@ const SingleProductScreen = ({ route, navigation }) => {
     const [colorList , setColorList] = useState(["color"])
     const [itemSize, setItemSize] = useState()
     const [itemColor, setItemColor] = useState()
-    const [img , setImg] = useState()
+    const [img , setImg] = useState("uploads\\2022-10-04T23-44-29.311Z-home-buttn.png")
+
+
+
+
+
 
     const handleAddToCart = async () => {
         axios.get(`${ip}/api/getMultipleFiles`)
             .then(response => {
-                console.log(response.data[0].files[0].filePath, "files")
-                setImg(response.data[0].files[0].filePath)
+                console.log(response.data[1].files[0].filePath, "files")
+                setImg(response.data[1].files[0].filePath)
             })
             .catch(error => console.log(error.message))
         const date = Date.now()
@@ -92,7 +97,6 @@ const SingleProductScreen = ({ route, navigation }) => {
     }
 
     const handleCounter = (value) => {
-
         switch (value) {
             case "add":
 
@@ -149,8 +153,9 @@ const SingleProductScreen = ({ route, navigation }) => {
 
 
     /////////////////////////////////    listImage ( Rnder ) //////////////////////////////////
-
+    console.log(img)
     let renderItem = ({item}) => {
+
         return (
             <TouchableOpacity
             onPress={e=>{setImage(item)}}
@@ -159,11 +164,12 @@ const SingleProductScreen = ({ route, navigation }) => {
             <Image
                 style={styles.listImage}
                 resizeMode='contain'
-                source={{ uri: item }} />
+                source={{ uri: `http://192.168.1.104:9000/${img}` }} />
                 </TouchableOpacity>
         )
     }
 
+        console.log(img , "img")
 
 
 
